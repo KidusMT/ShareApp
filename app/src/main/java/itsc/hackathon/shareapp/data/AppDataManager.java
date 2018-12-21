@@ -19,6 +19,7 @@ package itsc.hackathon.shareapp.data;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
+import io.reactivex.Observable;
 import io.reactivex.Single;
 import itsc.hackathon.shareapp.data.network.ApiHeader;
 import itsc.hackathon.shareapp.data.network.ApiHelper;
@@ -146,6 +147,11 @@ public class AppDataManager implements DataManager {
     @Override
     public ApiHeader getApiHeader() {
         return mApiHelper.getApiHeader();
+    }
+
+    @Override
+    public Observable<LoginResponse> doServerLoginApiCall(LoginRequest.ServerLoginRequest request) {
+        return mApiHelper.doServerLoginApiCall(request);
     }
 
     @Override

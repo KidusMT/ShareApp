@@ -25,8 +25,10 @@ import dagger.Provides;
 import itsc.hackathon.shareapp.BuildConfig;
 import itsc.hackathon.shareapp.data.AppDataManager;
 import itsc.hackathon.shareapp.data.DataManager;
+import itsc.hackathon.shareapp.data.network.ApiCall;
 import itsc.hackathon.shareapp.data.network.ApiHeader;
 import itsc.hackathon.shareapp.data.network.ApiHelper;
+import itsc.hackathon.shareapp.data.network.ApiInterceptor;
 import itsc.hackathon.shareapp.data.network.AppApiHelper;
 import itsc.hackathon.shareapp.data.prefs.AppPreferencesHelper;
 import itsc.hackathon.shareapp.data.prefs.PreferencesHelper;
@@ -82,6 +84,12 @@ public class ApplicationModule {
     @Singleton
     PreferencesHelper providePreferencesHelper(AppPreferencesHelper appPreferencesHelper) {
         return appPreferencesHelper;
+    }
+
+    @Provides
+    @Singleton
+    ApiCall provideApiCall(ApiInterceptor apiInterceptor) {
+        return ApiCall.Factory.create(apiInterceptor);
     }
 
     @Provides

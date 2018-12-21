@@ -9,21 +9,25 @@ import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
 import itsc.hackathon.shareapp.BuildConfig;
+import itsc.hackathon.shareapp.data.network.model.LoginRequest;
+import itsc.hackathon.shareapp.data.network.model.LoginResponse;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
+import retrofit2.http.POST;
 
 
 public interface ApiCall {
 
     String HEADER_PARAM_SEPARATOR = ":";
 
-    @GET(ApiEndPoint.SENSOR)
-    @Headers(ApiHeader.API_AUTH_TYPE + HEADER_PARAM_SEPARATOR + ApiHeader.PROTECTED_API)
-    Observable<List<String>> getSensors();
+    @POST(ApiEndPoint.LOGIN)
+    @Headers(ApiHeader.API_AUTH_TYPE + HEADER_PARAM_SEPARATOR + ApiHeader.PUBLIC_API)
+    Observable<LoginResponse> login(@Body LoginRequest.ServerLoginRequest request);
 
     class Factory {
 

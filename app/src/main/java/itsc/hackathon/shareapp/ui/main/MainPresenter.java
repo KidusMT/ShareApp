@@ -59,9 +59,9 @@ public class MainPresenter<V extends MainMvpView> extends BasePresenter<V>
 //                            return;
 //                        }
 //
-//                        getDataManager().setUserAsLoggedOut();
-//                        getMvpView().hideLoading();
-//                        getMvpView().openLoginActivity();
+                        getDataManager().setUserAsLoggedOut();
+                        getMvpView().hideLoading();
+                        getMvpView().openLoginActivity();
 //                    }
 //                }, new Consumer<Throwable>() {
 //                    @Override
