@@ -142,4 +142,14 @@ public class FeedActivity extends BaseActivity implements FeedMvpView {
         mPresenter.onDetach();
         super.onDestroy();
     }
+
+    @Override
+    public void onFragmentDetached(String tag) {
+
+    }
+
+    @Override
+    public void hideKeyboard() {
+
+    }
 }

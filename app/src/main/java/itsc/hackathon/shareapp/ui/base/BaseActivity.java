@@ -16,8 +16,10 @@
 package itsc.hackathon.shareapp.ui.base;
 
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -26,7 +28,11 @@ import android.support.annotation.StringRes;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.AppCompatDelegate;
+import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -41,7 +47,8 @@ import itsc.hackathon.shareapp.utils.CommonUtils;
 import itsc.hackathon.shareapp.utils.NetworkUtils;
 
 import butterknife.Unbinder;
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+
+import static android.content.pm.PackageManager.GET_META_DATA;
 
 /**
  * Created by janisharali on 27/01/17.
@@ -56,14 +63,40 @@ public abstract class BaseActivity extends AppCompatActivity
 
     private Unbinder mUnBinder;
 
+    private static final String TAG = "BaseActivity";
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //for supporting vector image for api less than 21
+        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
         mActivityComponent = DaggerActivityComponent.builder()
                 .activityModule(new ActivityModule(this))
                 .applicationComponent(((MvpApp) getApplication()).getComponent())
                 .build();
+        Log.d(TAG, "onCreate");
+        resetTitles();
+    }
 
+    private void resetTitles() {
+        try {
+            ActivityInfo info = getPackageManager().getActivityInfo(getComponentName(), GET_META_DATA);
+            if (info.labelRes != 0) {
+                setTitle(info.labelRes);
+            }
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+            return true;
+        } else {
+            return super.onOptionsItemSelected(item);
+        }
     }
 
     public ActivityComponent getActivityComponent() {
@@ -72,7 +105,9 @@ public abstract class BaseActivity extends AppCompatActivity
 
     @Override
     protected void attachBaseContext(Context newBase) {
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+//        super.attachBaseContext(LocaleManager.setLocale(newBase));//.wrap(newBase));
+        super.attachBaseContext(newBase);
+        Log.d(TAG, "attachBaseContext");
     }
 
     @TargetApi(Build.VERSION_CODES.M)
@@ -101,7 +136,7 @@ public abstract class BaseActivity extends AppCompatActivity
         }
     }
 
-    private void showSnackBar(String message) {
+    public void showSnackBar(String message) {
         Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content),
                 message, Snackbar.LENGTH_SHORT);
         View sbView = snackbar.getView();
@@ -150,17 +185,15 @@ public abstract class BaseActivity extends AppCompatActivity
     }
 
     @Override
-    public void onFragmentDetached(String tag) {
-
+    public void onBackPressed() {
+        super.onBackPressed();
     }
 
-    public void hideKeyboard() {
-        View view = this.getCurrentFocus();
-        if (view != null) {
-            InputMethodManager imm = (InputMethodManager)
-                    getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-        }
+
+    public void hideKeyboard(Activity activity) {
+        //hides the keyboard till the User selects to an edit text
+        activity.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+
     }
 
     @Override

@@ -317,4 +317,9 @@ public class MainActivity extends BaseActivity implements MainMvpView {
             mDrawer.closeDrawer(Gravity.START);
         }
     }
+
+    @Override
+    public void hideKeyboard() {
+
+    }
 }

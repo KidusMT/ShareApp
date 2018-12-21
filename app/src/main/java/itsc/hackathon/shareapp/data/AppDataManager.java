@@ -47,28 +47,28 @@ public class AppDataManager implements DataManager {
         mApiHelper = apiHelper;
     }
 
-    @Override
-    public Single<LoginResponse> doGoogleLoginApiCall(LoginRequest.GoogleLoginRequest
-                                                              request) {
-        return mApiHelper.doGoogleLoginApiCall(request);
-    }
-
-    @Override
-    public Single<LoginResponse> doFacebookLoginApiCall(LoginRequest.FacebookLoginRequest
-                                                                request) {
-        return mApiHelper.doFacebookLoginApiCall(request);
-    }
-
-    @Override
-    public Single<LoginResponse> doServerLoginApiCall(LoginRequest.ServerLoginRequest
-                                                              request) {
-        return mApiHelper.doServerLoginApiCall(request);
-    }
-
-    @Override
-    public Single<LogoutResponse> doLogoutApiCall() {
-        return mApiHelper.doLogoutApiCall();
-    }
+//    @Override
+//    public Single<LoginResponse> doGoogleLoginApiCall(LoginRequest.GoogleLoginRequest
+//                                                              request) {
+//        return mApiHelper.doGoogleLoginApiCall(request);
+//    }
+//
+//    @Override
+//    public Single<LoginResponse> doFacebookLoginApiCall(LoginRequest.FacebookLoginRequest
+//                                                                request) {
+//        return mApiHelper.doFacebookLoginApiCall(request);
+//    }
+//
+//    @Override
+//    public Single<LoginResponse> doServerLoginApiCall(LoginRequest.ServerLoginRequest
+//                                                              request) {
+//        return mApiHelper.doServerLoginApiCall(request);
+//    }
+//
+//    @Override
+//    public Single<LogoutResponse> doLogoutApiCall() {
+//        return mApiHelper.doLogoutApiCall();
+//    }
 
     @Override
     public int getCurrentUserLoggedInMode() {
@@ -133,15 +133,15 @@ public class AppDataManager implements DataManager {
         updateUserInfo(null, DataManager.LoggedInMode.LOGGED_IN_MODE_LOGGED_OUT);
     }
 
-    @Override
-    public Single<BlogResponse> getBlogApiCall() {
-        return mApiHelper.getBlogApiCall();
-    }
-
-    @Override
-    public Single<OpenSourceResponse> getOpenSourceApiCall() {
-        return mApiHelper.getOpenSourceApiCall();
-    }
+//    @Override
+//    public Single<BlogResponse> getBlogApiCall() {
+//        return mApiHelper.getBlogApiCall();
+//    }
+//
+//    @Override
+//    public Single<OpenSourceResponse> getOpenSourceApiCall() {
+//        return mApiHelper.getOpenSourceApiCall();
+//    }
 
     @Override
     public ApiHeader getApiHeader() {

@@ -20,6 +20,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import itsc.hackathon.shareapp.R;
+import itsc.hackathon.shareapp.service.SyncService;
 import itsc.hackathon.shareapp.ui.base.BaseActivity;
 import itsc.hackathon.shareapp.ui.login.LoginActivity;
 import itsc.hackathon.shareapp.ui.main.MainActivity;
@@ -74,7 +75,7 @@ public class SplashActivity extends BaseActivity implements SplashMvpView {
 
     @Override
     public void startSyncService() {
-//        SyncService.start(this);
+        SyncService.start(this);
     }
 
     @Override
@@ -85,6 +86,16 @@ public class SplashActivity extends BaseActivity implements SplashMvpView {
 
     @Override
     protected void setUp() {
+
+    }
+
+    @Override
+    public void onFragmentDetached(String tag) {
+
+    }
+
+    @Override
+    public void hideKeyboard() {
 
     }
 }

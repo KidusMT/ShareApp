@@ -58,7 +58,7 @@ public class SplashPresenter<V extends SplashMvpView> extends BasePresenter<V>
 //                        if (!isViewAttached()) {
 //                            return;
 //                        }
-//                        decideNextActivity();
+                        decideNextActivity();
 //                    }
 //                }, new Consumer<Throwable>() {
 //                    @Override
