@@ -44,35 +44,35 @@ public class BlogPresenter<V extends BlogMvpView> extends BasePresenter<V>
     @Override
     public void onViewPrepared() {
         getMvpView().showLoading();
-        getCompositeDisposable().add(getDataManager()
-                .getBlogApiCall()
-                .subscribeOn(getSchedulerProvider().io())
-                .observeOn(getSchedulerProvider().ui())
-                .subscribe(new Consumer<BlogResponse>() {
-                    @Override
-                    public void accept(@NonNull BlogResponse blogResponse)
-                            throws Exception {
-                        if (blogResponse != null && blogResponse.getData() != null) {
-                            getMvpView().updateBlog(blogResponse.getData());
-                        }
-                        getMvpView().hideLoading();
-                    }
-                }, new Consumer<Throwable>() {
-                    @Override
-                    public void accept(@NonNull Throwable throwable)
-                            throws Exception {
-                        if (!isViewAttached()) {
-                            return;
-                        }
-
-                        getMvpView().hideLoading();
-
-                        // handle the error here
-                        if (throwable instanceof ANError) {
-                            ANError anError = (ANError) throwable;
-                            handleApiError(anError);
-                        }
-                    }
-                }));
+//        getCompositeDisposable().add(getDataManager()
+//                .getBlogApiCall()
+//                .subscribeOn(getSchedulerProvider().io())
+//                .observeOn(getSchedulerProvider().ui())
+//                .subscribe(new Consumer<BlogResponse>() {
+//                    @Override
+//                    public void accept(@NonNull BlogResponse blogResponse)
+//                            throws Exception {
+//                        if (blogResponse != null && blogResponse.getData() != null) {
+//                            getMvpView().updateBlog(blogResponse.getData());
+//                        }
+//                        getMvpView().hideLoading();
+//                    }
+//                }, new Consumer<Throwable>() {
+//                    @Override
+//                    public void accept(@NonNull Throwable throwable)
+//                            throws Exception {
+//                        if (!isViewAttached()) {
+//                            return;
+//                        }
+//
+//                        getMvpView().hideLoading();
+//
+//                        // handle the error here
+//                        if (throwable instanceof ANError) {
+//                            ANError anError = (ANError) throwable;
+//                            handleApiError(anError);
+//                        }
+//                    }
+//                }));
     }
 }

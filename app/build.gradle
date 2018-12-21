@@ -14,7 +14,6 @@
  */
 
 apply plugin: 'com.android.application'
-apply plugin: 'org.greenrobot.greendao'
 apply from: '../config/quality/quality.gradle'
 
 android {
@@ -43,10 +42,6 @@ android {
     }
 }
 
-greendao {
-    schemaVersion 1
-}
-
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
@@ -58,11 +53,6 @@ dependencies {
     implementation "com.android.support:support-vector-drawable:$rootProject.supportLibraryVersion"
     implementation "com.android.support:animated-vector-drawable:$rootProject.supportLibraryVersion"
 
-    // font
-    implementation "uk.co.chrisjenx:calligraphy:$rootProject.calligraphyVersion"
-
-    // network
-    implementation "com.amitshekhar.android:rx2-android-networking:$rootProject.rx2FastAndroidNetworking"
 
     // Retrofit and Picasso
     implementation "com.squareup.retrofit2:retrofit:$rootProject.retrofitVersion"
@@ -72,9 +62,6 @@ dependencies {
 
     // parser
     implementation "com.google.code.gson:gson:$rootProject.gsonVersion"
-
-    // database
-    implementation "org.greenrobot:greendao:$rootProject.greenDaoVersion"
 
     // debug database
     debugImplementation "com.amitshekhar.android:debug-db:$rootProject.debugDBVersion"

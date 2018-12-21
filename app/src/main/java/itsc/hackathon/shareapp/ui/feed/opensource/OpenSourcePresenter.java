@@ -44,35 +44,35 @@ public class OpenSourcePresenter<V extends OpenSourceMvpView> extends BasePresen
     @Override
     public void onViewPrepared() {
         getMvpView().showLoading();
-        getCompositeDisposable().add(getDataManager()
-                .getOpenSourceApiCall()
-                .subscribeOn(getSchedulerProvider().io())
-                .observeOn(getSchedulerProvider().ui())
-                .subscribe(new Consumer<OpenSourceResponse>() {
-                    @Override
-                    public void accept(@NonNull OpenSourceResponse openSourceResponse)
-                            throws Exception {
-                        if (openSourceResponse != null && openSourceResponse.getData() != null) {
-                            getMvpView().updateRepo(openSourceResponse.getData());
-                        }
-                        getMvpView().hideLoading();
-                    }
-                }, new Consumer<Throwable>() {
-                    @Override
-                    public void accept(@NonNull Throwable throwable)
-                            throws Exception {
-                        if (!isViewAttached()) {
-                            return;
-                        }
-
-                        getMvpView().hideLoading();
-
-                        // handle the error here
-                        if (throwable instanceof ANError) {
-                            ANError anError = (ANError) throwable;
-                            handleApiError(anError);
-                        }
-                    }
-                }));
+//        getCompositeDisposable().add(getDataManager()
+//                .getOpenSourceApiCall()
+//                .subscribeOn(getSchedulerProvider().io())
+//                .observeOn(getSchedulerProvider().ui())
+//                .subscribe(new Consumer<OpenSourceResponse>() {
+//                    @Override
+//                    public void accept(@NonNull OpenSourceResponse openSourceResponse)
+//                            throws Exception {
+//                        if (openSourceResponse != null && openSourceResponse.getData() != null) {
+//                            getMvpView().updateRepo(openSourceResponse.getData());
+//                        }
+//                        getMvpView().hideLoading();
+//                    }
+//                }, new Consumer<Throwable>() {
+//                    @Override
+//                    public void accept(@NonNull Throwable throwable)
+//                            throws Exception {
+//                        if (!isViewAttached()) {
+//                            return;
+//                        }
+//
+//                        getMvpView().hideLoading();
+//
+//                        // handle the error here
+//                        if (throwable instanceof ANError) {
+//                            ANError anError = (ANError) throwable;
+//                            handleApiError(anError);
+//                        }
+//                    }
+//                }));
     }
 }

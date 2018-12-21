@@ -16,16 +16,10 @@
 package itsc.hackathon.shareapp.data;
 
 
-import android.content.Context;
+import javax.inject.Inject;
+import javax.inject.Singleton;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.internal.$Gson$Types;
-import com.google.gson.reflect.TypeToken;
-import itsc.hackathon.shareapp.data.db.DbHelper;
-import itsc.hackathon.shareapp.data.db.model.Option;
-import itsc.hackathon.shareapp.data.db.model.Question;
-import itsc.hackathon.shareapp.data.db.model.User;
+import io.reactivex.Single;
 import itsc.hackathon.shareapp.data.network.ApiHeader;
 import itsc.hackathon.shareapp.data.network.ApiHelper;
 import itsc.hackathon.shareapp.data.network.model.BlogResponse;
@@ -34,20 +28,6 @@ import itsc.hackathon.shareapp.data.network.model.LoginResponse;
 import itsc.hackathon.shareapp.data.network.model.LogoutResponse;
 import itsc.hackathon.shareapp.data.network.model.OpenSourceResponse;
 import itsc.hackathon.shareapp.data.prefs.PreferencesHelper;
-import itsc.hackathon.shareapp.di.ApplicationContext;
-import itsc.hackathon.shareapp.utils.AppConstants;
-import itsc.hackathon.shareapp.utils.CommonUtils;
-
-import java.lang.reflect.Type;
-import java.util.List;
-
-import javax.inject.Inject;
-import javax.inject.Singleton;
-
-import io.reactivex.Observable;
-import io.reactivex.ObservableSource;
-import io.reactivex.Single;
-import io.reactivex.functions.Function;
 
 /**
  * Created by janisharali on 27/01/17.
@@ -58,30 +38,13 @@ public class AppDataManager implements DataManager {
 
     private static final String TAG = "AppDataManager";
 
-    private final Context mContext;
-    private final DbHelper mDbHelper;
     private final PreferencesHelper mPreferencesHelper;
     private final ApiHelper mApiHelper;
 
     @Inject
-    public AppDataManager(@ApplicationContext Context context,
-                          DbHelper dbHelper,
-                          PreferencesHelper preferencesHelper,
-                          ApiHelper apiHelper) {
-        mContext = context;
-        mDbHelper = dbHelper;
+    public AppDataManager(PreferencesHelper preferencesHelper, ApiHelper apiHelper) {
         mPreferencesHelper = preferencesHelper;
         mApiHelper = apiHelper;
-    }
-
-    @Override
-    public Observable<Long> insertUser(User user) {
-        return mDbHelper.insertUser(user);
-    }
-
-    @Override
-    public Observable<List<User>> getAllUsers() {
-        return mDbHelper.getAllUsers();
     }
 
     @Override
@@ -171,41 +134,6 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
-    public Observable<Boolean> isQuestionEmpty() {
-        return mDbHelper.isQuestionEmpty();
-    }
-
-    @Override
-    public Observable<Boolean> isOptionEmpty() {
-        return mDbHelper.isOptionEmpty();
-    }
-
-    @Override
-    public Observable<Boolean> saveQuestion(Question question) {
-        return mDbHelper.saveQuestion(question);
-    }
-
-    @Override
-    public Observable<Boolean> saveOption(Option option) {
-        return mDbHelper.saveOption(option);
-    }
-
-    @Override
-    public Observable<Boolean> saveQuestionList(List<Question> questionList) {
-        return mDbHelper.saveQuestionList(questionList);
-    }
-
-    @Override
-    public Observable<Boolean> saveOptionList(List<Option> optionList) {
-        return mDbHelper.saveOptionList(optionList);
-    }
-
-    @Override
-    public Observable<List<Question>> getAllQuestions() {
-        return mDbHelper.getAllQuestions();
-    }
-
-    @Override
     public Single<BlogResponse> getBlogApiCall() {
         return mApiHelper.getBlogApiCall();
     }
@@ -219,16 +147,6 @@ public class AppDataManager implements DataManager {
     public ApiHeader getApiHeader() {
         return mApiHelper.getApiHeader();
     }
-
-//    @Override
-//    public void setApiHeader(ApiHeader apiHeader) {
-//
-//    }
-//
-//    @Override
-//    public Observable<String> serverLogin(LoginRequest.ServerLoginRequest request) {
-//        return mApiHelper.serverLogin(request);
-//    }
 
     @Override
     public void updateApiHeader(String accessToken) {

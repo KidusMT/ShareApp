@@ -15,19 +15,12 @@
 
 package itsc.hackathon.shareapp.ui.main;
 
-import com.androidnetworking.error.ANError;
-import itsc.hackathon.shareapp.data.DataManager;
-import itsc.hackathon.shareapp.data.db.model.Question;
-import itsc.hackathon.shareapp.data.network.model.LogoutResponse;
-import itsc.hackathon.shareapp.ui.base.BasePresenter;
-import itsc.hackathon.shareapp.utils.rx.SchedulerProvider;
-
-import java.util.List;
-
 import javax.inject.Inject;
 
 import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.functions.Consumer;
+import itsc.hackathon.shareapp.data.DataManager;
+import itsc.hackathon.shareapp.ui.base.BasePresenter;
+import itsc.hackathon.shareapp.utils.rx.SchedulerProvider;
 
 
 /**
@@ -56,77 +49,57 @@ public class MainPresenter<V extends MainMvpView> extends BasePresenter<V>
     public void onDrawerOptionLogoutClick() {
         getMvpView().showLoading();
 
-        getCompositeDisposable().add(getDataManager().doLogoutApiCall()
-                .subscribeOn(getSchedulerProvider().io())
-                .observeOn(getSchedulerProvider().ui())
-                .subscribe(new Consumer<LogoutResponse>() {
-                    @Override
-                    public void accept(LogoutResponse response) throws Exception {
-                        if (!isViewAttached()) {
-                            return;
-                        }
-
-                        getDataManager().setUserAsLoggedOut();
-                        getMvpView().hideLoading();
-                        getMvpView().openLoginActivity();
-                    }
-                }, new Consumer<Throwable>() {
-                    @Override
-                    public void accept(Throwable throwable) throws Exception {
-                        if (!isViewAttached()) {
-                            return;
-                        }
-
-                        getMvpView().hideLoading();
-
-                        // handle the login error here
-                        if (throwable instanceof ANError) {
-                            ANError anError = (ANError) throwable;
-                            handleApiError(anError);
-                        }
-                    }
-                }));
+//        getCompositeDisposable().add(getDataManager().doLogoutApiCall()
+//                .subscribeOn(getSchedulerProvider().io())
+//                .observeOn(getSchedulerProvider().ui())
+//                .subscribe(new Consumer<LogoutResponse>() {
+//                    @Override
+//                    public void accept(LogoutResponse response) throws Exception {
+//                        if (!isViewAttached()) {
+//                            return;
+//                        }
+//
+//                        getDataManager().setUserAsLoggedOut();
+//                        getMvpView().hideLoading();
+//                        getMvpView().openLoginActivity();
+//                    }
+//                }, new Consumer<Throwable>() {
+//                    @Override
+//                    public void accept(Throwable throwable) throws Exception {
+//                        if (!isViewAttached()) {
+//                            return;
+//                        }
+//
+//                        getMvpView().hideLoading();
+//
+//                        // handle the login error here
+//                        if (throwable instanceof ANError) {
+//                            ANError anError = (ANError) throwable;
+//                            handleApiError(anError);
+//                        }
+//                    }
+//                }));
 
     }
 
     @Override
     public void onViewInitialized() {
-        getCompositeDisposable().add(getDataManager()
-                .getAllQuestions()
-                .subscribeOn(getSchedulerProvider().io())
-                .observeOn(getSchedulerProvider().ui())
-                .subscribe(new Consumer<List<Question>>() {
-                    @Override
-                    public void accept(List<Question> questionList) throws Exception {
-                        if (!isViewAttached()) {
-                            return;
-                        }
-
-                        if (questionList != null) {
-                            getMvpView().refreshQuestionnaire(questionList);
-                        }
-                    }
-                }));
-    }
-
-    @Override
-    public void onCardExhausted() {
-        getCompositeDisposable().add(getDataManager()
-                .getAllQuestions()
-                .subscribeOn(getSchedulerProvider().io())
-                .observeOn(getSchedulerProvider().ui())
-                .subscribe(new Consumer<List<Question>>() {
-                    @Override
-                    public void accept(List<Question> questionList) throws Exception {
-                        if (!isViewAttached()) {
-                            return;
-                        }
-
-                        if (questionList != null) {
-                            getMvpView().reloadQuestionnaire(questionList);
-                        }
-                    }
-                }));
+//        getCompositeDisposable().add(getDataManager()
+//                .getAllQuestions()
+//                .subscribeOn(getSchedulerProvider().io())
+//                .observeOn(getSchedulerProvider().ui())
+//                .subscribe(new Consumer<List<Question>>() {
+//                    @Override
+//                    public void accept(List<Question> questionList) throws Exception {
+//                        if (!isViewAttached()) {
+//                            return;
+//                        }
+//
+//                        if (questionList != null) {
+//                            getMvpView().refreshQuestionnaire(questionList);
+//                        }
+//                    }
+//                }));
     }
 
     @Override
@@ -134,22 +107,21 @@ public class MainPresenter<V extends MainMvpView> extends BasePresenter<V>
         if (!isViewAttached()) {
             return;
         }
-        getMvpView().updateAppVersion();
 
-        final String currentUserName = getDataManager().getCurrentUserName();
-        if (currentUserName != null && !currentUserName.isEmpty()) {
-            getMvpView().updateUserName(currentUserName);
-        }
-
-        final String currentUserEmail = getDataManager().getCurrentUserEmail();
-        if (currentUserEmail != null && !currentUserEmail.isEmpty()) {
-            getMvpView().updateUserEmail(currentUserEmail);
-        }
-
-        final String profilePicUrl = getDataManager().getCurrentUserProfilePicUrl();
-        if (profilePicUrl != null && !profilePicUrl.isEmpty()) {
-            getMvpView().updateUserProfilePic(profilePicUrl);
-        }
+//        final String currentUserName = getDataManager().getCurrentUserName();
+//        if (currentUserName != null && !currentUserName.isEmpty()) {
+//            getMvpView().updateUserName(currentUserName);
+//        }
+//
+//        final String currentUserEmail = getDataManager().getCurrentUserEmail();
+//        if (currentUserEmail != null && !currentUserEmail.isEmpty()) {
+//            getMvpView().updateUserEmail(currentUserEmail);
+//        }
+//
+//        final String profilePicUrl = getDataManager().getCurrentUserProfilePicUrl();
+//        if (profilePicUrl != null && !profilePicUrl.isEmpty()) {
+//            getMvpView().updateUserProfilePic(profilePicUrl);
+//        }
     }
 
     @Override

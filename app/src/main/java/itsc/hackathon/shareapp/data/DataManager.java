@@ -16,17 +16,14 @@
 package itsc.hackathon.shareapp.data;
 
 
-import itsc.hackathon.shareapp.data.db.DbHelper;
 import itsc.hackathon.shareapp.data.network.ApiHelper;
 import itsc.hackathon.shareapp.data.prefs.PreferencesHelper;
-
-import io.reactivex.Observable;
 
 /**
  * Created by janisharali on 27/01/17.
  */
 
-public interface DataManager extends DbHelper, PreferencesHelper, ApiHelper {
+public interface DataManager extends PreferencesHelper, ApiHelper {
 
     void updateApiHeader(String accessToken);
 

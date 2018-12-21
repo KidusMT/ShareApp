@@ -18,13 +18,13 @@ package itsc.hackathon.shareapp.di.module;
 import android.app.Application;
 import android.content.Context;
 
+import javax.inject.Singleton;
+
+import dagger.Module;
+import dagger.Provides;
 import itsc.hackathon.shareapp.BuildConfig;
-import itsc.hackathon.shareapp.R;
 import itsc.hackathon.shareapp.data.AppDataManager;
 import itsc.hackathon.shareapp.data.DataManager;
-import itsc.hackathon.shareapp.data.db.AppDbHelper;
-import itsc.hackathon.shareapp.data.db.DbHelper;
-import itsc.hackathon.shareapp.data.network.ApiHeader;
 import itsc.hackathon.shareapp.data.network.ApiHelper;
 import itsc.hackathon.shareapp.data.network.AppApiHelper;
 import itsc.hackathon.shareapp.data.prefs.AppPreferencesHelper;
@@ -34,12 +34,6 @@ import itsc.hackathon.shareapp.di.ApplicationContext;
 import itsc.hackathon.shareapp.di.DatabaseInfo;
 import itsc.hackathon.shareapp.di.PreferenceInfo;
 import itsc.hackathon.shareapp.utils.AppConstants;
-
-import javax.inject.Singleton;
-
-import dagger.Module;
-import dagger.Provides;
-import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
 /**
  * Created by janisharali on 27/01/17.
@@ -66,12 +60,6 @@ public class ApplicationModule {
     }
 
     @Provides
-    @DatabaseInfo
-    String provideDatabaseName() {
-        return AppConstants.DB_NAME;
-    }
-
-    @Provides
     @ApiInfo
     String provideApiKey() {
         return BuildConfig.API_KEY;
@@ -91,12 +79,6 @@ public class ApplicationModule {
 
     @Provides
     @Singleton
-    DbHelper provideDbHelper(AppDbHelper appDbHelper) {
-        return appDbHelper;
-    }
-
-    @Provides
-    @Singleton
     PreferencesHelper providePreferencesHelper(AppPreferencesHelper appPreferencesHelper) {
         return appPreferencesHelper;
     }
@@ -107,22 +89,5 @@ public class ApplicationModule {
         return appApiHelper;
     }
 
-    @Provides
-    @Singleton
-    ApiHeader.ProtectedApiHeader provideProtectedApiHeader(@ApiInfo String apiKey,
-                                                           PreferencesHelper preferencesHelper) {
-        return new ApiHeader.ProtectedApiHeader(
-                apiKey,
-                preferencesHelper.getCurrentUserId(),
-                preferencesHelper.getAccessToken());
-    }
 
-    @Provides
-    @Singleton
-    CalligraphyConfig provideCalligraphyDefaultConfig() {
-        return new CalligraphyConfig.Builder()
-                .setDefaultFontPath("fonts/source-sans-pro/SourceSansPro-Regular.ttf")
-                .setFontAttrId(R.attr.fontPath)
-                .build();
-    }
 }

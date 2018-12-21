@@ -25,16 +25,16 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import itsc.hackathon.shareapp.R;
-import itsc.hackathon.shareapp.data.network.model.OpenSourceResponse;
-import itsc.hackathon.shareapp.ui.base.BaseViewHolder;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import itsc.hackathon.shareapp.R;
+import itsc.hackathon.shareapp.data.network.model.OpenSourceResponse;
+import itsc.hackathon.shareapp.ui.base.BaseViewHolder;
 
 /**
  * Created by Janisharali on 25-05-2017.
@@ -130,9 +130,9 @@ public class OpenSourceAdapter extends RecyclerView.Adapter<BaseViewHolder> {
             final OpenSourceResponse.Repo repo = mOpenSourceResponseList.get(position);
 
             if (repo.getCoverImgUrl() != null) {
-                Glide.with(itemView.getContext())
+                Picasso.get()
                         .load(repo.getCoverImgUrl())
-                        .asBitmap()
+//                        .asBitmap()
                         .centerCrop()
                         .into(coverImageView);
             }

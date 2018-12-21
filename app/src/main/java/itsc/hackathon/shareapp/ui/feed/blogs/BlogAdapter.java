@@ -25,7 +25,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
+import com.squareup.picasso.Picasso;
+
 import itsc.hackathon.shareapp.R;
 import itsc.hackathon.shareapp.data.network.model.BlogResponse;
 import itsc.hackathon.shareapp.ui.base.BaseViewHolder;
@@ -137,9 +138,8 @@ public class BlogAdapter extends RecyclerView.Adapter<BaseViewHolder> {
             final BlogResponse.Blog blog = mBlogResponseList.get(position);
 
             if (blog.getCoverImgUrl() != null) {
-                Glide.with(itemView.getContext())
+                Picasso.get()
                         .load(blog.getCoverImgUrl())
-                        .asBitmap()
                         .centerCrop()
                         .into(coverImageView);
             }

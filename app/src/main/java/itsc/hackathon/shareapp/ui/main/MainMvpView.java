@@ -15,10 +15,7 @@
 
 package itsc.hackathon.shareapp.ui.main;
 
-import itsc.hackathon.shareapp.data.db.model.Question;
 import itsc.hackathon.shareapp.ui.base.MvpView;
-
-import java.util.List;
 
 /**
  * Created by janisharali on 27/01/17.
@@ -30,17 +27,11 @@ public interface MainMvpView extends MvpView {
 
     void showAboutFragment();
 
-    void refreshQuestionnaire(List<Question> questionList);
-
-    void reloadQuestionnaire(List<Question> questionList);
-
-    void updateUserName(String currentUserName);
-
-    void updateUserEmail(String currentUserEmail);
-
-    void updateUserProfilePic(String currentUserProfilePicUrl);
-
-    void updateAppVersion();
+//    void updateUserName(String currentUserName);
+//
+//    void updateUserEmail(String currentUserEmail);
+//
+//    void updateUserProfilePic(String currentUserProfilePicUrl);
 
     void showRateUsDialog();
 
