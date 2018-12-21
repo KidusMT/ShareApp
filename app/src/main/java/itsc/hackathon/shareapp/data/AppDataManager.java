@@ -65,10 +65,10 @@ public class AppDataManager implements DataManager {
 //        return mApiHelper.doServerLoginApiCall(request);
 //    }
 //
-//    @Override
-//    public Single<LogoutResponse> doLogoutApiCall() {
-//        return mApiHelper.doLogoutApiCall();
-//    }
+    @Override
+    public Single<LogoutResponse> doLogoutApiCall() {
+        return mApiHelper.doLogoutApiCall();
+    }
 
     @Override
     public int getCurrentUserLoggedInMode() {

@@ -18,6 +18,9 @@ package itsc.hackathon.shareapp.data.network;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
+import io.reactivex.Single;
+import itsc.hackathon.shareapp.data.network.model.LogoutResponse;
+
 /**
  * Created by janisharali on 28/01/17.
  */
@@ -48,13 +51,15 @@ public class AppApiHelper implements ApiHelper {
 //                .getObjectSingle(LoginResponse.class);
 //    }
 
-//    @Override
-//    public Single<LogoutResponse> doLogoutApiCall() {
+    @Override
+    public Single<LogoutResponse> doLogoutApiCall() {
 //        return Rx2AndroidNetworking.post(ApiEndPoint.ENDPOINT_LOGOUT)
 //                .addHeaders(mApiHeader.getProtectedApiHeader())
 //                .build()
 //                .getObjectSingle(LogoutResponse.class);
-//    }
+
+        return null;
+    }
 
 }
 

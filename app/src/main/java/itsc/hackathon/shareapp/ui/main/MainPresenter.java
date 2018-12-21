@@ -18,7 +18,9 @@ package itsc.hackathon.shareapp.ui.main;
 import javax.inject.Inject;
 
 import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.functions.Consumer;
 import itsc.hackathon.shareapp.data.DataManager;
+import itsc.hackathon.shareapp.data.network.model.LogoutResponse;
 import itsc.hackathon.shareapp.ui.base.BasePresenter;
 import itsc.hackathon.shareapp.utils.rx.SchedulerProvider;
 
@@ -59,9 +61,9 @@ public class MainPresenter<V extends MainMvpView> extends BasePresenter<V>
 //                            return;
 //                        }
 //
-//                        getDataManager().setUserAsLoggedOut();
-//                        getMvpView().hideLoading();
-//                        getMvpView().openLoginActivity();
+                        getDataManager().setUserAsLoggedOut();
+                        getMvpView().hideLoading();
+                        getMvpView().openLoginActivity();
 //                    }
 //                }, new Consumer<Throwable>() {
 //                    @Override
@@ -72,7 +74,7 @@ public class MainPresenter<V extends MainMvpView> extends BasePresenter<V>
 //
 //                        getMvpView().hideLoading();
 //
-//                        // handle the login error here
+//                         handle the login error here
 //                        if (throwable instanceof ANError) {
 //                            ANError anError = (ANError) throwable;
 //                            handleApiError(anError);
