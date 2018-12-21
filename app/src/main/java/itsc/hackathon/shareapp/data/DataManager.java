@@ -28,21 +28,13 @@ import io.reactivex.Observable;
 
 public interface DataManager extends DbHelper, PreferencesHelper, ApiHelper {
 
-    void updateApiHeader(Long userId, String accessToken);
+    void updateApiHeader(String accessToken);
 
     void setUserAsLoggedOut();
 
-    Observable<Boolean> seedDatabaseQuestions();
+    void updateUserInfo(String accessToken, LoggedInMode loggedInMode);
 
-    Observable<Boolean> seedDatabaseOptions();
-
-    void updateUserInfo(
-            String accessToken,
-            Long userId,
-            LoggedInMode loggedInMode,
-            String userName,
-            String email,
-            String profilePicPath);
+    void updateUserToken(String accessToken);
 
     enum LoggedInMode {
 

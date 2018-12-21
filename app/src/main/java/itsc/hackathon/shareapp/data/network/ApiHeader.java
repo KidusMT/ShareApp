@@ -29,85 +29,45 @@ import javax.inject.Singleton;
 @Singleton
 public class ApiHeader {
 
-    private ProtectedApiHeader mProtectedApiHeader;
-    private PublicApiHeader mPublicApiHeader;
+    public static final String API_AUTH_TYPE = "API_AUTH_TYPE";
+    public static final String PUBLIC_API = "PUBLIC_API";
+    public static final String PROTECTED_API = "PROTECTED_API";
 
-    @Inject
-    public ApiHeader(PublicApiHeader publicApiHeader, ProtectedApiHeader protectedApiHeader) {
-        mPublicApiHeader = publicApiHeader;
-        mProtectedApiHeader = protectedApiHeader;
+    public static final String HEADER_PARAM_API_KEY = "api_key";
+    public static final String HEADER_PARAM_ACCESS_TOKEN = "Authorization";
+    public static final String HEADER_PARAM_USER_ID = "user_id";
+
+    private String mApiKey;
+    private Long mUserId;
+    private String mAccessToken;
+
+    public ApiHeader(String mAccessToken) {
+//        this.mApiKey = mApiKey;
+//        this.mUserId = mUserId;
+        this.mAccessToken = mAccessToken;
     }
 
-    public ProtectedApiHeader getProtectedApiHeader() {
-        return mProtectedApiHeader;
+//    public String getApiKey() {
+//        return mApiKey;
+//    }
+//
+//    public void setApiKey(String apiKey) {
+//        mApiKey = apiKey;
+//    }
+//
+//    public Long getUserId() {
+//        return mUserId;
+//    }
+//
+//    public void setUserId(Long userId) {
+//        mUserId = userId;
+//    }
+
+    public String getAccessToken() {
+        return "Bearer "+ mAccessToken;
     }
 
-    public PublicApiHeader getPublicApiHeader() {
-        return mPublicApiHeader;
-    }
-
-    public static final class PublicApiHeader {
-
-        @Expose
-        @SerializedName("api_key")
-        private String mApiKey;
-
-        @Inject
-        public PublicApiHeader(@ApiInfo String apiKey) {
-            mApiKey = apiKey;
-        }
-
-        public String getApiKey() {
-            return mApiKey;
-        }
-
-        public void setApiKey(String apiKey) {
-            mApiKey = apiKey;
-        }
-    }
-
-    public static final class ProtectedApiHeader {
-
-        @Expose
-        @SerializedName("api_key")
-        private String mApiKey;
-
-        @Expose
-        @SerializedName("user_id")
-        private Long mUserId;
-
-        @Expose
-        @SerializedName("access_token")
-        private String mAccessToken;
-
-        public ProtectedApiHeader(String mApiKey, Long mUserId, String mAccessToken) {
-            this.mApiKey = mApiKey;
-            this.mUserId = mUserId;
-            this.mAccessToken = mAccessToken;
-        }
-
-        public String getApiKey() {
-            return mApiKey;
-        }
-
-        public void setApiKey(String apiKey) {
-            mApiKey = apiKey;
-        }
-
-        public Long getUserId() {
-            return mUserId;
-        }
-
-        public void setUserId(Long mUserId) {
-            this.mUserId = mUserId;
-        }
-
-        public String getAccessToken() {
-            return mAccessToken;
-        }
-
-        public void setAccessToken(String accessToken) {
-            mAccessToken = accessToken;
-        }
+    public void setAccessToken(String accessToken) {
+        mAccessToken = accessToken;
     }
 }

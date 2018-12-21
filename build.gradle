@@ -19,6 +19,7 @@ buildscript {
     repositories {
         jcenter()
         google()
+        mavenCentral()
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.0.1'
@@ -33,6 +34,8 @@ allprojects {
     repositories {
         jcenter()
         google()
+        mavenCentral()
+        maven { url 'https://jitpack.io' }
     }
 }
 
@@ -69,4 +72,9 @@ ext {
     junitVersion = '4.12'
     espressoVersion = '2.2.2'
     mockitoVersion = '2.7.1'
+    rxJakeVersion = '1.0.0'
+
+    retrofitVersion = '2.4.0'
+    retrofitInterceptorVersion = '3.8.0'
+    picassoVersion = '2.71828'
 }

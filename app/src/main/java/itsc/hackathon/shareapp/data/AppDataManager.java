@@ -75,22 +75,6 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
-    public ApiHeader getApiHeader() {
-        return mApiHelper.getApiHeader();
-    }
-
-    @Override
-    public String getAccessToken() {
-        return mPreferencesHelper.getAccessToken();
-    }
-
-    @Override
-    public void setAccessToken(String accessToken) {
-        mPreferencesHelper.setAccessToken(accessToken);
-        mApiHelper.getApiHeader().getProtectedApiHeader().setAccessToken(accessToken);
-    }
-
-    @Override
     public Observable<Long> insertUser(User user) {
         return mDbHelper.insertUser(user);
     }
@@ -174,39 +158,16 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
-    public void updateApiHeader(Long userId, String accessToken) {
-        mApiHelper.getApiHeader().getProtectedApiHeader().setUserId(userId);
-        mApiHelper.getApiHeader().getProtectedApiHeader().setAccessToken(accessToken);
-    }
-
-    @Override
-    public void updateUserInfo(
-            String accessToken,
-            Long userId,
-            LoggedInMode loggedInMode,
-            String userName,
-            String email,
-            String profilePicPath) {
-
+    public void updateUserInfo(String accessToken, LoggedInMode loggedInMode) {
         setAccessToken(accessToken);
-        setCurrentUserId(userId);
+        updateApiHeader(accessToken);
         setCurrentUserLoggedInMode(loggedInMode);
-        setCurrentUserName(userName);
-        setCurrentUserEmail(email);
-        setCurrentUserProfilePicUrl(profilePicPath);
-
-        updateApiHeader(userId, accessToken);
     }
+
 
     @Override
     public void setUserAsLoggedOut() {
-        updateUserInfo(
-                null,
-                null,
-                DataManager.LoggedInMode.LOGGED_IN_MODE_LOGGED_OUT,
-                null,
-                null,
-                null);
+        updateUserInfo(null, DataManager.LoggedInMode.LOGGED_IN_MODE_LOGGED_OUT);
     }
 
     @Override
@@ -245,60 +206,6 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
-    public Observable<Boolean> seedDatabaseQuestions() {
-
-        GsonBuilder builder = new GsonBuilder().excludeFieldsWithoutExposeAnnotation();
-        final Gson gson = builder.create();
-
-        return mDbHelper.isQuestionEmpty()
-                .concatMap(new Function<Boolean, ObservableSource<? extends Boolean>>() {
-                    @Override
-                    public ObservableSource<? extends Boolean> apply(Boolean isEmpty)
-                            throws Exception {
-                        if (isEmpty) {
-                            Type type = $Gson$Types
-                                    .newParameterizedTypeWithOwner(null, List.class,
-                                            Question.class);
-                            List<Question> questionList = gson.fromJson(
-                                    CommonUtils.loadJSONFromAsset(mContext,
-                                            AppConstants.SEED_DATABASE_QUESTIONS),
-                                    type);
-
-                            return saveQuestionList(questionList);
-                        }
-                        return Observable.just(false);
-                    }
-                });
-    }
-
-    @Override
-    public Observable<Boolean> seedDatabaseOptions() {
-
-        GsonBuilder builder = new GsonBuilder().excludeFieldsWithoutExposeAnnotation();
-        final Gson gson = builder.create();
-
-        return mDbHelper.isOptionEmpty()
-                .concatMap(new Function<Boolean, ObservableSource<? extends Boolean>>() {
-                    @Override
-                    public ObservableSource<? extends Boolean> apply(Boolean isEmpty)
-                            throws Exception {
-                        if (isEmpty) {
-                            Type type = new TypeToken<List<Option>>() {
-                            }
-                                    .getType();
-                            List<Option> optionList = gson.fromJson(
-                                    CommonUtils.loadJSONFromAsset(mContext,
-                                            AppConstants.SEED_DATABASE_OPTIONS),
-                                    type);
-
-                            return saveOptionList(optionList);
-                        }
-                        return Observable.just(false);
-                    }
-                });
-    }
-
-    @Override
     public Single<BlogResponse> getBlogApiCall() {
         return mApiHelper.getBlogApiCall();
     }
@@ -307,4 +214,42 @@ public class AppDataManager implements DataManager {
     public Single<OpenSourceResponse> getOpenSourceApiCall() {
         return mApiHelper.getOpenSourceApiCall();
     }
+
+    @Override
+    public ApiHeader getApiHeader() {
+        return mApiHelper.getApiHeader();
+    }
+
+//    @Override
+//    public void setApiHeader(ApiHeader apiHeader) {
+//
+//    }
+//
+//    @Override
+//    public Observable<String> serverLogin(LoginRequest.ServerLoginRequest request) {
+//        return mApiHelper.serverLogin(request);
+//    }
+
+    @Override
+    public void updateApiHeader(String accessToken) {
+        mApiHelper.getApiHeader().setAccessToken(accessToken);
+    }
+
+    @Override
+    public String getAccessToken() {
+        return mPreferencesHelper.getAccessToken();
+    }
+
+    @Override
+    public void setAccessToken(String accessToken) {
+        mPreferencesHelper.setAccessToken(accessToken);
+        mApiHelper.getApiHeader().setAccessToken(accessToken);
+    }
+
+    @Override
+    public void updateUserToken(String accessToken) {
+        setAccessToken(accessToken);
+
+    }
+
 }

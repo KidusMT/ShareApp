@@ -64,8 +64,11 @@ dependencies {
     // network
     implementation "com.amitshekhar.android:rx2-android-networking:$rootProject.rx2FastAndroidNetworking"
 
-    // image
-    implementation "com.github.bumptech.glide:glide:$rootProject.glideVersion"
+    // Retrofit and Picasso
+    implementation "com.squareup.retrofit2:retrofit:$rootProject.retrofitVersion"
+    implementation "com.squareup.retrofit2:converter-gson:$rootProject.retrofitVersion"
+    implementation "com.squareup.picasso:picasso:$rootProject.picassoVersion"
+    implementation "com.squareup.okhttp3:logging-interceptor:$rootProject.retrofitInterceptorVersion"
 
     // parser
     implementation "com.google.code.gson:gson:$rootProject.gsonVersion"
@@ -85,6 +88,7 @@ dependencies {
     // reactive
     implementation "io.reactivex.rxjava2:rxjava:$rootProject.rxjava2Version"
     implementation "io.reactivex.rxjava2:rxandroid:$rootProject.rxandroidVersion"
+    implementation "com.jakewharton.retrofit:retrofit2-rxjava2-adapter:$rootProject.rxJakeVersion"
 
     // code generator for view
     implementation "com.jakewharton:butterknife:$rootProject.butterKnifeVersion"
