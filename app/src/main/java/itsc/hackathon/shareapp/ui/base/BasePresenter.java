@@ -24,16 +24,16 @@ import android.util.Log;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonSyntaxException;
-import itsc.hackathon.shareapp.R;
-import itsc.hackathon.shareapp.data.DataManager;
-import itsc.hackathon.shareapp.data.network.model.ApiError;
-import itsc.hackathon.shareapp.utils.AppConstants;
-import itsc.hackathon.shareapp.utils.rx.SchedulerProvider;
 
 import javax.inject.Inject;
 import javax.net.ssl.HttpsURLConnection;
 
 import io.reactivex.disposables.CompositeDisposable;
+import itsc.hackathon.shareapp.R;
+import itsc.hackathon.shareapp.data.DataManager;
+import itsc.hackathon.shareapp.data.network.model.ApiError;
+import itsc.hackathon.shareapp.utils.AppConstants;
+import itsc.hackathon.shareapp.utils.rx.SchedulerProvider;
 
 /**
  * Base class that implements the Presenter interface and provides a base implementation for

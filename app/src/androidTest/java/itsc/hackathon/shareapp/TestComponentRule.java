@@ -17,14 +17,14 @@ package itsc.hackathon.shareapp;
 
 import android.content.Context;
 
+import org.junit.rules.TestRule;
+import org.junit.runner.Description;
+import org.junit.runners.model.Statement;
+
 import itsc.hackathon.shareapp.data.DataManager;
 import itsc.hackathon.shareapp.di.component.DaggerTestComponent;
 import itsc.hackathon.shareapp.di.component.TestComponent;
 import itsc.hackathon.shareapp.di.module.ApplicationTestModule;
-
-import org.junit.rules.TestRule;
-import org.junit.runner.Description;
-import org.junit.runners.model.Statement;
 
 /**
  * Created by amitshekhar on 03/02/17.

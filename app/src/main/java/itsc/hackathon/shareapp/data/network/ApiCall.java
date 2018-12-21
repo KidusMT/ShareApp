@@ -16,6 +16,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
 
+
 public interface ApiCall {
 
     String HEADER_PARAM_SEPARATOR = ":";
