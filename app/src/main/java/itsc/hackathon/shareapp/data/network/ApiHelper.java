@@ -15,8 +15,9 @@
 
 package itsc.hackathon.shareapp.data.network;
 
-import io.reactivex.Single;
-import itsc.hackathon.shareapp.data.network.model.LogoutResponse;
+import io.reactivex.Observable;
+import itsc.hackathon.shareapp.data.network.model.LoginRequest;
+import itsc.hackathon.shareapp.data.network.model.LoginResponse;
 
 /**
  * Created by janisharali on 27/01/17.
@@ -26,7 +27,7 @@ public interface ApiHelper {
 
     ApiHeader getApiHeader();
 
-//    Single<LoginResponse> doServerLoginApiCall(LoginRequest.ServerLoginRequest request);
+    Observable<LoginResponse> doServerLoginApiCall(LoginRequest.ServerLoginRequest request);
 ////
-    Single<LogoutResponse> doLogoutApiCall();
+//    Single<LogoutResponse> doLogoutApiCall();
 }

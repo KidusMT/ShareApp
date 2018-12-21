@@ -20,6 +20,7 @@ import javax.inject.Inject;
 import io.reactivex.disposables.CompositeDisposable;
 import itsc.hackathon.shareapp.R;
 import itsc.hackathon.shareapp.data.DataManager;
+import itsc.hackathon.shareapp.data.network.model.LoginRequest;
 import itsc.hackathon.shareapp.ui.base.BasePresenter;
 import itsc.hackathon.shareapp.utils.CommonUtils;
 import itsc.hackathon.shareapp.utils.rx.SchedulerProvider;
@@ -47,15 +48,32 @@ public class LoginPresenter<V extends LoginMvpView> extends BasePresenter<V>
             getMvpView().onError(R.string.empty_email);
             return;
         }
-        if (!CommonUtils.isEmailValid(email)) {
-            getMvpView().onError(R.string.invalid_email);
-            return;
-        }
+//        if (!CommonUtils.isEmailValid(email)) {
+//            getMvpView().onError(R.string.invalid_email);
+//            return;
+//        }
         if (password == null || password.isEmpty()) {
             getMvpView().onError(R.string.empty_password);
             return;
         }
+
         getMvpView().showLoading();
+
+        getCompositeDisposable().add(getDataManager()
+                .doServerLoginApiCall(new LoginRequest.ServerLoginRequest(email, password))
+                .subscribeOn(getSchedulerProvider().io())
+                .observeOn(getSchedulerProvider().ui())
+                .subscribe(loginResponse -> {
+
+                    if (!isViewAttached())
+                        return;
+
+                    getMvpView().hideLoading();
+                    getMvpView().openMainActivity();
+
+                }, throwable -> {
+                    getMvpView().hideLoading();
+                }));
 
     }
 }

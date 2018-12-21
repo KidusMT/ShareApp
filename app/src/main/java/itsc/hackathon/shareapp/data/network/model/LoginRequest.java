@@ -30,24 +30,24 @@ public class LoginRequest {
 
     public static class ServerLoginRequest {
         @Expose
-        @SerializedName("email")
-        private String email;
+        @SerializedName("username")
+        private String username;
 
         @Expose
         @SerializedName("password")
         private String password;
 
         public ServerLoginRequest(String email, String password) {
-            this.email = email;
+            this.username = email;
             this.password = password;
         }
 
-        public String getEmail() {
-            return email;
+        public String getUsername() {
+            return username;
         }
 
-        public void setEmail(String email) {
-            this.email = email;
+        public void setUsername(String username) {
+            this.username = username;
         }
 
         public String getPassword() {
@@ -65,14 +65,14 @@ public class LoginRequest {
 
             ServerLoginRequest that = (ServerLoginRequest) object;
 
-            if (email != null ? !email.equals(that.email) : that.email != null) return false;
+            if (username != null ? !username.equals(that.username) : that.username != null) return false;
             return password != null ? password.equals(that.password) : that.password == null;
 
         }
 
         @Override
         public int hashCode() {
-            int result = email != null ? email.hashCode() : 0;
+            int result = username != null ? username.hashCode() : 0;
             result = 31 * result + (password != null ? password.hashCode() : 0);
             return result;
         }

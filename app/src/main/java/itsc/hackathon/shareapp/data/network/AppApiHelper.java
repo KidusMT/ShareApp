@@ -18,8 +18,10 @@ package itsc.hackathon.shareapp.data.network;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
+import io.reactivex.Observable;
 import io.reactivex.Single;
-import itsc.hackathon.shareapp.data.network.model.LogoutResponse;
+import itsc.hackathon.shareapp.data.network.model.LoginRequest;
+import itsc.hackathon.shareapp.data.network.model.LoginResponse;
 
 /**
  * Created by janisharali on 28/01/17.
@@ -29,10 +31,12 @@ import itsc.hackathon.shareapp.data.network.model.LogoutResponse;
 public class AppApiHelper implements ApiHelper {
 
     private ApiHeader mApiHeader;
+    private ApiCall mApiCall;
 
     @Inject
-    public AppApiHelper(ApiHeader apiHeader) {
+    public AppApiHelper(ApiHeader apiHeader, ApiCall apiCall) {
         mApiHeader = apiHeader;
+        mApiCall = apiCall;
     }
 
     @Override
@@ -41,25 +45,24 @@ public class AppApiHelper implements ApiHelper {
     }
 
 
-//    @Override
-//    public Single<LoginResponse> doServerLoginApiCall(LoginRequest.ServerLoginRequest
-//                                                              request) {
+    @Override
+    public Observable<LoginResponse> doServerLoginApiCall(LoginRequest.ServerLoginRequest
+                                                              request) {
 //        return Rx2AndroidNetworking.post(ApiEndPoint.ENDPOINT_SERVER_LOGIN)
 //                .addHeaders(mApiHeader.getPublicApiHeader())
 //                .addBodyParameter(request)
 //                .build()
 //                .getObjectSingle(LoginResponse.class);
-//    }
+        return mApiCall.login(request);
+    }
 
-    @Override
-    public Single<LogoutResponse> doLogoutApiCall() {
+//    @Override
+//    public Single<LogoutResponse> doLogoutApiCall() {
 //        return Rx2AndroidNetworking.post(ApiEndPoint.ENDPOINT_LOGOUT)
 //                .addHeaders(mApiHeader.getProtectedApiHeader())
 //                .build()
 //                .getObjectSingle(LogoutResponse.class);
-
-        return null;
-    }
+//    }
 
 }
 
