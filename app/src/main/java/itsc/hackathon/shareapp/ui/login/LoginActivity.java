@@ -72,12 +72,12 @@ public class LoginActivity extends BaseActivity implements LoginMvpView {
 
     @OnClick(R.id.ib_google_login)
     void onGoogleLoginClick(View v) {
-        mPresenter.onGoogleLoginClick();
+//        mPresenter.onGoogleLoginClick();
     }
 
     @OnClick(R.id.ib_fb_login)
     void onFbLoginClick(View v) {
-        mPresenter.onFacebookLoginClick();
+//        mPresenter.onFacebookLoginClick();
     }
 
     @Override

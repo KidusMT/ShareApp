@@ -17,17 +17,13 @@ package itsc.hackathon.shareapp;
 
 import android.app.Application;
 
-import com.androidnetworking.AndroidNetworking;
-import com.androidnetworking.interceptors.HttpLoggingInterceptor.Level;
+import javax.inject.Inject;
+
 import itsc.hackathon.shareapp.data.DataManager;
 import itsc.hackathon.shareapp.di.component.ApplicationComponent;
 import itsc.hackathon.shareapp.di.component.DaggerApplicationComponent;
 import itsc.hackathon.shareapp.di.module.ApplicationModule;
 import itsc.hackathon.shareapp.utils.AppLogger;
-
-import javax.inject.Inject;
-
-import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
 
 /**
@@ -38,9 +34,6 @@ public class MvpApp extends Application {
 
     @Inject
     DataManager mDataManager;
-
-    @Inject
-    CalligraphyConfig mCalligraphyConfig;
 
     private ApplicationComponent mApplicationComponent;
 
@@ -55,12 +48,6 @@ public class MvpApp extends Application {
 
         AppLogger.init();
 
-        AndroidNetworking.initialize(getApplicationContext());
-        if (BuildConfig.DEBUG) {
-            AndroidNetworking.enableLogging(Level.BODY);
-        }
-
-        CalligraphyConfig.initDefault(mCalligraphyConfig);
     }
 
     public ApplicationComponent getComponent() {

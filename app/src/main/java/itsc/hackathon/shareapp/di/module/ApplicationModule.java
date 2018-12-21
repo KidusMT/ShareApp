@@ -17,6 +17,7 @@ package itsc.hackathon.shareapp.di.module;
 
 import android.app.Application;
 import android.content.Context;
+import android.preference.Preference;
 
 import javax.inject.Singleton;
 
@@ -25,6 +26,7 @@ import dagger.Provides;
 import itsc.hackathon.shareapp.BuildConfig;
 import itsc.hackathon.shareapp.data.AppDataManager;
 import itsc.hackathon.shareapp.data.DataManager;
+import itsc.hackathon.shareapp.data.network.ApiHeader;
 import itsc.hackathon.shareapp.data.network.ApiHelper;
 import itsc.hackathon.shareapp.data.network.AppApiHelper;
 import itsc.hackathon.shareapp.data.prefs.AppPreferencesHelper;
@@ -89,5 +91,9 @@ public class ApplicationModule {
         return appApiHelper;
     }
 
-
+    @Provides
+    @Singleton
+    ApiHeader provideApiHeader(PreferencesHelper preferencesHelper) {
+        return new ApiHeader(preferencesHelper.getAccessToken());
+    }
 }

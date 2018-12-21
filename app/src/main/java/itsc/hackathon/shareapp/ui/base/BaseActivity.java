@@ -31,6 +31,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import butterknife.Unbinder;
 import itsc.hackathon.shareapp.MvpApp;
 import itsc.hackathon.shareapp.R;
 import itsc.hackathon.shareapp.di.component.ActivityComponent;
@@ -39,9 +40,6 @@ import itsc.hackathon.shareapp.di.module.ActivityModule;
 import itsc.hackathon.shareapp.ui.login.LoginActivity;
 import itsc.hackathon.shareapp.utils.CommonUtils;
 import itsc.hackathon.shareapp.utils.NetworkUtils;
-
-import butterknife.Unbinder;
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 /**
  * Created by janisharali on 27/01/17.
@@ -72,7 +70,7 @@ public abstract class BaseActivity extends AppCompatActivity
 
     @Override
     protected void attachBaseContext(Context newBase) {
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+//        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
 
     @TargetApi(Build.VERSION_CODES.M)

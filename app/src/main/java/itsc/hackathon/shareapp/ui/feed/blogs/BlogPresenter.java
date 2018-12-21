@@ -15,17 +15,12 @@
 
 package itsc.hackathon.shareapp.ui.feed.blogs;
 
-import com.androidnetworking.error.ANError;
-import itsc.hackathon.shareapp.data.DataManager;
-import itsc.hackathon.shareapp.data.network.model.BlogResponse;
-import itsc.hackathon.shareapp.ui.base.BasePresenter;
-import itsc.hackathon.shareapp.utils.rx.SchedulerProvider;
-
 import javax.inject.Inject;
 
-import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.functions.Consumer;
+import itsc.hackathon.shareapp.data.DataManager;
+import itsc.hackathon.shareapp.ui.base.BasePresenter;
+import itsc.hackathon.shareapp.utils.rx.SchedulerProvider;
 
 /**
  * Created by janisharali on 25/05/17.
