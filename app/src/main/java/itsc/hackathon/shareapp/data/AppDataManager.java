@@ -22,17 +22,14 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import io.reactivex.Observable;
-import io.reactivex.Single;
 import itsc.hackathon.shareapp.data.network.ApiHeader;
 import itsc.hackathon.shareapp.data.network.ApiHelper;
-import itsc.hackathon.shareapp.data.network.model.BlogResponse;
 import itsc.hackathon.shareapp.data.network.model.LoginRequest;
 import itsc.hackathon.shareapp.data.network.model.LoginResponse;
-import itsc.hackathon.shareapp.data.network.model.LogoutResponse;
-import itsc.hackathon.shareapp.data.network.model.OpenSourceResponse;
 import itsc.hackathon.shareapp.data.network.model.SignupRequest;
 import itsc.hackathon.shareapp.data.network.model.SignupResponse;
 import itsc.hackathon.shareapp.data.network.model.post.Post;
+import itsc.hackathon.shareapp.data.network.model.topic.Topic;
 import itsc.hackathon.shareapp.data.prefs.PreferencesHelper;
 
 /**
@@ -167,6 +164,11 @@ public class AppDataManager implements DataManager {
     @Override
     public Observable<List<Post>> getPosts() {
         return mApiHelper.getPosts();
+    }
+
+    @Override
+    public Observable<List<Topic>> getTopics() {
+        return mApiHelper.getTopics();
     }
 
     @Override

@@ -14,6 +14,7 @@ import itsc.hackathon.shareapp.data.network.model.LoginResponse;
 import itsc.hackathon.shareapp.data.network.model.SignupRequest;
 import itsc.hackathon.shareapp.data.network.model.SignupResponse;
 import itsc.hackathon.shareapp.data.network.model.post.Post;
+import itsc.hackathon.shareapp.data.network.model.topic.Topic;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
@@ -39,6 +40,10 @@ public interface ApiCall {
     @GET(ApiEndPoint.POST)
     @Headers(ApiHeader.API_AUTH_TYPE + HEADER_PARAM_SEPARATOR + ApiHeader.PUBLIC_API)
     Observable<List<Post>> getPosts();
+
+    @GET(ApiEndPoint.TOPIC)
+    @Headers(ApiHeader.API_AUTH_TYPE + HEADER_PARAM_SEPARATOR + ApiHeader.PUBLIC_API)
+    Observable<List<Topic>> getTopics();
 
     class Factory {
 

@@ -21,12 +21,12 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import io.reactivex.Observable;
-import io.reactivex.Single;
 import itsc.hackathon.shareapp.data.network.model.LoginRequest;
 import itsc.hackathon.shareapp.data.network.model.LoginResponse;
 import itsc.hackathon.shareapp.data.network.model.SignupRequest;
 import itsc.hackathon.shareapp.data.network.model.SignupResponse;
 import itsc.hackathon.shareapp.data.network.model.post.Post;
+import itsc.hackathon.shareapp.data.network.model.topic.Topic;
 
 /**
  * Created by janisharali on 28/01/17.
@@ -52,7 +52,7 @@ public class AppApiHelper implements ApiHelper {
 
     @Override
     public Observable<LoginResponse> doServerLoginApiCall(LoginRequest.ServerLoginRequest
-                                                              request) {
+                                                                  request) {
 //        return Rx2AndroidNetworking.post(ApiEndPoint.ENDPOINT_SERVER_LOGIN)
 //                .addHeaders(mApiHeader.getPublicApiHeader())
 //                .addBodyParameter(request)
@@ -69,6 +69,11 @@ public class AppApiHelper implements ApiHelper {
     @Override
     public Observable<List<Post>> getPosts() {
         return mApiCall.getPosts();
+    }
+
+    @Override
+    public Observable<List<Topic>> getTopics() {
+        return mApiCall.getTopics();
     }
 
 //    @Override
