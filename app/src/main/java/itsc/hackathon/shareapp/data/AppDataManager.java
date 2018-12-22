@@ -28,6 +28,7 @@ import itsc.hackathon.shareapp.data.network.model.LoginRequest;
 import itsc.hackathon.shareapp.data.network.model.LoginResponse;
 import itsc.hackathon.shareapp.data.network.model.SignupRequest;
 import itsc.hackathon.shareapp.data.network.model.SignupResponse;
+import itsc.hackathon.shareapp.data.network.model.comment.Comment;
 import itsc.hackathon.shareapp.data.network.model.post.Post;
 import itsc.hackathon.shareapp.data.network.model.topic.Topic;
 import itsc.hackathon.shareapp.data.prefs.PreferencesHelper;
@@ -169,6 +170,11 @@ public class AppDataManager implements DataManager {
     @Override
     public Observable<List<Topic>> getTopics() {
         return mApiHelper.getTopics();
+    }
+
+    @Override
+    public Observable<List<Comment>> getPostComments(String postId) {
+        return mApiHelper.getPostComments(postId);
     }
 
     @Override

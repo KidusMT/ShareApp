@@ -22,6 +22,7 @@ import itsc.hackathon.shareapp.data.network.model.LoginRequest;
 import itsc.hackathon.shareapp.data.network.model.LoginResponse;
 import itsc.hackathon.shareapp.data.network.model.SignupRequest;
 import itsc.hackathon.shareapp.data.network.model.SignupResponse;
+import itsc.hackathon.shareapp.data.network.model.comment.Comment;
 import itsc.hackathon.shareapp.data.network.model.post.Post;
 import itsc.hackathon.shareapp.data.network.model.topic.Topic;
 
@@ -40,6 +41,8 @@ public interface ApiHelper {
     Observable<List<Post>> getPosts();
 
     Observable<List<Topic>> getTopics();
+
+    Observable<List<Comment>> getPostComments(String postId);
 
 //  Single<LogoutResponse> doLogoutApiCall();
 }

@@ -29,7 +29,7 @@ public final class ApiEndPoint {
     public final static String NOTIFICATION = "notifications";
     public final static String USERS = "users";
 
-    public final static String MEASUREMENT_DELETE = "sensors/{sensor_id}/measurements/{measurement_id}";
+    public final static String POST_COMMENTS = "posts/{post_id}/comments";
     public final static String MEASUREMENT_LIST = "sensors/{sensor_id}/measurements";
 
     private ApiEndPoint() {

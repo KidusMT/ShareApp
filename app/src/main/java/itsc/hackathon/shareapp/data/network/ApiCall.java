@@ -13,6 +13,7 @@ import itsc.hackathon.shareapp.data.network.model.LoginRequest;
 import itsc.hackathon.shareapp.data.network.model.LoginResponse;
 import itsc.hackathon.shareapp.data.network.model.SignupRequest;
 import itsc.hackathon.shareapp.data.network.model.SignupResponse;
+import itsc.hackathon.shareapp.data.network.model.comment.Comment;
 import itsc.hackathon.shareapp.data.network.model.post.Post;
 import itsc.hackathon.shareapp.data.network.model.topic.Topic;
 import okhttp3.OkHttpClient;
@@ -23,6 +24,7 @@ import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 
 
 public interface ApiCall {
@@ -44,6 +46,12 @@ public interface ApiCall {
     @GET(ApiEndPoint.TOPIC)
     @Headers(ApiHeader.API_AUTH_TYPE + HEADER_PARAM_SEPARATOR + ApiHeader.PUBLIC_API)
     Observable<List<Topic>> getTopics();
+
+    @GET(ApiEndPoint.POST_COMMENTS)
+    @Headers(ApiHeader.API_AUTH_TYPE + HEADER_PARAM_SEPARATOR + ApiHeader.PUBLIC_API)
+    Observable<List<Comment>> getPostComments(@Path("post_id") String sensorId);
+
+
 
     class Factory {
 
