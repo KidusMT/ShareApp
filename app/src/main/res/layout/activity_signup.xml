@@ -33,7 +33,7 @@
                 android:padding="10dp">
 
                 <TextView
-                    android:id="@+id/signin_guest"
+                    android:id="@+id/signin_as_guest"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="right"

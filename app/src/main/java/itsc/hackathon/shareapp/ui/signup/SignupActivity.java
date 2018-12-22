@@ -58,8 +58,13 @@ public class SignupActivity extends BaseActivity implements SignupMvpView {
     }
 
     @OnClick(R.id.tv_login)
-    void onLoginClick(){
+    void onLoginClick(View v){
         mPresenter.onLoginClick();
+    }
+
+    @OnClick(R.id.signin_as_guest)
+    void onSignInAsGuestCLick(View v){
+        mPresenter.onSignInAsGuestClick();
     }
 
     @Override
