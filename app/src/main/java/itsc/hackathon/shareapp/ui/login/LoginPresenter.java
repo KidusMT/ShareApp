@@ -22,7 +22,6 @@ import itsc.hackathon.shareapp.R;
 import itsc.hackathon.shareapp.data.DataManager;
 import itsc.hackathon.shareapp.data.network.model.LoginRequest;
 import itsc.hackathon.shareapp.ui.base.BasePresenter;
-import itsc.hackathon.shareapp.utils.CommonUtils;
 import itsc.hackathon.shareapp.utils.rx.SchedulerProvider;
 
 /**
@@ -67,6 +66,12 @@ public class LoginPresenter<V extends LoginMvpView> extends BasePresenter<V>
                     if (!isViewAttached())
                         return;
                     getMvpView().hideLoading();
+
+                    getDataManager().updateUserInfo(loginResponse.getUser().getId(),
+                            DataManager.LoggedInMode.LOGGED_IN_MODE_SERVER, loginResponse.getUser().getFirstname(),
+                            loginResponse.getUser().getLastname(), loginResponse.getUser().getUsername(),
+                            loginResponse.getUser().getEmail());
+
                     getMvpView().openMainActivity();
                 }, throwable -> {
                     getMvpView().hideLoading();

@@ -24,34 +24,25 @@ import java.util.ArrayList;
 import dagger.Module;
 import dagger.Provides;
 import io.reactivex.disposables.CompositeDisposable;
-import itsc.hackathon.shareapp.data.network.model.BlogResponse;
-import itsc.hackathon.shareapp.data.network.model.OpenSourceResponse;
 import itsc.hackathon.shareapp.di.ActivityContext;
 import itsc.hackathon.shareapp.di.PerActivity;
 import itsc.hackathon.shareapp.ui.about.AboutMvpPresenter;
 import itsc.hackathon.shareapp.ui.about.AboutMvpView;
 import itsc.hackathon.shareapp.ui.about.AboutPresenter;
-import itsc.hackathon.shareapp.ui.feed.FeedMvpPresenter;
-import itsc.hackathon.shareapp.ui.feed.FeedMvpView;
-import itsc.hackathon.shareapp.ui.feed.FeedPagerAdapter;
-import itsc.hackathon.shareapp.ui.feed.FeedPresenter;
-import itsc.hackathon.shareapp.ui.feed.blogs.BlogAdapter;
-import itsc.hackathon.shareapp.ui.feed.blogs.BlogMvpPresenter;
-import itsc.hackathon.shareapp.ui.feed.blogs.BlogMvpView;
-import itsc.hackathon.shareapp.ui.feed.blogs.BlogPresenter;
-import itsc.hackathon.shareapp.ui.feed.opensource.OpenSourceAdapter;
-import itsc.hackathon.shareapp.ui.feed.opensource.OpenSourceMvpPresenter;
-import itsc.hackathon.shareapp.ui.feed.opensource.OpenSourceMvpView;
-import itsc.hackathon.shareapp.ui.feed.opensource.OpenSourcePresenter;
+import itsc.hackathon.shareapp.ui.detail.DetailAdapter;
+import itsc.hackathon.shareapp.ui.detail.DetailPostMvpPresenter;
+import itsc.hackathon.shareapp.ui.detail.DetailPostMvpView;
+import itsc.hackathon.shareapp.ui.detail.DetailPostPresenter;
 import itsc.hackathon.shareapp.ui.login.LoginMvpPresenter;
 import itsc.hackathon.shareapp.ui.login.LoginMvpView;
 import itsc.hackathon.shareapp.ui.login.LoginPresenter;
 import itsc.hackathon.shareapp.ui.main.MainMvpPresenter;
 import itsc.hackathon.shareapp.ui.main.MainMvpView;
 import itsc.hackathon.shareapp.ui.main.MainPresenter;
-import itsc.hackathon.shareapp.ui.main.rating.RatingDialogMvpPresenter;
-import itsc.hackathon.shareapp.ui.main.rating.RatingDialogMvpView;
-import itsc.hackathon.shareapp.ui.main.rating.RatingDialogPresenter;
+import itsc.hackathon.shareapp.ui.notification.NotificationAdapter;
+import itsc.hackathon.shareapp.ui.notification.NotificationMvpPresenter;
+import itsc.hackathon.shareapp.ui.notification.NotificationMvpView;
+import itsc.hackathon.shareapp.ui.notification.NotificationPresenter;
 import itsc.hackathon.shareapp.ui.post.PostAdapter;
 import itsc.hackathon.shareapp.ui.post.PostMvpPresenter;
 import itsc.hackathon.shareapp.ui.post.PostMvpView;
@@ -62,6 +53,10 @@ import itsc.hackathon.shareapp.ui.signup.SignupPresenter;
 import itsc.hackathon.shareapp.ui.splash.SplashMvpPresenter;
 import itsc.hackathon.shareapp.ui.splash.SplashMvpView;
 import itsc.hackathon.shareapp.ui.splash.SplashPresenter;
+import itsc.hackathon.shareapp.ui.topic.TopicAdapter;
+import itsc.hackathon.shareapp.ui.topic.TopicMvpPresenter;
+import itsc.hackathon.shareapp.ui.topic.TopicMvpView;
+import itsc.hackathon.shareapp.ui.topic.TopicPresenter;
 import itsc.hackathon.shareapp.utils.rx.AppSchedulerProvider;
 import itsc.hackathon.shareapp.utils.rx.SchedulerProvider;
 
@@ -134,40 +129,6 @@ public class ActivityModule {
     }
 
     @Provides
-    RatingDialogMvpPresenter<RatingDialogMvpView> provideRateUsPresenter(
-            RatingDialogPresenter<RatingDialogMvpView> presenter) {
-        return presenter;
-    }
-
-    @Provides
-    FeedMvpPresenter<FeedMvpView> provideFeedPresenter(
-            FeedPresenter<FeedMvpView> presenter) {
-        return presenter;
-    }
-
-    @Provides
-    OpenSourceMvpPresenter<OpenSourceMvpView> provideOpenSourcePresenter(
-            OpenSourcePresenter<OpenSourceMvpView> presenter) {
-        return presenter;
-    }
-
-    @Provides
-    BlogMvpPresenter<BlogMvpView> provideBlogMvpPresenter(
-            BlogPresenter<BlogMvpView> presenter) {
-        return presenter;
-    }
-
-    @Provides
-    FeedPagerAdapter provideFeedPagerAdapter(AppCompatActivity activity) {
-        return new FeedPagerAdapter(activity.getSupportFragmentManager());
-    }
-
-    @Provides
-    OpenSourceAdapter provideOpenSourceAdapter() {
-        return new OpenSourceAdapter(new ArrayList<OpenSourceResponse.Repo>());
-    }
-
-    @Provides
     PostAdapter providePostAdapter() {
         return new PostAdapter(new ArrayList<>());
     }
@@ -179,8 +140,36 @@ public class ActivityModule {
     }
 
     @Provides
-    BlogAdapter provideBlogAdapter() {
-        return new BlogAdapter(new ArrayList<BlogResponse.Blog>());
+    NotificationAdapter provideNotificationAdapter() {
+        return new NotificationAdapter(new ArrayList<>());
+    }
+
+    @Provides
+    NotificationMvpPresenter<NotificationMvpView> provideNotificationPresenter(
+            NotificationPresenter<NotificationMvpView> presenter) {
+        return presenter;
+    }
+
+    @Provides
+    DetailAdapter provideDetailAdapter() {
+        return new DetailAdapter(new ArrayList<>());
+    }
+
+    @Provides
+    DetailPostMvpPresenter<DetailPostMvpView> provideDetailPresenter(
+            DetailPostPresenter<DetailPostMvpView> presenter) {
+        return presenter;
+    }
+
+    @Provides
+    TopicAdapter provideTopicAdapter() {
+        return new TopicAdapter(new ArrayList<>());
+    }
+
+    @Provides
+    TopicMvpPresenter<TopicMvpView> provideTopicPresenter(
+            TopicPresenter<TopicMvpView> presenter) {
+        return presenter;
     }
 
     @Provides

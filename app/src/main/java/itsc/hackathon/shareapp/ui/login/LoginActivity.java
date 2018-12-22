@@ -82,16 +82,6 @@ public class LoginActivity extends BaseActivity implements LoginMvpView {
         mPresenter.onsignInAsGuestClick();
     }
 
-//    @OnClick(R.id.ib_google_login)
-//    void onGoogleLoginClick(View v) {
-////        mPresenter.onGoogleLoginClick();
-//    }
-//
-//    @OnClick(R.id.ib_fb_login)
-//    void onFbLoginClick(View v) {
-////        mPresenter.onFacebookLoginClick();
-//    }
-
     @Override
     public void openMainActivity() {
         Intent intent = MainActivity.getStartIntent(LoginActivity.this);
@@ -118,12 +108,12 @@ public class LoginActivity extends BaseActivity implements LoginMvpView {
     }
 
     @Override
-    public void onFragmentDetached(String tag) {
+    public void hideKeyboard() {
 
     }
 
     @Override
-    public void hideKeyboard() {
+    public void onFragmentDetached(String tag, String parent) {
 
     }
 }

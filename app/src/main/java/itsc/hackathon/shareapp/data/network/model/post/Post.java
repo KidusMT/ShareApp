@@ -1,10 +1,10 @@
 
 package itsc.hackathon.shareapp.data.network.model.post;
 
-import java.io.Serializable;
-import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+
+import java.io.Serializable;
 
 public class Post implements Serializable {
 
@@ -17,15 +17,12 @@ public class Post implements Serializable {
     @SerializedName("file")
     @Expose
     private String file;
-    @SerializedName("votes")
+    @SerializedName("createdAt")
     @Expose
-    private List<String> votes = null;
+    private String createdAt;
     @SerializedName("id")
     @Expose
     private String id;
-    @SerializedName("userId")
-    @Expose
-    private String userId;
 
     public String getTitle() {
         return title;
@@ -51,12 +48,12 @@ public class Post implements Serializable {
         this.file = file;
     }
 
-    public List<String> getVotes() {
-        return votes;
+    public String getCreatedAt() {
+        return createdAt;
     }
 
-    public void setVotes(List<String> votes) {
-        this.votes = votes;
+    public void setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
     }
 
     public String getId() {
@@ -65,14 +62,6 @@ public class Post implements Serializable {
 
     public void setId(String id) {
         this.id = id;
-    }
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
     }
 
 }

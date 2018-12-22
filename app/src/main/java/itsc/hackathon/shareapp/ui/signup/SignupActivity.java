@@ -73,11 +73,6 @@ public class SignupActivity extends BaseActivity implements SignupMvpView {
     }
 
     @Override
-    public void onFragmentDetached(String tag) {
-
-    }
-
-    @Override
     public void openMainActivity() {
         Intent intent = MainActivity.getStartIntent(SignupActivity.this);
         startActivity(intent);
@@ -93,6 +88,11 @@ public class SignupActivity extends BaseActivity implements SignupMvpView {
 
     @Override
     public void hideKeyboard() {
+
+    }
+
+    @Override
+    public void onFragmentDetached(String tag, String parent) {
 
     }
 }

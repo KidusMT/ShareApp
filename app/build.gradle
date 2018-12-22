@@ -30,13 +30,13 @@ android {
     }
     buildTypes {
         debug {
-            buildConfigField("String", "BASE_URL", "\"http://10.42.0.1:5000/api/\"")
+            buildConfigField("String", "BASE_URL", "\"https://aterera.herokuapp.com/api/\"")
             buildConfigField("String", "API_KEY", "\"ABCXYZ123TEST\"")
         }
         release {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            buildConfigField("String", "BASE_URL", "\"http://10.42.0.1:5000/api/\"")
+            buildConfigField("String", "BASE_URL", "\"https://aterera.herokuapp.com/api/\"")
             buildConfigField("String", "API_KEY", "\"ABCXYZ123TEST\"")
         }
     }
@@ -105,6 +105,8 @@ dependencies {
     // allowing multi-dex for api < 20
     implementation 'com.android.support:multidex:1.0.3'
 
+    // date formatter
+    implementation "com.github.thunder413:DateTimeUtils:$rootProject.dateVersion"
 }
 
 configurations.all {

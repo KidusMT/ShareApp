@@ -1,10 +1,9 @@
 package itsc.hackathon.shareapp.ui.post;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.graphics.drawable.Animatable;
-import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.hardware.Sensor;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -25,14 +24,12 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import eu.waziup.app.R;
-import eu.waziup.app.data.network.model.sensor.Measurement;
-import eu.waziup.app.data.network.model.sensor.Sensor;
-import eu.waziup.app.di.component.ActivityComponent;
+import itsc.hackathon.shareapp.R;
 import itsc.hackathon.shareapp.data.network.model.post.Post;
+import itsc.hackathon.shareapp.di.component.ActivityComponent;
 import itsc.hackathon.shareapp.ui.base.BaseFragment;
 
-public class PostFragment extends BaseFragment implements PostMvpView, CallBack{//, SensorAdapter.MeasurementCallback
+public class PostFragment extends BaseFragment implements PostMvpView, CallBack {//, SensorAdapter.MeasurementCallback
 
     @Inject
     PostMvpPresenter<PostMvpView> mPresenter;
@@ -43,22 +40,22 @@ public class PostFragment extends BaseFragment implements PostMvpView, CallBack{
     @Inject
     LinearLayoutManager mLayoutManager;
 
-    @BindView(R.id.sensor_recycler)
+    @BindView(R.id.post_recycler)
     RecyclerView mRecyclerView;
 
-    @BindView(R.id.sensor_swipe_to_refresh)
+    @BindView(R.id.post_swipe_to_refresh)
     SwipeRefreshLayout mSwipeRefreshLayout;
 
-    @BindView(R.id.tv_no_sensor)
+    @BindView(R.id.tv_no_post)
     TextView tvNoSensors;
 
-    SensorCommunicator communicator;
+    PostCommunicator communicator;
 
-    public static final String TAG = "SensorFragment";
+    public static final String TAG = "PostFragment";
 
-    public static SensorFragment newInstance() {
+    public static PostFragment newInstance() {
         Bundle args = new Bundle();
-        SensorFragment fragment = new SensorFragment();
+        PostFragment fragment = new PostFragment();
         fragment.setArguments(args);
         return fragment;
     }
@@ -66,7 +63,7 @@ public class PostFragment extends BaseFragment implements PostMvpView, CallBack{
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_sensor, container, false);
+        View view = inflater.inflate(R.layout.fragment_post, container, false);
 
         ActivityComponent component = getActivityComponent();
         if (component != null) {
@@ -74,15 +71,14 @@ public class PostFragment extends BaseFragment implements PostMvpView, CallBack{
             setUnBinder(ButterKnife.bind(this, view));
             mPresenter.onAttach(this);
             mAdapter.setCallback(this);
-            mAdapter.setMeasurementCallback(this);
         }
 
         setUp(view);
 
-        mPresenter.loadSensors();
+        mPresenter.loadPosts();
 
         mSwipeRefreshLayout.setOnRefreshListener(() -> {
-            mPresenter.loadSensors();
+            mPresenter.loadPosts();
             mSwipeRefreshLayout.setRefreshing(false);
         });
 
@@ -92,10 +88,10 @@ public class PostFragment extends BaseFragment implements PostMvpView, CallBack{
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        communicator = (SensorCommunicator) context;
+        communicator = (PostCommunicator) context;
     }
 
-    @OnClick(R.id.fab_sensor)
+    @OnClick(R.id.fab_post)
     void onFabClicked() {
         communicator.fabClicked();
     }
@@ -103,9 +99,9 @@ public class PostFragment extends BaseFragment implements PostMvpView, CallBack{
     @Override
     protected void setUp(View view) {
         setUpRecyclerView();
-        mPresenter.loadSensors();
+        mPresenter.loadPosts();
         if (getBaseActivity().getSupportActionBar() != null)
-            getBaseActivity().getSupportActionBar().setTitle(R.string.sensors);
+            getBaseActivity().getSupportActionBar().setTitle("Posts");
     }
 
     private void setUpRecyclerView() {
@@ -116,17 +112,17 @@ public class PostFragment extends BaseFragment implements PostMvpView, CallBack{
 
     @Override
     public void showPosts(List<Post> posts) {
-        if (sensors != null) {
-            if (sensors.size() > 0) {
+        if (posts != null) {
+            if (posts.size() > 0) {
                 if (tvNoSensors != null && tvNoSensors.getVisibility() == View.VISIBLE)
                     tvNoSensors.setVisibility(View.GONE);
                 if (mRecyclerView != null && mRecyclerView.getVisibility() == View.GONE)
                     mRecyclerView.setVisibility(View.VISIBLE);
-                mAdapter.addItems(sensors);
+                mAdapter.addItems(posts);
             } else {
                 if (tvNoSensors != null && tvNoSensors.getVisibility() == View.GONE) {
                     tvNoSensors.setVisibility(View.VISIBLE);
-                    tvNoSensors.setText(R.string.no_sensors_list_found);
+                    tvNoSensors.setText("No posts list found.");
                 }
                 if (mRecyclerView != null && mRecyclerView.getVisibility() == View.VISIBLE)
                     mRecyclerView.setVisibility(View.GONE);
@@ -142,7 +138,7 @@ public class PostFragment extends BaseFragment implements PostMvpView, CallBack{
 
     @Override
     public void loadPage() {
-//        mPresenter.loadSensors();
+        mPresenter.loadPosts();
     }
 
     @Override
@@ -154,17 +150,9 @@ public class PostFragment extends BaseFragment implements PostMvpView, CallBack{
         return true;
     }
 
-//    @Override
-//    public void onItemClicked(Measurement measurement) {
-//        MeasurementDetailDialog dialog = new MeasurementDetailDialog(getBaseActivity(), measurement);
-//        if (dialog.getWindow() != null) {
-//            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-//        }
-//        dialog.show();
-//    }
 
     @Override
-    public void onItemClicked(Post sensor) {
-//        communicator.onItemClicked(sensor);
+    public void onItemClicked(Post post) {
+        communicator.onItemClicked(post);
     }
 }

@@ -1,4 +1,4 @@
-package itsc.hackathon.shareapp.ui.detail;
+package itsc.hackathon.shareapp.ui.topic;
 
 import javax.inject.Inject;
 
@@ -12,35 +12,28 @@ import itsc.hackathon.shareapp.utils.rx.SchedulerProvider;
  * Created by KidusMT.
  */
 
-public class DetailPresenter<V extends DetailMvpView> extends BasePresenter<V>
-        implements DetailMvpPresenter<V> {
-
-    private static final String TAG = "QRScanPresenter";
+public class TopicPresenter<V extends TopicMvpView> extends BasePresenter<V>
+        implements TopicMvpPresenter<V> {
 
     @Inject
-    public DetailPresenter(DataManager dataManager,
-                           SchedulerProvider schedulerProvider,
-                           CompositeDisposable compositeDisposable) {
+    public TopicPresenter(DataManager dataManager,
+                          SchedulerProvider schedulerProvider,
+                          CompositeDisposable compositeDisposable) {
         super(dataManager, schedulerProvider, compositeDisposable);
     }
 
     @Override
-    public void onLogOutClicked() {
-        // removing the token when the user logout
-        getDataManager().setUserAsLoggedOut();
-    }
-
-    @Override
-    public void loadPosts() {
+    public void loadTopics() {
         getMvpView().showLoading();
-        getCompositeDisposable().add(getDataManager().getPosts()
+
+        getCompositeDisposable().add(getDataManager().getTopics()
                 .subscribeOn(getSchedulerProvider().io())
                 .observeOn(getSchedulerProvider().ui())
-                .subscribe(posts -> {
+                .subscribe(topics -> {
                     if (!isViewAttached())
                         return;
 
-                    getMvpView().showPosts(posts);
+                    getMvpView().showTopics(topics);
 
                 }, throwable -> {
 
@@ -52,5 +45,4 @@ public class DetailPresenter<V extends DetailMvpView> extends BasePresenter<V>
 
                 }));
     }
-
 }

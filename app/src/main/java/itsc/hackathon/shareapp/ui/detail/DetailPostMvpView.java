@@ -4,6 +4,7 @@ import android.hardware.Sensor;
 
 import java.util.List;
 
+import itsc.hackathon.shareapp.data.network.model.comment.Comment;
 import itsc.hackathon.shareapp.data.network.model.post.Post;
 import itsc.hackathon.shareapp.ui.base.MvpView;
 
@@ -11,9 +12,9 @@ import itsc.hackathon.shareapp.ui.base.MvpView;
  * Created by KidusMT.
  */
 
-public interface DetailMvpView extends MvpView {
+public interface DetailPostMvpView extends MvpView {
 
-    void showPosts(List<Post> posts);
+    void showComments(List<Comment> comments);
     void openDetailSensorActivity(Sensor sensor);
-    void loadPage();
+    void loadPage(Post post);
 }

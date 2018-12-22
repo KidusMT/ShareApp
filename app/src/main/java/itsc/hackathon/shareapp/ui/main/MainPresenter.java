@@ -18,12 +18,10 @@ package itsc.hackathon.shareapp.ui.main;
 import javax.inject.Inject;
 
 import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.functions.Consumer;
 import itsc.hackathon.shareapp.data.DataManager;
-import itsc.hackathon.shareapp.data.network.model.LogoutResponse;
+import itsc.hackathon.shareapp.data.network.model.post.Post;
 import itsc.hackathon.shareapp.ui.base.BasePresenter;
 import itsc.hackathon.shareapp.utils.rx.SchedulerProvider;
-
 
 /**
  * Created by janisharali on 27/01/17.
@@ -39,49 +37,6 @@ public class MainPresenter<V extends MainMvpView> extends BasePresenter<V>
                          SchedulerProvider schedulerProvider,
                          CompositeDisposable compositeDisposable) {
         super(dataManager, schedulerProvider, compositeDisposable);
-    }
-
-    @Override
-    public void onDrawerOptionAboutClick() {
-        getMvpView().closeNavigationDrawer();
-        getMvpView().showAboutFragment();
-    }
-
-    @Override
-    public void onDrawerOptionLogoutClick() {
-        getMvpView().showLoading();
-
-//        getCompositeDisposable().add(getDataManager().doLogoutApiCall()
-//                .subscribeOn(getSchedulerProvider().io())
-//                .observeOn(getSchedulerProvider().ui())
-//                .subscribe(new Consumer<LogoutResponse>() {
-//                    @Override
-//                    public void accept(LogoutResponse response) throws Exception {
-//                        if (!isViewAttached()) {
-//                            return;
-//                        }
-//
-                        getDataManager().setUserAsLoggedOut();
-                        getMvpView().hideLoading();
-                        getMvpView().openLoginActivity();
-//                    }
-//                }, new Consumer<Throwable>() {
-//                    @Override
-//                    public void accept(Throwable throwable) throws Exception {
-//                        if (!isViewAttached()) {
-//                            return;
-//                        }
-//
-//                        getMvpView().hideLoading();
-//
-//                         handle the login error here
-//                        if (throwable instanceof ANError) {
-//                            ANError anError = (ANError) throwable;
-//                            handleApiError(anError);
-//                        }
-//                    }
-//                }));
-
     }
 
     @Override
@@ -110,31 +65,39 @@ public class MainPresenter<V extends MainMvpView> extends BasePresenter<V>
             return;
         }
 
-//        final String currentUserName = getDataManager().getCurrentUserName();
-//        if (currentUserName != null && !currentUserName.isEmpty()) {
-//            getMvpView().updateUserName(currentUserName);
-//        }
-//
-//        final String currentUserEmail = getDataManager().getCurrentUserEmail();
-//        if (currentUserEmail != null && !currentUserEmail.isEmpty()) {
-//            getMvpView().updateUserEmail(currentUserEmail);
-//        }
-//
-//        final String profilePicUrl = getDataManager().getCurrentUserProfilePicUrl();
-//        if (profilePicUrl != null && !profilePicUrl.isEmpty()) {
-//            getMvpView().updateUserProfilePic(profilePicUrl);
-//        }
+        final String currentUserName = getDataManager().getCurrentUserName();
+        if (currentUserName != null && !currentUserName.isEmpty()) {
+            getMvpView().updateUserName(currentUserName);
+        }
+
+        final String currentUserEmail = getDataManager().getCurrentUserEmail();
+        if (currentUserEmail != null && !currentUserEmail.isEmpty()) {
+            getMvpView().updateUserEmail(currentUserEmail);
+        }
+
+        final String profilePicUrl = getDataManager().getCurrentUserProfilePicUrl();
+        if (profilePicUrl != null && !profilePicUrl.isEmpty()) {
+            getMvpView().updateUserProfilePic(profilePicUrl);
+        }
     }
 
     @Override
-    public void onDrawerRateUsClick() {
-        getMvpView().closeNavigationDrawer();
-        getMvpView().showRateUsDialog();
+    public void onLogOutClicked() {
+        // removing the token when the user logout
+        getDataManager().setUserAsLoggedOut();
+        getMvpView().openLoginActivity();
     }
 
     @Override
-    public void onDrawerMyFeedClick() {
-        getMvpView().closeNavigationDrawer();
-        getMvpView().openMyFeedActivity();
+    public void onFabClicked() {
+        getMvpView().lockDrawer();
+        getMvpView().openRegistrationSensor();
     }
+
+    @Override
+    public void onPostItemClicked(Post post, String parent) {
+        getMvpView().lockDrawer();
+        getMvpView().openDetailPost(post, parent);
+    }
+
 }

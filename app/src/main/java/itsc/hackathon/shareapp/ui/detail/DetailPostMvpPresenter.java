@@ -9,9 +9,9 @@ import itsc.hackathon.shareapp.ui.base.MvpPresenter;
  */
 
 @PerActivity
-public interface DetailMvpPresenter<V extends DetailMvpView> extends MvpPresenter<V> {
+public interface DetailPostMvpPresenter<V extends DetailPostMvpView> extends MvpPresenter<V> {
 
     void onLogOutClicked();
 
-    void loadPosts();
+    void loadComments(String postId);
 }

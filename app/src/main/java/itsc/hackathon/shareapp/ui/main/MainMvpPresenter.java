@@ -16,6 +16,7 @@
 package itsc.hackathon.shareapp.ui.main;
 
 
+import itsc.hackathon.shareapp.data.network.model.post.Post;
 import itsc.hackathon.shareapp.di.PerActivity;
 import itsc.hackathon.shareapp.ui.base.MvpPresenter;
 
@@ -26,15 +27,13 @@ import itsc.hackathon.shareapp.ui.base.MvpPresenter;
 @PerActivity
 public interface MainMvpPresenter<V extends MainMvpView> extends MvpPresenter<V> {
 
-    void onDrawerOptionAboutClick();
-
-    void onDrawerOptionLogoutClick();
-
-    void onDrawerRateUsClick();
-
-    void onDrawerMyFeedClick();
-
     void onViewInitialized();
 
     void onNavMenuCreated();
+
+    void onLogOutClicked();
+
+    void onFabClicked();
+
+    void onPostItemClicked(Post post, String parent);
 }

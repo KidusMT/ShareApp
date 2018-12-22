@@ -5,16 +5,39 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ui.detail.DetailFragment">
+    tools:context=".ui.detail.DetailPostFragment">
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/detail_toolbar"
-        style="@style/Toolbar"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:layout_marginTop="@dimen/app_bar_height"
         android:background="@color/colorPrimary"
-        app:subtitleTextColor="@color/black_effective"
-        app:title="@string/app_name"
-        app:titleTextAppearance="@style/Toolbar.TitleText"
-        app:titleTextColor="@color/white" />
+        android:gravity="center|start"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/nav_back_btn"
+            style="@style/Button.ImageButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:background="@color/transparent"
+            android:tint="@color/white"
+            app:srcCompat="@drawable/ic_arrow" />
+
+        <TextView
+            android:id="@+id/toolbar_title"
+            style="@style/TextStyle.Heading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="post_title"
+            android:textColor="@color/white"
+            android:textSize="20sp" />
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/view_container"
@@ -24,7 +47,7 @@
 
 
         <android.support.v4.widget.SwipeRefreshLayout
-            android:id="@+id/sensor_swipe_to_refresh"
+            android:id="@+id/detail_swipe_to_refresh"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
@@ -43,6 +66,7 @@
                     android:id="@+id/detail_comment_count"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@color/material_grey_100"
                     android:padding="8dp"
                     android:text="5 comments"
                     android:textColor="@color/material_grey_700"
@@ -53,20 +77,20 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginTop="3dp"
+                    android:visibility="gone"
                     android:scrollbars="vertical"
                     tools:listitem="@layout/card_comments" />
 
-                <!--<TextView-->
-                <!--android:id="@+id/tv_no_sensor"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_centerInParent="true"-->
-                <!--android:layout_margin="5dp"-->
-                <!--android:fontFamily="@font/roboto_light"-->
-                <!--android:text="@string/no_sensors_list_found"-->
-                <!--android:textAlignment="center"-->
-                <!--android:textSize="18sp"-->
-                <!--android:visibility="gone" />-->
+                <TextView
+                    android:id="@+id/tv_no_comments"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_margin="5dp"
+                    android:fontFamily="@font/roboto_light"
+                    android:text="No comments list found."
+                    android:textAlignment="center"
+                    android:textSize="18sp" />
 
             </LinearLayout>
 

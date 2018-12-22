@@ -15,6 +15,7 @@
 
 package itsc.hackathon.shareapp.ui.main;
 
+import itsc.hackathon.shareapp.data.network.model.post.Post;
 import itsc.hackathon.shareapp.ui.base.MvpView;
 
 /**
@@ -25,21 +26,20 @@ public interface MainMvpView extends MvpView {
 
     void openLoginActivity();
 
-    void showAboutFragment();
-
-//    void updateUserName(String currentUserName);
-//
-//    void updateUserEmail(String currentUserEmail);
-//
-//    void updateUserProfilePic(String currentUserProfilePicUrl);
-
-    void showRateUsDialog();
-
-    void openMyFeedActivity();
-
     void closeNavigationDrawer();
 
     void lockDrawer();
 
     void unlockDrawer();
+
+    void openRegistrationSensor();
+
+    void openDetailPost(Post post, String parentFragment);
+
+    // for the navigation drawer
+    void updateUserName(String currentUserName);
+
+    void updateUserEmail(String currentUserEmail);
+
+    void updateUserProfilePic(String currentUserProfilePicUrl);
 }

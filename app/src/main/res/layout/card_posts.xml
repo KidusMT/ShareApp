@@ -29,6 +29,15 @@
                 android:paddingStart="20dp"
                 android:paddingEnd="20dp">
 
+                <!--todo make something in here-->
+                <!--<itsc.hackathon.shareapp.ui.custom.RoundedImageView-->
+                <!--android:id="@+id/iv_profile_pic"-->
+                <!--android:layout_width="64dp"-->
+                <!--android:layout_height="64dp"-->
+                <!--android:layout_marginTop="40dp"-->
+                <!--android:scaleType="fitCenter"-->
+                <!--android:src="@drawable/ic_mindorks_logo" />-->
+
                 <ImageView
                     android:id="@+id/card_post_user_profile"
                     android:layout_width="40dp"
@@ -194,10 +203,10 @@
                         android:id="@+id/card_post_vote_count"
                         android:layout_width="20dp"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/roboto_regular"
-                        android:gravity="center_vertical"
                         android:layout_marginEnd="12dp"
                         android:layout_marginRight="12dp"
+                        android:fontFamily="@font/roboto_regular"
+                        android:gravity="center_vertical"
                         android:text="2"
                         android:textSize="20sp" />
 

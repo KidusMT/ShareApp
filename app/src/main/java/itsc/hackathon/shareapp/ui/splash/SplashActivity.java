@@ -90,12 +90,12 @@ public class SplashActivity extends BaseActivity implements SplashMvpView {
     }
 
     @Override
-    public void onFragmentDetached(String tag) {
+    public void hideKeyboard() {
 
     }
 
     @Override
-    public void hideKeyboard() {
+    public void onFragmentDetached(String tag, String parent) {
 
     }
 }

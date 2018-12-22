@@ -75,4 +75,7 @@ ext {
     retrofitVersion = '2.4.0'
     retrofitInterceptorVersion = '3.8.0'
     picassoVersion = '2.71828'
+
+    //DateUtil
+    dateVersion = '1.0'
 }

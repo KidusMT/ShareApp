@@ -102,15 +102,17 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
-    public void updateUserInfo(String accessToken, LoggedInMode loggedInMode) {
+    public void updateUserInfo(String accessToken, LoggedInMode loggedInMode, String firstName, String lastName, String username, String email) {
         setAccessToken(accessToken);
         updateApiHeader(accessToken);
         setCurrentUserLoggedInMode(loggedInMode);
+        setCurrentUserEmail(email);
+        setCurrentUserName(username);
     }
 
     @Override
     public void setUserAsLoggedOut() {
-        updateUserInfo(null, DataManager.LoggedInMode.LOGGED_IN_MODE_LOGGED_OUT);
+        updateUserInfo(null, DataManager.LoggedInMode.LOGGED_IN_MODE_LOGGED_OUT, null,null, null, null);
     }
 
     @Override

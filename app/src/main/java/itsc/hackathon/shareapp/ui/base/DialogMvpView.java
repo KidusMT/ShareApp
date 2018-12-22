@@ -21,5 +21,5 @@ package itsc.hackathon.shareapp.ui.base;
 
 public interface DialogMvpView extends MvpView {
 
-    void dismissDialog(String tag);
+    void dismissDialog(String tag, String parentFragment);
 }

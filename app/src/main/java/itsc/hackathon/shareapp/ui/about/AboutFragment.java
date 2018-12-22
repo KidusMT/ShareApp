@@ -77,7 +77,8 @@ public class AboutFragment extends BaseFragment implements AboutMvpView {
 
     @OnClick(R.id.nav_back_btn)
     void onNavBackClick() {
-        getBaseActivity().onFragmentDetached(TAG);
+        // todo find a better way of passing the parent fragment for this fragment
+        getBaseActivity().onFragmentDetached(TAG, AboutFragment.TAG);
     }
 
     @Override

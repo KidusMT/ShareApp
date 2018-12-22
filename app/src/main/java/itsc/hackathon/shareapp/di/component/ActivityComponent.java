@@ -15,19 +15,22 @@
 
 package itsc.hackathon.shareapp.di.component;
 
+import dagger.Component;
 import itsc.hackathon.shareapp.di.PerActivity;
 import itsc.hackathon.shareapp.di.module.ActivityModule;
 import itsc.hackathon.shareapp.ui.about.AboutFragment;
-import itsc.hackathon.shareapp.ui.feed.FeedActivity;
-import itsc.hackathon.shareapp.ui.feed.blogs.BlogFragment;
-import itsc.hackathon.shareapp.ui.feed.opensource.OpenSourceFragment;
+import itsc.hackathon.shareapp.ui.detail.DetailAdapter;
+import itsc.hackathon.shareapp.ui.detail.DetailPostFragment;
 import itsc.hackathon.shareapp.ui.login.LoginActivity;
 import itsc.hackathon.shareapp.ui.main.MainActivity;
-import itsc.hackathon.shareapp.ui.main.rating.RateUsDialog;
+import itsc.hackathon.shareapp.ui.notification.NotificationAdapter;
+import itsc.hackathon.shareapp.ui.notification.NotificationFragment;
+import itsc.hackathon.shareapp.ui.post.PostAdapter;
+import itsc.hackathon.shareapp.ui.post.PostFragment;
 import itsc.hackathon.shareapp.ui.signup.SignupActivity;
 import itsc.hackathon.shareapp.ui.splash.SplashActivity;
-
-import dagger.Component;
+import itsc.hackathon.shareapp.ui.topic.TopicAdapter;
+import itsc.hackathon.shareapp.ui.topic.TopicFragment;
 
 /**
  * Created by janisharali on 27/01/17.
@@ -45,15 +48,21 @@ public interface ActivityComponent {
 
     void inject(SplashActivity activity);
 
-    void inject(FeedActivity activity);
-
     void inject(AboutFragment fragment);
 
-    void inject(OpenSourceFragment fragment);
+    // notification
+    void inject(TopicFragment fragment);
+    void inject(TopicAdapter adapter);
 
-    void inject(BlogFragment fragment);
+    // notification
+    void inject(NotificationFragment fragment);
+    void inject(NotificationAdapter adapter);
 
-    void inject(RateUsDialog dialog);
+    // detail
+    void inject(DetailPostFragment fragment);
+    void inject(DetailAdapter adapter);
 
-
+    // post
+    void inject(PostFragment fragment);
+    void inject(PostAdapter adapter);
 }

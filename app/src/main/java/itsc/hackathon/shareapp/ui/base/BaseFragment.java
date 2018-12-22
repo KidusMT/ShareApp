@@ -158,6 +158,6 @@ public abstract class BaseFragment extends Fragment implements MvpView {
 
         void onFragmentAttached();
 
-        void onFragmentDetached(String tag);
+        void onFragmentDetached(String tag, String parent);
     }
 }

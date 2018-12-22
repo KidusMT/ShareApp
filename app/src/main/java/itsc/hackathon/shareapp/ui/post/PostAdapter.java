@@ -12,6 +12,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.github.thunder413.datetimeutils.DateTimeStyle;
+import com.github.thunder413.datetimeutils.DateTimeUtils;
+
 import java.util.List;
 
 import butterknife.BindView;
@@ -74,7 +77,7 @@ public class PostAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         @BindView(R.id.card_post_title)
         TextView mPostTitle;
 
-        @BindView(R.id.card_post_title)
+        @BindView(R.id.card_post_date)
         TextView mPostDate;
 
         @BindView(R.id.card_post_attachment)
@@ -116,6 +119,20 @@ public class PostAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
                 post = posts.get(position);
 
+                // title
+                if (!TextUtils.isEmpty(post.getTitle()))
+                    mPostTitle.setText(String.valueOf(post.getTitle()));
+
+                // date
+                if (!TextUtils.isEmpty(post.getCreatedAt()))
+                    mPostDate.setText(DateTimeUtils.formatWithStyle(post.getCreatedAt(),
+                            DateTimeStyle.MEDIUM));
+
+                // description
+                if (!TextUtils.isEmpty(post.getDescription()))
+                    mPostDescription.setText(String.valueOf(post.getDescription()));
+
+
                 // id
 //                mSensorId.setText((TextUtils.isEmpty(post.getId())) ? post.getName() : post.getId());
 //
@@ -149,14 +166,14 @@ public class PostAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 //
 //                measurementContainer.removeAllViews();
 //
-//                if (post.getMeasurements() != null) {
+//                if (post.getFile() != null) {
 //
-//                    if (post.getMeasurements().size() > 0) {
+//                    if (post.getFile().size() > 0) {
 //                        measurementsTitle.setVisibility(View.VISIBLE);
 //                    } else {
 //                        measurementsTitle.setVisibility(View.GONE);
 //                    }
-
+//
 //
 //                    for (Measurement measurement : post.getMeasurements()) {
 //                        TextView measurementValue = new TextView(itemView.getContext());

@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.List;
@@ -14,25 +13,23 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import itsc.hackathon.shareapp.R;
-import itsc.hackathon.shareapp.data.network.model.post.Post;
+import itsc.hackathon.shareapp.data.network.model.comment.Comment;
 import itsc.hackathon.shareapp.ui.base.BaseViewHolder;
-import itsc.hackathon.shareapp.ui.post.CallBack;
 
 public class DetailAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
-    private List<Post> posts;
-    private CallBack mCallback;
-//    private MeasurementCallback mMeasurementCallback;
+    private List<Comment> comments;
+    private Callback mCallback;
 
-    public DetailAdapter(List<Post> posts) {
-        this.posts = posts;
+    public DetailAdapter(List<Comment> comments) {
+        this.comments = comments;
     }
 
     @NonNull
     @Override
     public SensorViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View view = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.card_posts, viewGroup, false);
+                .inflate(R.layout.card_comments, viewGroup, false);
         return new SensorViewHolder(view);
     }
 
@@ -41,65 +38,40 @@ public class DetailAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         sensorViewHolder.onBind(i);
     }
 
-    public void addItems(List<Post> sensors) {
-        this.posts.clear();
-        this.posts.addAll(sensors);
+    public void addItems(List<Comment> comments) {
+        this.comments.clear();
+        this.comments.addAll(comments);
         notifyDataSetChanged();
     }
 
     @Override
     public int getItemCount() {
-        return posts.size();
+        return comments.size();
     }
 
-    public void setCallback(CallBack callback) {
+    public void setCallback(Callback callback) {
         mCallback = callback;
     }
 
-//    public void setMeasurementCallback(MeasurementCallback callback) {
-//        mMeasurementCallback = callback;
-//}
-
-//    public interface MeasurementCallback {
-//        void onItemClicked(Measurement measurement);
-//    }
+    public interface Callback {
+        void onItemClicked(Comment comment);
+    }
 
     public class SensorViewHolder extends BaseViewHolder {
 
-        @BindView(R.id.card_post_user_profile)
-        ImageView mPostUserProfile;
+        @BindView(R.id.card_comment_user_profile)
+        ImageView mCommentUserProfile;
 
-        @BindView(R.id.card_post_title)
-        TextView mPostTitle;
+        @BindView(R.id.card_comment_username)
+        TextView mCommentTitle;
 
-        @BindView(R.id.card_post_title)
-        TextView mPostDate;
+        @BindView(R.id.card_comment_date)
+        TextView mCommentDate;
 
-        @BindView(R.id.card_post_attachment)
-        ImageView mPostAttachment;
+        @BindView(R.id.card_comment_description)
+        TextView mCommentDescription;
 
-        @BindView(R.id.card_post_description)
-        TextView mPostDescription;
-
-        @BindView(R.id.topic_container)
-        LinearLayout topicContainer;
-
-        @BindView(R.id.card_post_points)
-        TextView mPostPoints;
-
-        @BindView(R.id.card_post_comments_count)
-        TextView mPostCommentCount;
-
-        @BindView(R.id.card_post_vote_count)
-        TextView mPostVoteCount;
-
-        @BindView(R.id.card_post_btn_vote_up)
-        ImageView btnVoteUp;
-
-        @BindView(R.id.card_post_btn_vote_down)
-        ImageView btnVoteDown;
-
-        Post post;
+        Comment comment;
 
         public SensorViewHolder(View view) {
             super(view);
@@ -110,53 +82,53 @@ public class DetailAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         public void onBind(int position) {
             super.onBind(position);
 
-            if (posts != null) {
+            if (comments != null) {
 
-                post = posts.get(position);
+                comment = comments.get(position);
 
                 // id
-//                mSensorId.setText((TextUtils.isEmpty(post.getId())) ? post.getName() : post.getId());
+//                mSensorId.setText((TextUtils.isEmpty(comment.getId())) ? comment.getName() : comment.getId());
 //
 //                // TODO check visibility first for every view before setting visibility
 //                // date
-//                if (!TextUtils.isEmpty(post.getDateCreated())) {
+//                if (!TextUtils.isEmpty(comment.getDateCreated())) {
 //                    mSensorDate.setVisibility(View.VISIBLE);
-//                    mSensorDate.setText(String.valueOf(DateTimeUtils.formatWithStyle(post.getDateCreated(),
+//                    mSensorDate.setText(String.valueOf(DateTimeUtils.formatWithStyle(comment.getDateCreated(),
 //                            DateTimeStyle.MEDIUM)));
 //                } else {
 //                    mSensorDate.setVisibility(View.GONE);
 //                }
 //
 //                // owner
-//                if (!TextUtils.isEmpty(post.getOwner())) {
+//                if (!TextUtils.isEmpty(comment.getOwner())) {
 //                    ownerIcon.setVisibility(View.VISIBLE);
 //                    mSensorOwner.setVisibility(View.VISIBLE);
-//                    mSensorOwner.setText(String.valueOf(post.getOwner()));
+//                    mSensorOwner.setText(String.valueOf(comment.getOwner()));
 //                } else {
 //                    ownerIcon.setVisibility(View.GONE);
 //                    mSensorOwner.setVisibility(View.GONE);
 //                }
 //
 //                // domain
-//                if (!TextUtils.isEmpty(post.getDomain())) {
+//                if (!TextUtils.isEmpty(comment.getDomain())) {
 //                    mSensorDomain.setVisibility(View.VISIBLE);
-//                    mSensorDomain.setText(String.valueOf(post.getDomain()));
+//                    mSensorDomain.setText(String.valueOf(comment.getDomain()));
 //                } else {
 //                    mSensorDomain.setVisibility(View.GONE);
 //                }
 //
 //                measurementContainer.removeAllViews();
 //
-//                if (post.getMeasurements() != null) {
+//                if (comment.getMeasurements() != null) {
 //
-//                    if (post.getMeasurements().size() > 0) {
+//                    if (comment.getMeasurements().size() > 0) {
 //                        measurementsTitle.setVisibility(View.VISIBLE);
 //                    } else {
 //                        measurementsTitle.setVisibility(View.GONE);
 //                    }
 
 //
-//                    for (Measurement measurement : post.getMeasurements()) {
+//                    for (Measurement measurement : comment.getMeasurements()) {
 //                        TextView measurementValue = new TextView(itemView.getContext());
 //                        measurementValue.setTextColor(itemView.getResources().getColor(R.color.white));
 //                        measurementValue.setGravity(Gravity.CENTER);
@@ -185,16 +157,15 @@ public class DetailAdapter extends RecyclerView.Adapter<BaseViewHolder> {
                 // todo find a better way of handling this condition
             }
 
-            itemView.setOnClickListener(v -> mCallback.onItemClicked(posts.get(getAdapterPosition())));
+            itemView.setOnClickListener(v -> mCallback.onItemClicked(comments.get(getAdapterPosition())));
 
         }
 
         @Override
         protected void clear() {
-            mPostTitle.setText("");
-            mPostDate.setText("");
-            mPostDescription.setText("");
-            mPostVoteCount.setText("");
+            mCommentTitle.setText("");
+            mCommentDate.setText("");
+            mCommentDescription.setText("");
         }
     }
 }
