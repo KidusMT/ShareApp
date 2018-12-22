@@ -77,15 +77,12 @@ public class SplashPresenter<V extends SplashMvpView> extends BasePresenter<V>
     }
 
     private void decideNextActivity() {
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                if (getDataManager().getCurrentUserLoggedInMode()
-                        == DataManager.LoggedInMode.LOGGED_IN_MODE_LOGGED_OUT.getType()) {
-                    getMvpView().openLoginActivity();
-                } else {
-                    getMvpView().openMainActivity();
-                }
+        new Handler().postDelayed(() -> {
+            if (getDataManager().getCurrentUserLoggedInMode()
+                    == DataManager.LoggedInMode.LOGGED_IN_MODE_LOGGED_OUT.getType()) {
+                getMvpView().openLoginActivity();
+            } else {
+                getMvpView().openMainActivity();
             }
         }, 1500);
 

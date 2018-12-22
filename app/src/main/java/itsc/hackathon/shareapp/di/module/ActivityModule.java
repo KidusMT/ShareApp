@@ -47,6 +47,7 @@ import itsc.hackathon.shareapp.ui.main.MainPresenter;
 import itsc.hackathon.shareapp.ui.main.rating.RatingDialogMvpPresenter;
 import itsc.hackathon.shareapp.ui.main.rating.RatingDialogMvpView;
 import itsc.hackathon.shareapp.ui.main.rating.RatingDialogPresenter;
+import itsc.hackathon.shareapp.ui.signup.SignupMvpPresenter;
 import itsc.hackathon.shareapp.ui.signup.SignupMvpView;
 import itsc.hackathon.shareapp.ui.signup.SignupPresenter;
 import itsc.hackathon.shareapp.ui.splash.SplashMvpPresenter;
@@ -117,7 +118,7 @@ public class ActivityModule {
 
     @Provides
     @PerActivity
-    SignupPresenter<SignupMvpView> provideSignupPresenter(
+    SignupMvpPresenter<SignupMvpView> provideSignupPresenter(
             SignupPresenter<SignupMvpView> presenter) {
         return presenter;
     }

@@ -18,8 +18,8 @@ import itsc.hackathon.shareapp.ui.main.MainActivity;
 
 public class SignupActivity extends BaseActivity implements SignupMvpView {
 
-//    @Inject
-//    SignupMvpPresenter<SignupMvpView> mPresenter;
+    @Inject
+    SignupMvpPresenter<SignupMvpView> mPresenter;
 
     @BindView(R.id.et_username)
     EditText mUserNameEditText;
@@ -45,21 +45,21 @@ public class SignupActivity extends BaseActivity implements SignupMvpView {
         setContentView(R.layout.activity_signup);
         getActivityComponent().inject(this);
         setUnBinder(ButterKnife.bind(this));
-//        mPresenter.onAttach(SignupActivity.this);
+        mPresenter.onAttach(SignupActivity.this);
     }
 
     @OnClick(R.id.btn_register)
     void onServerSignupCLick(View v){
         Toast.makeText(this, "Hey", Toast.LENGTH_SHORT).show();
-//        mPresenter.onServerSignupCLick(mFullNameEditText.getText().toString(),
-//                mUserNameEditText.getText().toString(),
-//                mEmailEditText.getText().toString(),
-//                mPasswordEditText.getText().toString());
+        mPresenter.onServerSignupCLick(mFullNameEditText.getText().toString(),
+                mUserNameEditText.getText().toString(),
+                mEmailEditText.getText().toString(),
+                mPasswordEditText.getText().toString());
     }
 
     @OnClick(R.id.tv_login)
     void onLoginClick(){
-//        mPresenter.onLoginClick();
+        mPresenter.onLoginClick();
     }
 
     @Override
