@@ -1,11 +1,12 @@
 
 package itsc.hackathon.shareapp.data.network.model.post;
 
+import java.io.Serializable;
 import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Post {
+public class Post implements Serializable {
 
     @SerializedName("title")
     @Expose
