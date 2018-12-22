@@ -22,6 +22,8 @@ import io.reactivex.Observable;
 import io.reactivex.Single;
 import itsc.hackathon.shareapp.data.network.model.LoginRequest;
 import itsc.hackathon.shareapp.data.network.model.LoginResponse;
+import itsc.hackathon.shareapp.data.network.model.SignupRequest;
+import itsc.hackathon.shareapp.data.network.model.SignupResponse;
 
 /**
  * Created by janisharali on 28/01/17.
@@ -54,6 +56,11 @@ public class AppApiHelper implements ApiHelper {
 //                .build()
 //                .getObjectSingle(LoginResponse.class);
         return mApiCall.login(request);
+    }
+
+    @Override
+    public Observable<SignupResponse> doServerSignupCall(SignupRequest.ServerSignupRequest request) {
+        return mApiCall.signup(request);
     }
 
 //    @Override

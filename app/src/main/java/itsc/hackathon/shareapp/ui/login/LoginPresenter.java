@@ -64,16 +64,23 @@ public class LoginPresenter<V extends LoginMvpView> extends BasePresenter<V>
                 .subscribeOn(getSchedulerProvider().io())
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(loginResponse -> {
-
                     if (!isViewAttached())
                         return;
-
                     getMvpView().hideLoading();
                     getMvpView().openMainActivity();
-
                 }, throwable -> {
                     getMvpView().hideLoading();
                 }));
 
+    }
+
+    @Override
+    public void onSignupClick() {
+        getMvpView().openSignupActivity();
+    }
+
+    @Override
+    public void onsignInAsGuestClick() {
+        getMvpView().openMainActivity();
     }
 }

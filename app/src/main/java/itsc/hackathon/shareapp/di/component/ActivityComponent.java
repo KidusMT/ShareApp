@@ -24,6 +24,7 @@ import itsc.hackathon.shareapp.ui.feed.opensource.OpenSourceFragment;
 import itsc.hackathon.shareapp.ui.login.LoginActivity;
 import itsc.hackathon.shareapp.ui.main.MainActivity;
 import itsc.hackathon.shareapp.ui.main.rating.RateUsDialog;
+import itsc.hackathon.shareapp.ui.signup.SignupActivity;
 import itsc.hackathon.shareapp.ui.splash.SplashActivity;
 
 import dagger.Component;
@@ -35,6 +36,8 @@ import dagger.Component;
 @PerActivity
 @Component(dependencies = ApplicationComponent.class, modules = ActivityModule.class)
 public interface ActivityComponent {
+
+    void inject(SignupActivity activity);
 
     void inject(MainActivity activity);
 
@@ -51,5 +54,6 @@ public interface ActivityComponent {
     void inject(BlogFragment fragment);
 
     void inject(RateUsDialog dialog);
+
 
 }

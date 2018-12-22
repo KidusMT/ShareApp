@@ -20,6 +20,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import itsc.hackathon.shareapp.R;
 import itsc.hackathon.shareapp.ui.base.BaseActivity;
@@ -30,6 +31,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import itsc.hackathon.shareapp.ui.signup.SignupActivity;
 
 
 /**
@@ -70,6 +72,16 @@ public class LoginActivity extends BaseActivity implements LoginMvpView {
                 mPasswordEditText.getText().toString());
     }
 
+    @OnClick(R.id.tv_sign_up)
+    void onSignupClick(View v){
+        mPresenter.onSignupClick();
+    }
+
+    @OnClick(R.id.signin_guest)
+    void onSignInAsGuestClick(View v ){
+        mPresenter.onsignInAsGuestClick();
+    }
+
 //    @OnClick(R.id.ib_google_login)
 //    void onGoogleLoginClick(View v) {
 ////        mPresenter.onGoogleLoginClick();
@@ -83,6 +95,13 @@ public class LoginActivity extends BaseActivity implements LoginMvpView {
     @Override
     public void openMainActivity() {
         Intent intent = MainActivity.getStartIntent(LoginActivity.this);
+        startActivity(intent);
+        finish();
+    }
+
+    @Override
+    public void openSignupActivity() {
+        Intent intent = SignupActivity.getStartIntent( LoginActivity.this);
         startActivity(intent);
         finish();
     }

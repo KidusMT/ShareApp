@@ -14,8 +14,8 @@
   -->
 
 <resources>
-    <color name="colorPrimary">@color/blue_black_light</color>
-    <color name="colorPrimaryDark">@color/black</color>
+    <color name="colorPrimary">#4b4d4f</color>
+    <color name="colorPrimaryDark">#313334</color>
     <color name="colorAccent">#FF4081</color>
     <color name="light_gray">#dbdbdb</color>
     <color name="gray">#7e7e7e</color>

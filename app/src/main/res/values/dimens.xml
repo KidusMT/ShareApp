@@ -36,4 +36,9 @@
 
     <dimen name="action_margin">16dp</dimen>
     <dimen name="fab_dimen">16dp</dimen>
+    <dimen name="input_layout_margin_side">8dp</dimen>
+    <dimen name="input_layout_margin">4dp</dimen>
+    <dimen name="input_layout_padding">6dp</dimen>
+    <dimen name="edit_text_margin">4dp</dimen>
+    <dimen name="edit_text_padding">3dp</dimen>
 </resources>

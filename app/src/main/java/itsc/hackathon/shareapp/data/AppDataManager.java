@@ -28,6 +28,8 @@ import itsc.hackathon.shareapp.data.network.model.LoginRequest;
 import itsc.hackathon.shareapp.data.network.model.LoginResponse;
 import itsc.hackathon.shareapp.data.network.model.LogoutResponse;
 import itsc.hackathon.shareapp.data.network.model.OpenSourceResponse;
+import itsc.hackathon.shareapp.data.network.model.SignupRequest;
+import itsc.hackathon.shareapp.data.network.model.SignupResponse;
 import itsc.hackathon.shareapp.data.prefs.PreferencesHelper;
 
 /**
@@ -66,10 +68,10 @@ public class AppDataManager implements DataManager {
 //        return mApiHelper.doServerLoginApiCall(request);
 //    }
 //
-    @Override
-    public Single<LogoutResponse> doLogoutApiCall() {
-        return mApiHelper.doLogoutApiCall();
-    }
+//    @Override
+//    public Single<LogoutResponse> doLogoutApiCall() {
+//        return mApiHelper.doLogoutApiCall();
+//    }
 
     @Override
     public int getCurrentUserLoggedInMode() {
@@ -152,6 +154,11 @@ public class AppDataManager implements DataManager {
     @Override
     public Observable<LoginResponse> doServerLoginApiCall(LoginRequest.ServerLoginRequest request) {
         return mApiHelper.doServerLoginApiCall(request);
+    }
+
+    @Override
+    public Observable<SignupResponse> doServerSignupCall(SignupRequest.ServerSignupRequest request) {
+        return mApiHelper.doServerSignupCall(request);
     }
 
     @Override

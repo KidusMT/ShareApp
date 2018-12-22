@@ -11,6 +11,8 @@ import io.reactivex.Observable;
 import itsc.hackathon.shareapp.BuildConfig;
 import itsc.hackathon.shareapp.data.network.model.LoginRequest;
 import itsc.hackathon.shareapp.data.network.model.LoginResponse;
+import itsc.hackathon.shareapp.data.network.model.SignupRequest;
+import itsc.hackathon.shareapp.data.network.model.SignupResponse;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
@@ -28,6 +30,10 @@ public interface ApiCall {
     @POST(ApiEndPoint.LOGIN)
     @Headers(ApiHeader.API_AUTH_TYPE + HEADER_PARAM_SEPARATOR + ApiHeader.PUBLIC_API)
     Observable<LoginResponse> login(@Body LoginRequest.ServerLoginRequest request);
+
+    @POST(ApiEndPoint.SIGNUP)
+    @Headers(ApiHeader.API_AUTH_TYPE + HEADER_PARAM_SEPARATOR + ApiHeader.PUBLIC_API)
+    Observable<SignupResponse> signup(@Body SignupRequest.ServerSignupRequest request);
 
     class Factory {
 

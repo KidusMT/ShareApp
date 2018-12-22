@@ -46,8 +46,8 @@
     <string name="password">Password</string>
 
     <!--Login Validation-->
-    <string name="empty_email">Please provide a non empty email.</string>
-    <string name="invalid_email">Please provide a valid email.</string>
+    <string name="empty_email">Please provide a non empty username.</string>
+    <string name="invalid_email">Please provide a valid username.</string>
     <string name="empty_password">Please provide a non empty password.</string>
 
     <!--about fragment-->
@@ -84,5 +84,12 @@
     <string name="empty_screen">We do not have anything\nhere right now.</string>
     <string name="please_retry">Please Retry</string>
     <string name="retry">Retry</string>
+    <string name="register">Register</string>
+    <string name="splash_copyright_label">&#169; 2018</string>
+    <string name="or">OR</string>
+    <string name="x">X</string>
+    <string name="empty_fullname">Please provide a non-empty full name.</string>
+    <string name="get_an_account_login">Get An Account? Login</string>
+    <string name="no_account_yet_register">No Account yet? Register</string>
 
 </resources>

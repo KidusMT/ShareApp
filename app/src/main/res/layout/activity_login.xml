@@ -76,7 +76,14 @@
                 android:layout_gravity="center"
                 android:layout_margin="5dp"
                 android:orientation="vertical">
-
+                <TextView
+                    android:id="@+id/signin_guest"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/x"
+                    android:textSize="16sp"
+                    android:padding="10dp"
+                    android:layout_gravity="right"/>
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="100dp"
@@ -84,9 +91,10 @@
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="20dp"
                     android:layout_marginEnd="10dp"
+                    android:tint="@color/colorPrimaryDark"
                     android:layout_marginBottom="10dp"
                     android:scaleType="fitCenter"
-                    app:srcCompat="@drawable/ic_mindorks_logo" />
+                    app:srcCompat="@drawable/ic_app_logo" />
 
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
@@ -151,58 +159,21 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginEnd="20dp"
-                    android:background="@drawable/bg_btn_curved_accent_color"
-                    android:text="login"
+                    android:layout_margin="20dp"
+                    android:background="@color/colorPrimaryDark"
+                    android:text="Login"
                     android:textColor="@color/white"
                     android:textSize="18dp" />
 
-                <Button
-                    android:id="@+id/btn_google_login"
-                    android:layout_width="match_parent"
+
+                <TextView
+                    android:id="@+id/tv_sign_up"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginEnd="20dp"
-                    android:layout_marginBottom="30dp"
-                    android:background="@drawable/bg_curved_primary_color"
-                    android:text="google"
-                    android:textColor="@color/white"
-                    android:textSize="18dp" />
-
-
-                <!--android:layout_marginTop="20dp"-->
-                <!--android:layout_marginBottom="30dp"-->
-
-                <android.support.v7.widget.AppCompatButton
-                    android:id="@+id/authorize"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/action_margin"
-                    android:layout_marginRight="@dimen/action_margin"
-                    android:text="make authorization request"
-                    android:visibility="gone" />
-
-                <android.support.v7.widget.AppCompatButton
-                    android:id="@+id/makeApiCall"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/action_margin"
-                    android:layout_marginRight="@dimen/action_margin"
-                    android:text="make api call"
-                    android:visibility="gone" />
-
-                <android.support.v7.widget.AppCompatButton
-                    android:id="@+id/signOut"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/action_margin"
-                    android:layout_marginRight="@dimen/action_margin"
-                    android:text="sign out"
-                    android:visibility="gone" />
+                    android:layout_marginBottom="@dimen/input_layout_margin"
+                    android:padding="@dimen/edit_text_padding"
+                    android:text="@string/no_account_yet_register"/>
 
 
             </LinearLayout>

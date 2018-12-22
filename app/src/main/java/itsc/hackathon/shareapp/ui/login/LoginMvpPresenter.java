@@ -27,7 +27,8 @@ import itsc.hackathon.shareapp.ui.base.MvpPresenter;
 public interface LoginMvpPresenter<V extends LoginMvpView> extends MvpPresenter<V> {
 
     void onServerLoginClick(String email, String password);
-
+    void onSignupClick();
+    void onsignInAsGuestClick();
 //    void onGoogleLoginClick();
 //
 //    void onFacebookLoginClick();

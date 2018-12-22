@@ -15,11 +15,12 @@
 
 package itsc.hackathon.shareapp.ui.splash;
 
+
+import android.os.Handler;
+
 import javax.inject.Inject;
 
-import io.reactivex.ObservableSource;
 import io.reactivex.disposables.CompositeDisposable;
-import itsc.hackathon.shareapp.R;
 import itsc.hackathon.shareapp.data.DataManager;
 import itsc.hackathon.shareapp.ui.base.BasePresenter;
 import itsc.hackathon.shareapp.utils.rx.SchedulerProvider;
@@ -76,11 +77,18 @@ public class SplashPresenter<V extends SplashMvpView> extends BasePresenter<V>
     }
 
     private void decideNextActivity() {
-        if (getDataManager().getCurrentUserLoggedInMode()
-                == DataManager.LoggedInMode.LOGGED_IN_MODE_LOGGED_OUT.getType()) {
-            getMvpView().openLoginActivity();
-        } else {
-            getMvpView().openMainActivity();
-        }
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (getDataManager().getCurrentUserLoggedInMode()
+                        == DataManager.LoggedInMode.LOGGED_IN_MODE_LOGGED_OUT.getType()) {
+                    getMvpView().openLoginActivity();
+                } else {
+                    getMvpView().openMainActivity();
+                }
+            }
+        }, 1500);
+
+
     }
 }
