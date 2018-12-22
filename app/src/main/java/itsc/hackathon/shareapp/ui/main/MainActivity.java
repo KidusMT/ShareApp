@@ -227,26 +227,23 @@ public class MainActivity extends BaseActivity implements MainMvpView {
 //        mEmailTextView = (TextView) headerLayout.findViewById(R.id.tv_email);
 
         mNavigationView.setNavigationItemSelectedListener(
-                new NavigationView.OnNavigationItemSelectedListener() {
-                    @Override
-                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                        mDrawer.closeDrawer(GravityCompat.START);
-                        switch (item.getItemId()) {
-                            case R.id.nav_item_about:
-                                mPresenter.onDrawerOptionAboutClick();
-                                return true;
-                            case R.id.nav_item_rate_us:
-                                mPresenter.onDrawerRateUsClick();
-                                return true;
-                            case R.id.nav_item_feed:
-                                mPresenter.onDrawerMyFeedClick();
-                                return true;
-                            case R.id.nav_item_logout:
-                                mPresenter.onDrawerOptionLogoutClick();
-                                return true;
-                            default:
-                                return false;
-                        }
+                item -> {
+                    mDrawer.closeDrawer(GravityCompat.START);
+                    switch (item.getItemId()) {
+                        case R.id.nav_item_about:
+                            mPresenter.onDrawerOptionAboutClick();
+                            return true;
+                        case R.id.nav_item_rate_us:
+                            mPresenter.onDrawerRateUsClick();
+                            return true;
+                        case R.id.nav_item_feed:
+                            mPresenter.onDrawerMyFeedClick();
+                            return true;
+                        case R.id.nav_item_logout:
+                            mPresenter.onDrawerOptionLogoutClick();
+                            return true;
+                        default:
+                            return false;
                     }
                 });
     }
