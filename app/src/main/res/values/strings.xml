@@ -92,4 +92,10 @@
     <string name="get_an_account_login">Get An Account? Login</string>
     <string name="no_account_yet_register">No Account yet? Register</string>
 
+    <string name="error_invalid_credential">Invalid credential! try again.</string>
+    <string name="error_file_does_not_exist">File does not exist.</string>
+    <string name="error_server_error">Internal Server Error.</string>
+    <string name="error_server_unreachable">Service Unavailable.</string>
+    <string name="error_something_wrong_happend">Something wrong happened. Please try again later.</string>
+
 </resources>

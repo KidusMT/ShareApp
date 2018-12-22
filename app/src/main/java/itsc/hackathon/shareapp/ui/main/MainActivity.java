@@ -67,11 +67,8 @@ public class MainActivity extends BaseActivity implements MainMvpView {
     @BindView(R.id.tv_app_version)
     TextView mAppVersionTextView;
 
-
 //    private TextView mNameTextView;
-//
 //    private TextView mEmailTextView;
-
 //    private RoundedImageView mProfileImageView;
 
     private ActionBarDrawerToggle mDrawerToggle;
@@ -105,47 +102,6 @@ public class MainActivity extends BaseActivity implements MainMvpView {
             onFragmentDetached(AboutFragment.TAG);
         }
     }
-
-//    @Override
-//    public void refreshQuestionnaire(List<Question> questionList) {
-//        for (Question question : questionList) {
-//            if (question != null
-//                    && question.getOptionList() != null
-//                    && question.getOptionList().size() == 3) {
-//                mCardsContainerView.addView(new QuestionCard(question));
-//            }
-//        }
-//    }
-
-//    @Override
-//    public void reloadQuestionnaire(List<Question> questionList) {
-//        refreshQuestionnaire(questionList);
-//        ScaleAnimation animation =
-//                new ScaleAnimation(
-//                        1.15f, 1, 1.15f, 1,
-//                        Animation.RELATIVE_TO_SELF, 0.5f,
-//                        Animation.RELATIVE_TO_SELF, 0.5f);
-//
-//        mCardsContainerView.setAnimation(animation);
-//        animation.setDuration(100);
-//        animation.start();
-//    }
-
-
-//    @Override
-//    public void updateUserName(String currentUserName) {
-//        mNameTextView.setText(currentUserName);
-//    }
-//
-//    @Override
-//    public void updateUserEmail(String currentUserEmail) {
-//        mEmailTextView.setText(currentUserEmail);
-//    }
-//
-//    @Override
-//    public void updateUserProfilePic(String currentUserProfilePicUrl) {
-//        //load profile pic url into ANImageView
-//    }
 
     @Override
     protected void onResume() {

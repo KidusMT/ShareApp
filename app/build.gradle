@@ -101,6 +101,10 @@ dependencies {
     androidTestImplementation "com.android.support.test.espresso:espresso-intents:$rootProject.espressoVersion"
     androidTestImplementation "org.mockito:mockito-core:$rootProject.mockitoVersion"
     androidTestAnnotationProcessor "com.google.dagger:dagger-compiler:$rootProject.dagger2Version"
+
+    // allowing multi-dex for api < 20
+    implementation 'com.android.support:multidex:1.0.3'
+
 }
 
 configurations.all {

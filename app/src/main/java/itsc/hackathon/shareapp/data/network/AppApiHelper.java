@@ -15,6 +15,8 @@
 
 package itsc.hackathon.shareapp.data.network;
 
+import java.util.List;
+
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
@@ -24,6 +26,7 @@ import itsc.hackathon.shareapp.data.network.model.LoginRequest;
 import itsc.hackathon.shareapp.data.network.model.LoginResponse;
 import itsc.hackathon.shareapp.data.network.model.SignupRequest;
 import itsc.hackathon.shareapp.data.network.model.SignupResponse;
+import itsc.hackathon.shareapp.data.network.model.post.Post;
 
 /**
  * Created by janisharali on 28/01/17.
@@ -61,6 +64,11 @@ public class AppApiHelper implements ApiHelper {
     @Override
     public Observable<SignupResponse> doServerSignupCall(SignupRequest.ServerSignupRequest request) {
         return mApiCall.signup(request);
+    }
+
+    @Override
+    public Observable<List<Post>> getPosts() {
+        return mApiCall.getPosts();
     }
 
 //    @Override

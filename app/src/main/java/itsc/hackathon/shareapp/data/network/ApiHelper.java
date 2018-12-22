@@ -15,13 +15,14 @@
 
 package itsc.hackathon.shareapp.data.network;
 
+import java.util.List;
+
 import io.reactivex.Observable;
-import io.reactivex.Single;
 import itsc.hackathon.shareapp.data.network.model.LoginRequest;
 import itsc.hackathon.shareapp.data.network.model.LoginResponse;
-import itsc.hackathon.shareapp.data.network.model.LogoutResponse;
 import itsc.hackathon.shareapp.data.network.model.SignupRequest;
 import itsc.hackathon.shareapp.data.network.model.SignupResponse;
+import itsc.hackathon.shareapp.data.network.model.post.Post;
 
 /**
  * Created by janisharali on 27/01/17.
@@ -32,7 +33,10 @@ public interface ApiHelper {
     ApiHeader getApiHeader();
 
     Observable<LoginResponse> doServerLoginApiCall(LoginRequest.ServerLoginRequest request);
+
     Observable<SignupResponse> doServerSignupCall(SignupRequest.ServerSignupRequest request);
+
+    Observable<List<Post>> getPosts();
 
 //  Single<LogoutResponse> doLogoutApiCall();
 }

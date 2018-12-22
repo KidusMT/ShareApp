@@ -19,6 +19,11 @@ import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 
+import java.util.ArrayList;
+
+import dagger.Module;
+import dagger.Provides;
+import io.reactivex.disposables.CompositeDisposable;
 import itsc.hackathon.shareapp.data.network.model.BlogResponse;
 import itsc.hackathon.shareapp.data.network.model.OpenSourceResponse;
 import itsc.hackathon.shareapp.di.ActivityContext;
@@ -47,6 +52,10 @@ import itsc.hackathon.shareapp.ui.main.MainPresenter;
 import itsc.hackathon.shareapp.ui.main.rating.RatingDialogMvpPresenter;
 import itsc.hackathon.shareapp.ui.main.rating.RatingDialogMvpView;
 import itsc.hackathon.shareapp.ui.main.rating.RatingDialogPresenter;
+import itsc.hackathon.shareapp.ui.post.PostAdapter;
+import itsc.hackathon.shareapp.ui.post.PostMvpPresenter;
+import itsc.hackathon.shareapp.ui.post.PostMvpView;
+import itsc.hackathon.shareapp.ui.post.PostPresenter;
 import itsc.hackathon.shareapp.ui.signup.SignupMvpPresenter;
 import itsc.hackathon.shareapp.ui.signup.SignupMvpView;
 import itsc.hackathon.shareapp.ui.signup.SignupPresenter;
@@ -55,12 +64,6 @@ import itsc.hackathon.shareapp.ui.splash.SplashMvpView;
 import itsc.hackathon.shareapp.ui.splash.SplashPresenter;
 import itsc.hackathon.shareapp.utils.rx.AppSchedulerProvider;
 import itsc.hackathon.shareapp.utils.rx.SchedulerProvider;
-
-import java.util.ArrayList;
-
-import dagger.Module;
-import dagger.Provides;
-import io.reactivex.disposables.CompositeDisposable;
 
 /**
  * Created by janisharali on 27/01/17.
@@ -162,6 +165,17 @@ public class ActivityModule {
     @Provides
     OpenSourceAdapter provideOpenSourceAdapter() {
         return new OpenSourceAdapter(new ArrayList<OpenSourceResponse.Repo>());
+    }
+
+    @Provides
+    PostAdapter providePostAdapter() {
+        return new PostAdapter(new ArrayList<>());
+    }
+
+    @Provides
+    PostMvpPresenter<PostMvpView> providePostPresenter(
+            PostPresenter<PostMvpView> presenter) {
+        return presenter;
     }
 
     @Provides

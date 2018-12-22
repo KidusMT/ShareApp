@@ -23,7 +23,7 @@ public final class ApiEndPoint {
 
     public final static String LOGIN = "users/login";
     public final static String SIGNUP = "users";
-    public final static String SENSOR = "sensors";
+    public final static String POST = "posts";
 
     public final static String NOTIFICATION = "notifications";
     public final static String USERS = "users";

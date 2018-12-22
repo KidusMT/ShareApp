@@ -16,6 +16,8 @@
 package itsc.hackathon.shareapp.data;
 
 
+import java.util.List;
+
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
@@ -30,6 +32,7 @@ import itsc.hackathon.shareapp.data.network.model.LogoutResponse;
 import itsc.hackathon.shareapp.data.network.model.OpenSourceResponse;
 import itsc.hackathon.shareapp.data.network.model.SignupRequest;
 import itsc.hackathon.shareapp.data.network.model.SignupResponse;
+import itsc.hackathon.shareapp.data.network.model.post.Post;
 import itsc.hackathon.shareapp.data.prefs.PreferencesHelper;
 
 /**
@@ -159,6 +162,11 @@ public class AppDataManager implements DataManager {
     @Override
     public Observable<SignupResponse> doServerSignupCall(SignupRequest.ServerSignupRequest request) {
         return mApiHelper.doServerSignupCall(request);
+    }
+
+    @Override
+    public Observable<List<Post>> getPosts() {
+        return mApiHelper.getPosts();
     }
 
     @Override

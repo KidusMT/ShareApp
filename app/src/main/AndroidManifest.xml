@@ -33,6 +33,7 @@
             android:theme="@style/AppTheme.Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -55,7 +56,8 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.main.MainActivity" />
         </activity>
-        <activity android:name=".ui.signup.SignupActivity"></activity>
+        <activity android:name=".ui.signup.SignupActivity" />
+        <activity android:name=".ui.detail.DetailActivity"></activity>
     </application>
 
 </manifest>
