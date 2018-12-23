@@ -86,69 +86,9 @@ public class NotificationAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
                 notification = notifications.get(position);
 
-//                // sensor name
-//                if (notification.getCondition().getSensors().size() > 0) {
-//                    for (int i = 0; i < notification.getCondition().getSensors().size(); i++) {
-//                        mNotificationSensorName.setText(String.valueOf(
-//                                (notification.getCondition().getSensors().size() == 1) ? notification.getCondition().getSensors().get(i)
-//                                        : (notification.getCondition().getSensors().size() == i) ? notification.getCondition().getSensors().get(i)
-//                                        : notification.getCondition().getSensors().get(i) + ", "));
-//                    }
-//                } else {
-//                    mNotificationSensorName.setVisibility(View.GONE);
-//                }
-//
-//                // measurement
-//                if (notification.getCondition().getMeasurements().size() > 0) {
-//                    for (int i = 0; i < notification.getCondition().getMeasurements().size(); i++) {
-//                        mNotificationMeasurement.setText(String.valueOf(
-//                                (notification.getCondition().getMeasurements().size() == 1) ? notification.getCondition().getMeasurements().get(i)
-//                                        : (notification.getCondition().getMeasurements().size() == i) ? notification.getCondition().getMeasurements().get(i)
-//                                        : notification.getCondition().getMeasurements().get(i) + ", "));
-//                    }
-//                } else {
-//                    mNotificationMeasurement.setVisibility(View.GONE);
-//                }
-//
-//                // expression
-//                if (!TextUtils.isEmpty(notification.getCondition().getExpression())) {
-//                    mNotificationExpression.setText(String.valueOf(notification.getCondition().getExpression()));
-//                } else {
-//                    mNotificationExpression.setVisibility(View.GONE);
-//                }
-//
-//                // message
-//                if (!TextUtils.isEmpty(notification.getNotification().getMessage())) {
-//                    mNotificationMessage.setText(String.valueOf(notification.getNotification().getMessage()));
-//                } else {
-//                    mNotificationMessage.setVisibility(View.GONE);
-//                }
-//
-//                // owner
-//                if (notification.getNotification().getUsernames().size() > 0) {
-//                    for (int i = 0; i < notification.getNotification().getUsernames().size(); i++) {
-//                        mNotificationOwner.setText(String.valueOf(
-//                                (notification.getNotification().getUsernames().size() == 1) ? notification.getNotification().getUsernames().get(i)
-//                                        : (notification.getNotification().getUsernames().size() == i) ? notification.getNotification().getUsernames().get(i)
-//                                        : notification.getNotification().getUsernames().get(i) + ", "));
-//                    }
-//                } else {
-//                    mNotificationOwner.setVisibility(View.GONE);
-//                }
-//
-//                // shared at
-//                if (notification.getCondition().getSensors().size() > 0) {
-//                    for (int i = 0; i < notification.getNotification().getChannels().size(); i++) {
-//                        mNotificationSharedAt.setText(String.valueOf(
-//                                (notification.getNotification().getChannels().size() == 1) ?
-//                                        notification.getNotification().getChannels().get(i)
-//                                        : (notification.getNotification().getChannels().size() == i) ?
-//                                        notification.getNotification().getChannels().get(i)
-//                                        : notification.getNotification().getChannels().get(i) + ", "));
-//                    }
-//                } else {
-//                    mNotificationSharedAt.setVisibility(View.GONE);
-//                }
+                notificationTitle.setText(notification.getNotificationTitle());
+                notificationDate.setText(notification.getNotificationDate());
+                notificationTopic.setText(notification.getNotificationTopic());
 
             } else {
                 // todo find a better way of handling this condition

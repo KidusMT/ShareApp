@@ -20,7 +20,7 @@
             android:orientation="vertical">
 
             <android.support.v4.widget.SwipeRefreshLayout
-                android:id="@+id/subscription_swipe_to_refresh"
+                android:id="@+id/notification_swipe_to_refresh"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior">
@@ -32,7 +32,7 @@
                     android:layout_marginEnd="5dp">
 
                     <android.support.v7.widget.RecyclerView
-                        android:id="@+id/subscription_recycler"
+                        android:id="@+id/notification_recycler"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_marginTop="3dp"
@@ -40,7 +40,7 @@
                         tools:listitem="@layout/card_topic" />
 
                     <TextView
-                        android:id="@+id/tv_no_subscription"
+                        android:id="@+id/tv_no_notification"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
