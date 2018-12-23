@@ -62,12 +62,12 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
-    public Long getCurrentUserId() {
+    public String getCurrentUserId() {
         return mPreferencesHelper.getCurrentUserId();
     }
 
     @Override
-    public void setCurrentUserId(Long userId) {
+    public void setCurrentUserId(String userId) {
         mPreferencesHelper.setCurrentUserId(userId);
     }
 

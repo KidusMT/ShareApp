@@ -9,6 +9,7 @@ import itsc.hackathon.shareapp.data.network.model.SignupRequest;
 import itsc.hackathon.shareapp.ui.base.BasePresenter;
 import itsc.hackathon.shareapp.ui.login.LoginMvpPresenter;
 import itsc.hackathon.shareapp.ui.login.LoginMvpView;
+import itsc.hackathon.shareapp.utils.CommonUtils;
 import itsc.hackathon.shareapp.utils.rx.SchedulerProvider;
 
 public class SignupPresenter<V extends SignupMvpView> extends BasePresenter<V>
@@ -44,7 +45,12 @@ public class SignupPresenter<V extends SignupMvpView> extends BasePresenter<V>
                     getMvpView().hideLoading();
                     getMvpView().openMainActivity();
                 },throwable -> {
+
+                    if (!isViewAttached())
+                        return;
+
                     getMvpView().hideLoading();
+                    getMvpView().onError(CommonUtils.getErrorMessage(throwable));
                 }));
     }
 

@@ -69,7 +69,6 @@ public class PostPresenter<V extends PostMvpView> extends BasePresenter<V>
                                 }));
                     }
 
-                    Log.e("--->topics", String.valueOf(posts.get(0).getTopics()));
                     // replace with the loaded topics when finished the loop
                     getMvpView().showPosts(posts);
 

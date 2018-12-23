@@ -65,7 +65,7 @@ public interface ApiCall {
     @Headers(ApiHeader.API_AUTH_TYPE + HEADER_PARAM_SEPARATOR + ApiHeader.PUBLIC_API)
     Observable<List<Topic>> getSubscription(@Path("users_id") String sensorId);
 
-    @Streaming //todo this has to be handled well runs on main thread
+    @Streaming
     @GET(FILE_DOWNLOAD)
     @Headers(ApiHeader.API_AUTH_TYPE + HEADER_PARAM_SEPARATOR + ApiHeader.PUBLIC_API)
     Call<ResponseBody> downloadFile(@Path("file") String file);

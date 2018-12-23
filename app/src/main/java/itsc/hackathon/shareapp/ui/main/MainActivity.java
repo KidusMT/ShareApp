@@ -45,6 +45,7 @@ import itsc.hackathon.shareapp.R;
 import itsc.hackathon.shareapp.data.network.model.post.Post;
 import itsc.hackathon.shareapp.data.network.model.topic.Topic;
 import itsc.hackathon.shareapp.ui.base.BaseActivity;
+import itsc.hackathon.shareapp.ui.create.CreateFragment;
 import itsc.hackathon.shareapp.ui.custom.RoundedImageView;
 import itsc.hackathon.shareapp.ui.detail.DetailPostFragment;
 import itsc.hackathon.shareapp.ui.login.LoginActivity;
@@ -312,7 +313,13 @@ public class MainActivity extends BaseActivity implements MainMvpView, PostCommu
 
     @Override
     public void openRegistrationSensor() {
+        lockDrawer();
 
+        getSupportFragmentManager()
+                .beginTransaction()
+                .setCustomAnimations(R.anim.fade_in, R.anim.fade_out)
+                .replace(R.id.cl_root_view, CreateFragment.newInstance(), CreateFragment.TAG)
+                .commit();
     }
 
     @Override

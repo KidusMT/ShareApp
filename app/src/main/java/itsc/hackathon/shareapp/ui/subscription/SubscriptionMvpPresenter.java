@@ -11,5 +11,5 @@ import itsc.hackathon.shareapp.ui.base.MvpPresenter;
 @PerActivity
 public interface SubscriptionMvpPresenter<V extends SubscriptionMvpView> extends MvpPresenter<V> {
 
-    void loadPosts();
+    void loadSubscription();
 }

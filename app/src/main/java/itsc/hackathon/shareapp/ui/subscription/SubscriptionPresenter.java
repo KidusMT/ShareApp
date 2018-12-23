@@ -23,7 +23,7 @@ public class SubscriptionPresenter<V extends SubscriptionMvpView> extends BasePr
     }
 
     @Override
-    public void loadPosts() {
+    public void loadSubscription() {
         getMvpView().showLoading();
         getCompositeDisposable().add(getDataManager().getSubscription(String.valueOf(getDataManager().getCurrentUserId()))
                 .subscribeOn(getSchedulerProvider().io())

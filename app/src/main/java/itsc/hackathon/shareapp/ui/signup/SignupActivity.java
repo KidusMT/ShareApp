@@ -49,8 +49,8 @@ public class SignupActivity extends BaseActivity implements SignupMvpView {
     }
 
     @OnClick(R.id.btn_register)
-    void onServerSignupCLick(View v){
-        Toast.makeText(this, "Hey", Toast.LENGTH_SHORT).show();
+    void onServerSignupCLick(){
+//        Toast.makeText(this, "Hey", Toast.LENGTH_SHORT).show();
         mPresenter.onServerSignupCLick(mFullNameEditText.getText().toString(),
                 mUserNameEditText.getText().toString(),
                 mEmailEditText.getText().toString(),
