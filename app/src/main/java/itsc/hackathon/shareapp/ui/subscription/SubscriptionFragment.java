@@ -202,6 +202,6 @@ public class SubscriptionFragment extends BaseFragment implements SubscriptionMv
 
     @Override
     public void onItemClicked(Topic topic) {
-        communicator.onItemClicked(topic);
+//        communicator.onItemClicked(topic);
     }
 }

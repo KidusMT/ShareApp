@@ -2,7 +2,6 @@ package itsc.hackathon.shareapp.ui.detail;
 
 import android.Manifest;
 import android.app.Dialog;
-import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.hardware.Sensor;
@@ -61,7 +60,6 @@ import retrofit2.Call;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
-import static android.provider.Telephony.ServiceStateTable.AUTHORITY;
 import static itsc.hackathon.shareapp.utils.AppConstants.DETAIL_POST_KEY;
 
 public class DetailPostFragment extends BaseFragment implements DetailPostMvpView, DetailAdapter.Callback {
@@ -171,12 +169,12 @@ public class DetailPostFragment extends BaseFragment implements DetailPostMvpVie
                 != PackageManager.PERMISSION_GRANTED &&
                 ContextCompat.checkSelfPermission(getBaseActivity(),
                         Manifest.permission.READ_EXTERNAL_STORAGE)
-                != PackageManager.PERMISSION_GRANTED) {
+                        != PackageManager.PERMISSION_GRANTED) {
 
             // Permission is not granted
             // Should we show an explanation?
             if (ActivityCompat.shouldShowRequestPermissionRationale(getBaseActivity(),
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE ) &&
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE) &&
                     ActivityCompat.shouldShowRequestPermissionRationale(getBaseActivity(),
                             Manifest.permission.READ_EXTERNAL_STORAGE)) {
                 // Show an explanation to the user *asynchronously* -- don't block
@@ -329,7 +327,7 @@ public class DetailPostFragment extends BaseFragment implements DetailPostMvpVie
             if (!TextUtils.isEmpty(post.getFile())) {
                 // todo check this out later
                 fileName = post.getFile().substring(post.getFile().lastIndexOf("/") + 1, post.getFile().length());
-                destinationFile = new java.io.File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), fileName);
+                destinationFile = new java.io.File(getBaseActivity().getFilesDir(), fileName);
 
                 title.setText(String.valueOf(fileName));
 
@@ -427,7 +425,7 @@ public class DetailPostFragment extends BaseFragment implements DetailPostMvpVie
             if (progress[0].second > 0) {
                 int currentProgress = (int) ((double) progress[0].first / (double) progress[0].second * 100);
 //                progressBar.setProgress(currentProgress);
-
+//
 //                txtProgressPercent.setText("Progress " + currentProgress + "%");
 
             }
@@ -451,7 +449,7 @@ public class DetailPostFragment extends BaseFragment implements DetailPostMvpVie
     private void saveToDisk(ResponseBody body, String filename) {
         try {
 
-            File destinationFile = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), filename);
+            File destinationFile = new File(getBaseActivity().getFilesDir(), filename);//Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
 
             InputStream inputStream = null;
             OutputStream outputStream = null;
@@ -479,7 +477,7 @@ public class DetailPostFragment extends BaseFragment implements DetailPostMvpVie
                 Pair<Integer, Long> pairs = new Pair<>(100, 100L);
                 downloadZipFileTask.doProgress(pairs);
                 return;
-            } catch (IOException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
                 Pair<Integer, Long> pairs = new Pair<>(-1, Long.valueOf(-1));
                 downloadZipFileTask.doProgress(pairs);
@@ -490,7 +488,7 @@ public class DetailPostFragment extends BaseFragment implements DetailPostMvpVie
                 if (inputStream != null) inputStream.close();
                 if (outputStream != null) outputStream.close();
             }
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
 //            Toast.makeTex(getBaseActivity(), "Failed to save the file!", Toast.LENGTH_SHORT).show();
             Log.d(TAG, "Failed to save the file!");
@@ -527,7 +525,7 @@ public class DetailPostFragment extends BaseFragment implements DetailPostMvpVie
 //        startActivity(intent);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            File file=new File(filePath);
+            File file = new File(filePath);
 //            Uri uri = FileProvider.getUriForFile(getBaseActivity(), getBaseActivity().getPackageName() + ".fileProvider", file);
 //            intent = new Intent(Intent.ACTION_VIEW);
 //            intent.setData(uri);

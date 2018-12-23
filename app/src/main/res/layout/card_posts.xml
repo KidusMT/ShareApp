@@ -202,6 +202,7 @@
                     <TextView
                         android:id="@+id/card_post_vote_count"
                         android:layout_width="20dp"
+                        android:text="2"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="12dp"
                         android:layout_marginRight="12dp"

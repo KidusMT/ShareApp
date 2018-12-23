@@ -48,13 +48,13 @@ public class TopicFragment extends BaseFragment implements TopicMvpView, TopicAd
     @Inject
     LinearLayoutManager mLayoutManager;
 
-    @BindView(R.id.subscription_recycler)
+    @BindView(R.id.notification_recycler)
     RecyclerView mRecyclerView;
 
-    @BindView(R.id.subscription_swipe_to_refresh)
+    @BindView(R.id.notification_swipe_to_refresh)
     SwipeRefreshLayout mSwipeRefreshLayout;
 
-    @BindView(R.id.tv_no_subscription)
+    @BindView(R.id.tv_no_notification)
     TextView tvNoSensors;
 
     SubscriptionCommunicator communicator;
@@ -105,7 +105,7 @@ public class TopicFragment extends BaseFragment implements TopicMvpView, TopicAd
         setUpRecyclerView();
         mPresenter.loadSubscription();
         if (getBaseActivity().getSupportActionBar() != null)
-            getBaseActivity().getSupportActionBar().setTitle("My Subscriptions");
+            getBaseActivity().getSupportActionBar().setTitle("Topic");
     }
 
     private void setUpRecyclerView() {
@@ -200,6 +200,6 @@ public class TopicFragment extends BaseFragment implements TopicMvpView, TopicAd
 
     @Override
     public void onItemClicked(Topic topic) {
-        communicator.onItemClicked(topic);
+//        communicator.onItemClicked(topic);
     }
 }
