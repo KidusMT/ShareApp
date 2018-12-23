@@ -1,14 +1,20 @@
 package itsc.hackathon.shareapp.ui.detail;
 
+import android.Manifest;
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.hardware.Sensor;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.content.FileProvider;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -54,6 +60,7 @@ import retrofit2.Call;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
+import static android.provider.Telephony.ServiceStateTable.AUTHORITY;
 import static itsc.hackathon.shareapp.utils.AppConstants.DETAIL_POST_KEY;
 
 public class DetailPostFragment extends BaseFragment implements DetailPostMvpView, DetailAdapter.Callback {
@@ -126,6 +133,8 @@ public class DetailPostFragment extends BaseFragment implements DetailPostMvpVie
 
     String fileName;
 
+    final int MY_PERMISSIONS_REQUEST_READ_CONTACTS = 100;
+
 
     public static final String TAG = "DetailPostFragment";
 
@@ -154,8 +163,36 @@ public class DetailPostFragment extends BaseFragment implements DetailPostMvpVie
             setUnBinder(ButterKnife.bind(this, view));
             mPresenter.onAttach(this);
             mAdapter.setCallback(this);
-//            mAdapter.setEditCallback(this);
-//            mAdapter.setDeleteCallback(this);
+        }
+
+        if (ContextCompat.checkSelfPermission(getBaseActivity(),
+                Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED &&
+                ContextCompat.checkSelfPermission(getBaseActivity(),
+                        Manifest.permission.READ_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            // Permission is not granted
+            // Should we show an explanation?
+            if (ActivityCompat.shouldShowRequestPermissionRationale(getBaseActivity(),
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE ) &&
+                    ActivityCompat.shouldShowRequestPermissionRationale(getBaseActivity(),
+                            Manifest.permission.READ_EXTERNAL_STORAGE)) {
+                // Show an explanation to the user *asynchronously* -- don't block
+                // this thread waiting for the user's response! After the user
+                // sees the explanation, try again to request the permission.
+            } else {
+                // No explanation needed; request the permission
+                ActivityCompat.requestPermissions(getBaseActivity(),
+                        new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE},
+                        MY_PERMISSIONS_REQUEST_READ_CONTACTS);
+
+                // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
+                // app-defined int constant. The callback method gets the
+                // result of the request.
+            }
+        } else {
+            // Permission has already been granted
         }
 
         if (getArguments() != null)
@@ -172,6 +209,29 @@ public class DetailPostFragment extends BaseFragment implements DetailPostMvpVie
         });
 
         return view;
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case MY_PERMISSIONS_REQUEST_READ_CONTACTS: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    // permission was granted, yay! Do the
+                    // contacts-related task you need to do.
+                } else {
+                    // permission denied, boo! Disable the
+                    // functionality that depends on this permission.
+                    getBaseActivity().onFragmentDetached(TAG, parentFragment);
+                }
+                return;
+            }
+
+            // other 'case' lines to check for other
+            // permissions this app might request.
+        }
     }
 
     @Override
@@ -265,11 +325,10 @@ public class DetailPostFragment extends BaseFragment implements DetailPostMvpVie
                 mPostTitle.setText(String.valueOf(post.getTitle()));
 
 
-
             if (!TextUtils.isEmpty(post.getFile())) {
                 // todo check this out later
-                fileName = post.getFile().substring(post.getFile().lastIndexOf("/")+1,post.getFile().length()-1);
-                destinationFile = new java.io.File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), post.getFile());
+                fileName = post.getFile().substring(post.getFile().lastIndexOf("/") + 1, post.getFile().length());
+                destinationFile = new java.io.File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), fileName);
 
                 title.setText(String.valueOf(fileName));
 
@@ -291,8 +350,8 @@ public class DetailPostFragment extends BaseFragment implements DetailPostMvpVie
                         dialog.setCancelable(false);
 
                         // set the custom dialog components - text, image and button
-                //            txtProgressPercent = dialog.findViewById(R.id.txtProgressPercent);
-                //            progressBar = dialog.findViewById(R.id.pb_loading);
+                        //            txtProgressPercent = dialog.findViewById(R.id.txtProgressPercent);
+                        //            progressBar = dialog.findViewById(R.id.pb_loading);
 
                         Button dialogButton = dialog.findViewById(R.id.dialogButtonCancel);
 
@@ -300,35 +359,36 @@ public class DetailPostFragment extends BaseFragment implements DetailPostMvpVie
                         Retrofit.Builder builder = new Retrofit.Builder().baseUrl(BuildConfig.BASE_URL);
                         Retrofit retrofit = builder.build();
                         ApiCall fileDownloadClient = retrofit.create(ApiCall.class);
-                        if (!TextUtils.isEmpty(fileName)){
-                            Call<ResponseBody> call = fileDownloadClient.downloadFile(fileName);
 
-                            call.enqueue(new retrofit2.Callback<ResponseBody>() {
-                                @Override
-                                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+//                        Log.e("---->got here", fileName);
+                        Call<ResponseBody> call = fileDownloadClient.downloadFile(fileName);
 
-                                    if (response.isSuccessful()) {
-                                        if (response.body() != null)
-                                            writeResponseBodyToDisk(response.body(), dialog);
-                                    }
+                        call.enqueue(new retrofit2.Callback<ResponseBody>() {
+                            @Override
+                            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+
+                                if (response.isSuccessful()) {
+                                    if (response.body() != null)
+                                        writeResponseBodyToDisk(response.body(), dialog);
                                 }
+                            }
 
-                                @Override
-                                public void onFailure(Call<ResponseBody> call, Throwable t) {
-                                    dialog.dismiss();
-                                    onError(CommonUtils.getErrorMessage(t));
-                                }
-                            });
-
-                            // if button is clicked, close the custom dialog
-                            dialogButton.setOnClickListener(v -> {
-                                call.cancel();
+                            @Override
+                            public void onFailure(Call<ResponseBody> call, Throwable t) {
                                 dialog.dismiss();
-                            });
-                        }
+                                onError(CommonUtils.getErrorMessage(t));
+                            }
+                        });
+
+                        // if button is clicked, close the custom dialog
+                        dialogButton.setOnClickListener(v -> {
+                            call.cancel();
+                            dialog.dismiss();
+                        });
 
                         dialog.show();
                     }
+
                 });
             }
             if (!TextUtils.isEmpty(post.getDescription()))
@@ -422,7 +482,7 @@ public class DetailPostFragment extends BaseFragment implements DetailPostMvpVie
                 e.printStackTrace();
                 Pair<Integer, Long> pairs = new Pair<>(-1, Long.valueOf(-1));
                 downloadZipFileTask.doProgress(pairs);
-                Toast.makeText(getBaseActivity(), "Failed to save the file!", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getBaseActivity(), "Failed to save the file!", Toast.LENGTH_SHORT).show();
                 Log.d(TAG, "Failed to save the file!");
                 return;
             } finally {
@@ -431,26 +491,54 @@ public class DetailPostFragment extends BaseFragment implements DetailPostMvpVie
             }
         } catch (IOException e) {
             e.printStackTrace();
-            Toast.makeText(getBaseActivity(), "Failed to save the file!", Toast.LENGTH_SHORT).show();
+//            Toast.makeTex(getBaseActivity(), "Failed to save the file!", Toast.LENGTH_SHORT).show();
             Log.d(TAG, "Failed to save the file!");
             return;
         }
     }
 
     public void openFile(String filePath) {
-        java.io.File file = new File(filePath);
-        MimeTypeMap map = MimeTypeMap.getSingleton();
-        String ext = MimeTypeMap.getFileExtensionFromUrl(file.getName());
-        String type = map.getMimeTypeFromExtension(ext);
+//        File file = new File(filePath);
+//        MimeTypeMap map = MimeTypeMap.getSingleton();
+//        String ext = MimeTypeMap.getFileExtensionFromUrl(file.getName());
+//        String type = map.getMimeTypeFromExtension(ext);
+//
+//        if (type == null)
+//            type = "*/*";
+//
+//        Intent intent = new Intent(Intent.ACTION_VIEW);
+//        Uri data = Uri.fromFile(file);
+//
+//        intent.setDataAndType(data, type);
+//
+//        startActivity(intent);
 
-        if (type == null)
-            type = "*/*";
-
+//        Intent i=new Intent(Intent.ACTION_VIEW, FileProvider.getUriForFile(getBaseActivity(), AUTHORITY, file));
+//
+//        i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+//        startActivity(i);
+//
+//        File file = new File( Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),mParam1.getEmlak_id()+".pdf");
+//        Uri pdfUri = FileProvider.getUriForFile(getBaseActivity(), getBaseActivity().getApplicationContext().getPackageName() + ".itsc.hackathon.shareapp.provider", file);
         Intent intent = new Intent(Intent.ACTION_VIEW);
-        Uri data = Uri.fromFile(file);
+//        intent.setDataAndType(pdfUri, "application/pdf");
+//        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+//        startActivity(intent);
 
-        intent.setDataAndType(data, type);
 
-        startActivity(intent);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            File file=new File(filePath);
+            Uri uri = FileProvider.getUriForFile(getBaseActivity(), getBaseActivity().getPackageName() + ".provider", file);
+            intent = new Intent(Intent.ACTION_VIEW);
+            intent.setData(uri);
+            intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            startActivity(intent);
+        } else {
+            intent = new Intent(Intent.ACTION_VIEW);
+            intent.setDataAndType(Uri.parse(filePath), "application/pdf");
+            intent = Intent.createChooser(intent, "Open File");
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+        }
     }
 }

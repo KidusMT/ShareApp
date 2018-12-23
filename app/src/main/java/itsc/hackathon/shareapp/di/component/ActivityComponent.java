@@ -19,6 +19,7 @@ import dagger.Component;
 import itsc.hackathon.shareapp.di.PerActivity;
 import itsc.hackathon.shareapp.di.module.ActivityModule;
 import itsc.hackathon.shareapp.ui.about.AboutFragment;
+import itsc.hackathon.shareapp.ui.create.CreateFragment;
 import itsc.hackathon.shareapp.ui.detail.DetailAdapter;
 import itsc.hackathon.shareapp.ui.detail.DetailPostFragment;
 import itsc.hackathon.shareapp.ui.login.LoginActivity;
@@ -51,6 +52,9 @@ public interface ActivityComponent {
     void inject(SplashActivity activity);
 
     void inject(AboutFragment fragment);
+
+    // create
+    void inject(CreateFragment fragment);
 
     //subscription
     void inject(SubscriptionFragment fragment);

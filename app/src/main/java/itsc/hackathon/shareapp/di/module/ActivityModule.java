@@ -29,6 +29,10 @@ import itsc.hackathon.shareapp.di.PerActivity;
 import itsc.hackathon.shareapp.ui.about.AboutMvpPresenter;
 import itsc.hackathon.shareapp.ui.about.AboutMvpView;
 import itsc.hackathon.shareapp.ui.about.AboutPresenter;
+import itsc.hackathon.shareapp.ui.base.MvpPresenter;
+import itsc.hackathon.shareapp.ui.create.CreateMvpPresenter;
+import itsc.hackathon.shareapp.ui.create.CreateMvpView;
+import itsc.hackathon.shareapp.ui.create.CreatePresenter;
 import itsc.hackathon.shareapp.ui.detail.DetailAdapter;
 import itsc.hackathon.shareapp.ui.detail.DetailPostMvpPresenter;
 import itsc.hackathon.shareapp.ui.detail.DetailPostMvpView;
@@ -184,6 +188,12 @@ public class ActivityModule {
     @Provides
     TopicMvpPresenter<TopicMvpView> provideTopicPresenter(
             TopicPresenter<TopicMvpView> presenter) {
+        return presenter;
+    }
+
+    @Provides
+    CreateMvpPresenter<CreateMvpView> provideCreatePresenter(
+            CreatePresenter<CreateMvpView> presenter) {
         return presenter;
     }
 
