@@ -2,6 +2,7 @@ package itsc.hackathon.shareapp.ui.detail;
 
 import android.Manifest;
 import android.app.Dialog;
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.hardware.Sensor;
@@ -525,14 +526,33 @@ public class DetailPostFragment extends BaseFragment implements DetailPostMvpVie
 //        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
 //        startActivity(intent);
 
-
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             File file=new File(filePath);
-            Uri uri = FileProvider.getUriForFile(getBaseActivity(), getBaseActivity().getPackageName() + ".provider", file);
-            intent = new Intent(Intent.ACTION_VIEW);
-            intent.setData(uri);
-            intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-            startActivity(intent);
+//            Uri uri = FileProvider.getUriForFile(getBaseActivity(), getBaseActivity().getPackageName() + ".fileProvider", file);
+//            intent = new Intent(Intent.ACTION_VIEW);
+//            intent.setData(uri);
+//            intent.setDataAndType(Uri.fromFile(file), "application/pdf");
+//            intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+//            startActivity(intent);
+
+            MimeTypeMap mime = MimeTypeMap.getSingleton();
+            String ext = file.getName().substring(file.getName().lastIndexOf(".") + 1);
+            String type = mime.getMimeTypeFromExtension(ext);
+            try {
+//                Intent intent = new Intent();
+                intent.setAction(Intent.ACTION_VIEW);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                    Uri contentUri = FileProvider.getUriForFile(getBaseActivity(), getBaseActivity().getPackageName() + ".fileProvider", file);
+                    intent.setDataAndType(contentUri, type);
+                } else {
+                    intent.setDataAndType(Uri.fromFile(file), type);
+                }
+//                startActivityForResult(intent, ACTIVITY_VIEW_ATTACHMENT);
+                startActivity(intent);
+            } catch (Exception anfe) {
+                Toast.makeText(getContext(), "No activity found to open this attachment.", Toast.LENGTH_LONG).show();
+            }
         } else {
             intent = new Intent(Intent.ACTION_VIEW);
             intent.setDataAndType(Uri.parse(filePath), "application/pdf");
