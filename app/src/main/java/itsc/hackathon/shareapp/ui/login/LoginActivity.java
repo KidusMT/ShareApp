@@ -93,7 +93,7 @@ public class LoginActivity extends BaseActivity implements LoginMvpView {
     public void openSignupActivity() {
         Intent intent = SignupActivity.getStartIntent( LoginActivity.this);
         startActivity(intent);
-        finish();
+//        finish();
     }
 
     @Override

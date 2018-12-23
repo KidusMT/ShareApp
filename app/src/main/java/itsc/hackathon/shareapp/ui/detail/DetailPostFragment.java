@@ -477,7 +477,7 @@ public class DetailPostFragment extends BaseFragment implements DetailPostMvpVie
                 Pair<Integer, Long> pairs = new Pair<>(100, 100L);
                 downloadZipFileTask.doProgress(pairs);
                 return;
-            } catch (Exception e) {
+            } catch (IOException e) {
                 e.printStackTrace();
                 Pair<Integer, Long> pairs = new Pair<>(-1, Long.valueOf(-1));
                 downloadZipFileTask.doProgress(pairs);
@@ -488,7 +488,7 @@ public class DetailPostFragment extends BaseFragment implements DetailPostMvpVie
                 if (inputStream != null) inputStream.close();
                 if (outputStream != null) outputStream.close();
             }
-        } catch (Exception e) {
+        } catch (IOException e) {
             e.printStackTrace();
 //            Toast.makeTex(getBaseActivity(), "Failed to save the file!", Toast.LENGTH_SHORT).show();
             Log.d(TAG, "Failed to save the file!");

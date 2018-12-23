@@ -14,6 +14,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import itsc.hackathon.shareapp.R;
 import itsc.hackathon.shareapp.ui.base.BaseActivity;
+import itsc.hackathon.shareapp.ui.login.LoginActivity;
 import itsc.hackathon.shareapp.ui.main.MainActivity;
 
 public class SignupActivity extends BaseActivity implements SignupMvpView {
@@ -81,9 +82,12 @@ public class SignupActivity extends BaseActivity implements SignupMvpView {
 
     @Override
     public void openLoginActivity() {
-        Intent intent =MainActivity.getStartIntent(SignupActivity.this);
+//        Intent intent = new Intent()
+//        LoginActivity.getStartIntent(SignupActivity.this);
+        Intent intent = LoginActivity.getStartIntent( SignupActivity.this);
         startActivity(intent);
-        finish();
+//        startActivity(intent);
+//        finish();
     }
 
     @Override
