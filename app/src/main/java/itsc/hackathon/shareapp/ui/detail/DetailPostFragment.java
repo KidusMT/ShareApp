@@ -84,6 +84,9 @@ public class DetailPostFragment extends BaseFragment implements DetailPostMvpVie
     @BindView(R.id.card_post_vote_count)
     TextView mPostVoteCount;
 
+    @BindView(R.id.detail_comment_count)
+    TextView mCommentCount;
+
     @BindView(R.id.card_post_btn_vote_up)
     ImageView btnVoteUp;
 
@@ -176,6 +179,7 @@ public class DetailPostFragment extends BaseFragment implements DetailPostMvpVie
                 if (mRecyclerView != null && mRecyclerView.getVisibility() == View.GONE)
                     mRecyclerView.setVisibility(View.VISIBLE);
                 mAdapter.addItems(comments);
+                mCommentCount.setText(String.valueOf(comments.size()) + " comments");
             } else {
                 if (mRecyclerView != null && mRecyclerView.getVisibility() == View.VISIBLE)
                     mRecyclerView.setVisibility(View.GONE);
@@ -183,6 +187,7 @@ public class DetailPostFragment extends BaseFragment implements DetailPostMvpVie
                     tvNoMeasurement.setVisibility(View.VISIBLE);
                     tvNoMeasurement.setText("No comments list found.");
                 }
+                mCommentCount.setVisibility(View.GONE);
             }
         }
         hideLoading();
@@ -213,24 +218,19 @@ public class DetailPostFragment extends BaseFragment implements DetailPostMvpVie
                 mPostDate.setText(String.valueOf(DateTimeUtils.formatWithStyle(post.getCreatedAt(),
                         DateTimeStyle.MEDIUM)));
 
-            // todo add the owner information here
-//            if (!TextUtils.isEmpty(post.getOwner())) {
-//                sensorOwnerTitle.setVisibility(View.VISIBLE);
-//                sensorOwner.setVisibility(View.VISIBLE);
-//                sensorOwner.setText(String.valueOf(post.getOwner()));
-//            } else {
-//                sensorOwnerTitle.setVisibility(View.GONE);
-//                sensorOwner.setVisibility(View.GONE);
-//            }
+            if (!TextUtils.isEmpty(post.getTitle()))
+                mPostTitle.setText(String.valueOf(post.getTitle()));
 
-//            if (!TextUtils.isEmpty(post.getDomain())) {
-//                sensorDomainTitle.setVisibility(View.VISIBLE);
-//                sensorDomain.setVisibility(View.VISIBLE);
-//                sensorDomain.setText(String.valueOf(post.getDomain()));
-//            } else {
-//                sensorDomainTitle.setVisibility(View.GONE);
-//                sensorDomain.setVisibility(View.GONE);
-//            }
+            if (!TextUtils.isEmpty(post.getFile()))
+                mPostAttachment.setVisibility(View.VISIBLE);
+            else
+                mPostAttachment.setVisibility(View.GONE);
+
+            if (!TextUtils.isEmpty(post.getDescription()))
+                mPostDescription.setText(String.valueOf(post.getDescription()));
+
+//            if (!TextUtils.isEmpty(post.get()))
+//                mPostVoteCount
 
         } else {// todo there has to be a way of expression the tvNoMeasurement in here in the else clause
 

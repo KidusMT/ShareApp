@@ -25,6 +25,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 
 public interface ApiCall {
@@ -43,13 +44,22 @@ public interface ApiCall {
     @Headers(ApiHeader.API_AUTH_TYPE + HEADER_PARAM_SEPARATOR + ApiHeader.PUBLIC_API)
     Observable<List<Post>> getPosts();
 
+    @GET(ApiEndPoint.POST_TOPICS)
+    @Headers(ApiHeader.API_AUTH_TYPE + HEADER_PARAM_SEPARATOR + ApiHeader.PUBLIC_API)
+    Observable<List<Topic>> getTopicsForPostId(@Path("post_id") String sensorId);
+
     @GET(ApiEndPoint.TOPIC)
     @Headers(ApiHeader.API_AUTH_TYPE + HEADER_PARAM_SEPARATOR + ApiHeader.PUBLIC_API)
     Observable<List<Topic>> getTopics();
 
     @GET(ApiEndPoint.POST_COMMENTS)
     @Headers(ApiHeader.API_AUTH_TYPE + HEADER_PARAM_SEPARATOR + ApiHeader.PUBLIC_API)
-    Observable<List<Comment>> getPostComments(@Path("post_id") String sensorId);
+    Observable<List<Comment>> getPostComments(@Path("post_id") String sensorId, @Query("filter") String filterRegulation);
+
+    @GET(ApiEndPoint.USER_SUBSCRIPTION)
+    @Headers(ApiHeader.API_AUTH_TYPE + HEADER_PARAM_SEPARATOR + ApiHeader.PUBLIC_API)
+    Observable<List<Topic>> getSubscription(@Path("users_id") String sensorId);
+
 
 
 

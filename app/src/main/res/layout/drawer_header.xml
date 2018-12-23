@@ -17,13 +17,21 @@
         android:paddingStart="16dp"
         android:paddingEnd="16dp">
 
-        <itsc.hackathon.shareapp.ui.custom.RoundedImageView
+
+        <ImageView
             android:id="@+id/iv_profile_pic"
             android:layout_width="64dp"
             android:layout_height="64dp"
             android:layout_marginTop="35dp"
             android:scaleType="fitCenter"
-            app:srcCompat="@drawable/ic_app_logo_black" />
+            app:srcCompat="@drawable/ic_account"  />
+        <!--<itsc.hackathon.shareapp.ui.custom.RoundedImageView-->
+            <!--android:id="@+id/iv_profile_pic"-->
+            <!--android:layout_width="64dp"-->
+            <!--android:layout_height="64dp"-->
+            <!--android:layout_marginTop="35dp"-->
+            <!--android:scaleType="fitCenter"-->
+            <!--app:srcCompat="@drawable/ic_app_logo_black" />-->
 
         <TextView
             android:id="@+id/tv_name"

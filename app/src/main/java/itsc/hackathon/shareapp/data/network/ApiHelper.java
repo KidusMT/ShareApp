@@ -42,7 +42,9 @@ public interface ApiHelper {
 
     Observable<List<Topic>> getTopics();
 
-    Observable<List<Comment>> getPostComments(String postId);
+    Observable<List<Comment>> getPostComments(String postId, String filter);
 
-//  Single<LogoutResponse> doLogoutApiCall();
+    Observable<List<Topic>> getSubscription(String userId);
+
+    Observable<List<Topic>> getTopicsByPostId(String postId);
 }

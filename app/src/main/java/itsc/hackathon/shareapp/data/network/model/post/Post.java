@@ -5,6 +5,9 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
+import java.util.List;
+
+import itsc.hackathon.shareapp.data.network.model.topic.Topic;
 
 public class Post implements Serializable {
 
@@ -23,6 +26,8 @@ public class Post implements Serializable {
     @SerializedName("id")
     @Expose
     private String id;
+
+    private List<Topic> topics;
 
     public String getTitle() {
         return title;
@@ -64,4 +69,11 @@ public class Post implements Serializable {
         this.id = id;
     }
 
+    public List<Topic> getTopics() {
+        return topics;
+    }
+
+    public void setTopics(List<Topic> topics) {
+        this.topics = topics;
+    }
 }

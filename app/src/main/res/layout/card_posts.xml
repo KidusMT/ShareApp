@@ -207,7 +207,6 @@
                         android:layout_marginRight="12dp"
                         android:fontFamily="@font/roboto_regular"
                         android:gravity="center_vertical"
-                        android:text="2"
                         android:textSize="20sp" />
 
                     <ImageView

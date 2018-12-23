@@ -30,7 +30,8 @@ public final class ApiEndPoint {
     public final static String USERS = "users";
 
     public final static String POST_COMMENTS = "posts/{post_id}/comments";
-    public final static String MEASUREMENT_LIST = "sensors/{sensor_id}/measurements";
+    public final static String USER_SUBSCRIPTION = "users/{users_id}/subscriptions";
+    public final static String POST_TOPICS = "posts/{post_id}/topics";
 
     private ApiEndPoint() {
         // This class is not publicly instantiable

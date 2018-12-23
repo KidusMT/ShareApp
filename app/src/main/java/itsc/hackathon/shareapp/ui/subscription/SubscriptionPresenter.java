@@ -1,4 +1,4 @@
-package itsc.hackathon.shareapp.ui.detail;
+package itsc.hackathon.shareapp.ui.subscription;
 
 import javax.inject.Inject;
 
@@ -12,36 +12,27 @@ import itsc.hackathon.shareapp.utils.rx.SchedulerProvider;
  * Created by KidusMT.
  */
 
-public class DetailPostPresenter<V extends DetailPostMvpView> extends BasePresenter<V>
-        implements DetailPostMvpPresenter<V> {
-
-    private static final String TAG = "QRScanPresenter";
+public class SubscriptionPresenter<V extends SubscriptionMvpView> extends BasePresenter<V>
+        implements SubscriptionMvpPresenter<V> {
 
     @Inject
-    public DetailPostPresenter(DataManager dataManager,
-                               SchedulerProvider schedulerProvider,
-                               CompositeDisposable compositeDisposable) {
+    public SubscriptionPresenter(DataManager dataManager,
+                                 SchedulerProvider schedulerProvider,
+                                 CompositeDisposable compositeDisposable) {
         super(dataManager, schedulerProvider, compositeDisposable);
     }
 
     @Override
-    public void onLogOutClicked() {
-        // removing the token when the user logout
-        getDataManager().setUserAsLoggedOut();
-    }
-
-    @Override
-    public void loadComments(String postId) {
+    public void loadPosts() {
         getMvpView().showLoading();
-        getCompositeDisposable().add(getDataManager().getPostComments(postId,
-                "{\"include\": \"creator\"}")
+        getCompositeDisposable().add(getDataManager().getSubscription(String.valueOf(getDataManager().getCurrentUserId()))
                 .subscribeOn(getSchedulerProvider().io())
                 .observeOn(getSchedulerProvider().ui())
-                .subscribe(comments -> {
+                .subscribe(posts -> {
                     if (!isViewAttached())
                         return;
 
-                    getMvpView().showComments(comments);
+                    getMvpView().showSubscriptions(posts);
 
                 }, throwable -> {
 

@@ -112,7 +112,7 @@ public class AppDataManager implements DataManager {
 
     @Override
     public void setUserAsLoggedOut() {
-        updateUserInfo(null, DataManager.LoggedInMode.LOGGED_IN_MODE_LOGGED_OUT, null,null, null, null);
+        updateUserInfo(null, DataManager.LoggedInMode.LOGGED_IN_MODE_LOGGED_OUT, null, null, null, null);
     }
 
     @Override
@@ -141,8 +141,18 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
-    public Observable<List<Comment>> getPostComments(String postId) {
-        return mApiHelper.getPostComments(postId);
+    public Observable<List<Comment>> getPostComments(String postId, String filter) {
+        return mApiHelper.getPostComments(postId, filter);
+    }
+
+    @Override
+    public Observable<List<Topic>> getSubscription(String userId) {
+        return mApiHelper.getSubscription(userId);
+    }
+
+    @Override
+    public Observable<List<Topic>> getTopicsByPostId(String postId) {
+        return mApiHelper.getTopicsByPostId(postId);
     }
 
     @Override

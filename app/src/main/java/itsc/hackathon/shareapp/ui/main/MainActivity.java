@@ -43,6 +43,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import itsc.hackathon.shareapp.R;
 import itsc.hackathon.shareapp.data.network.model.post.Post;
+import itsc.hackathon.shareapp.data.network.model.topic.Topic;
 import itsc.hackathon.shareapp.ui.base.BaseActivity;
 import itsc.hackathon.shareapp.ui.custom.RoundedImageView;
 import itsc.hackathon.shareapp.ui.detail.DetailPostFragment;
@@ -50,6 +51,9 @@ import itsc.hackathon.shareapp.ui.login.LoginActivity;
 import itsc.hackathon.shareapp.ui.notification.NotificationFragment;
 import itsc.hackathon.shareapp.ui.post.PostCommunicator;
 import itsc.hackathon.shareapp.ui.post.PostFragment;
+import itsc.hackathon.shareapp.ui.subscription.SubscriptionCommunicator;
+import itsc.hackathon.shareapp.ui.subscription.SubscriptionFragment;
+import itsc.hackathon.shareapp.ui.topic.TopicFragment;
 import itsc.hackathon.shareapp.utils.CommonUtils;
 import itsc.hackathon.shareapp.utils.ScreenUtils;
 
@@ -57,7 +61,7 @@ import itsc.hackathon.shareapp.utils.ScreenUtils;
  * Created by janisharali on 27/01/17.
  */
 
-public class MainActivity extends BaseActivity implements MainMvpView, PostCommunicator {
+public class MainActivity extends BaseActivity implements MainMvpView, PostCommunicator, SubscriptionCommunicator {
 
     @Inject
     MainMvpPresenter<MainMvpView> mPresenter;
@@ -133,7 +137,10 @@ public class MainActivity extends BaseActivity implements MainMvpView, PostCommu
                         .setMessage("Are you sure you want to exit?")
                         .setCancelable(false)
                         .setPositiveButton(getString(R.string.cancel), (dialog, which) -> dialog.dismiss())
-                        .setNegativeButton(getString(R.string.yes), (dialog, which) -> finish())
+                        .setNegativeButton(getString(R.string.yes), (dialog, which) -> {
+                            mPresenter.onLogOutClicked();
+                            finish();
+                        })
                         .show();
             } else {
                 // if the opened fragment is beside the postFragment which is the home fragment
@@ -189,8 +196,8 @@ public class MainActivity extends BaseActivity implements MainMvpView, PostCommu
                 changeToolbarTitle("Posts");
                 break;
             case R.id.nav_topic:
-//                fragmentClass = PostFragment.class;
-                CURRENT_TAG = PostFragment.TAG;
+                fragmentClass = TopicFragment.class;
+                CURRENT_TAG = TopicFragment.TAG;
                 changeToolbarTitle("Topics");
                 break;
             case R.id.nav_notification:
@@ -199,18 +206,18 @@ public class MainActivity extends BaseActivity implements MainMvpView, PostCommu
                 changeToolbarTitle("Notifications");
                 break;
             case R.id.nav_subscription:
-//                fragmentClass = MapFragment.class;
-//                CURRENT_TAG = MapFragment.TAG;
+                fragmentClass = SubscriptionFragment.class;
+                CURRENT_TAG = SubscriptionFragment.TAG;
                 changeToolbarTitle("Subscriptions");
                 break;
             case R.id.nav_profile:
 //                fragmentClass = MapFragment.class;
 //                CURRENT_TAG = MapFragment.TAG;
-                changeToolbarTitle("Profile");
+//                changeToolbarTitle("Profile");
                 break;
             case R.id.nav_setting:
-                CommonUtils.toast("settings clicked");
-                CURRENT_TAG = PostFragment.TAG;
+//                CommonUtils.toast("settings clicked");
+//                CURRENT_TAG = PostFragment.TAG;
                 break;
             case R.id.nav_logout:
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -251,14 +258,12 @@ public class MainActivity extends BaseActivity implements MainMvpView, PostCommu
                         .setCustomAnimations(R.anim.fade_in, R.anim.fade_out)
                         .replace(R.id.flContent, finalFragment, CURRENT_TAG)
                         .commit();
-
         };
 
         // If mPendingRunnable is not null, then add to the message queue
         if (mPendingRunnable != null) {
             mHandler.post(mPendingRunnable);
         }
-
 
         // Set action bar title
         setTitle(menuItem.getTitle());
@@ -267,10 +272,6 @@ public class MainActivity extends BaseActivity implements MainMvpView, PostCommu
     }
 
     private void loadNavHeader() {
-        // todo get the current user information from his "username"
-//        mNameTextView.setText("Corentin Dupont");
-//        mEmailTextView.setText("test@gmail.com");
-
         // showing dot next to notifications label
         nvDrawer.getMenu().getItem(2).setActionView(R.layout.menu_dot);
     }
@@ -286,13 +287,6 @@ public class MainActivity extends BaseActivity implements MainMvpView, PostCommu
                     .commitNow();
             unlockDrawer();
 
-//            if (TextUtils.equals(parent, MapFragment.TAG)) {
-//                getSupportFragmentManager()
-//                        .beginTransaction()
-//                        .setCustomAnimations(R.anim.fade_in, R.anim.fade_out)
-//                        .replace(R.id.flContent, MapFragment.newInstance(), MapFragment.TAG)
-//                        .commit();
-//            } else
             // todo find out if this is going to be removed or not
                 if (TextUtils.equals(parent, PostFragment.TAG)) {
                 getSupportFragmentManager()
@@ -303,17 +297,6 @@ public class MainActivity extends BaseActivity implements MainMvpView, PostCommu
             }
         }
     }
-
-//    @Override
-//    public void showAboutFragment() {
-//        lockDrawer();
-//        getSupportFragmentManager()
-//                .beginTransaction()
-//                .disallowAddToBackStack()
-//                .setCustomAnimations(R.anim.slide_left, R.anim.slide_right)
-//                .add(R.id.cl_root_view, AboutFragment.newInstance(), AboutFragment.TAG)
-//                .commit();
-//    }
 
     @Override
     public void lockDrawer() {
@@ -457,5 +440,10 @@ public class MainActivity extends BaseActivity implements MainMvpView, PostCommu
     @Override
     public void onItemClicked(Post post) {
         mPresenter.onPostItemClicked(post, PostFragment.TAG);
+    }
+
+    @Override
+    public void onItemClicked(Topic topic) {
+
     }
 }

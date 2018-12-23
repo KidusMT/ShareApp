@@ -29,6 +29,8 @@ import itsc.hackathon.shareapp.ui.post.PostAdapter;
 import itsc.hackathon.shareapp.ui.post.PostFragment;
 import itsc.hackathon.shareapp.ui.signup.SignupActivity;
 import itsc.hackathon.shareapp.ui.splash.SplashActivity;
+import itsc.hackathon.shareapp.ui.subscription.SubscriptionAdapter;
+import itsc.hackathon.shareapp.ui.subscription.SubscriptionFragment;
 import itsc.hackathon.shareapp.ui.topic.TopicAdapter;
 import itsc.hackathon.shareapp.ui.topic.TopicFragment;
 
@@ -49,6 +51,10 @@ public interface ActivityComponent {
     void inject(SplashActivity activity);
 
     void inject(AboutFragment fragment);
+
+    //subscription
+    void inject(SubscriptionFragment fragment);
+    void inject(SubscriptionAdapter adapter);
 
     // notification
     void inject(TopicFragment fragment);

@@ -78,17 +78,18 @@ public class AppApiHelper implements ApiHelper {
     }
 
     @Override
-    public Observable<List<Comment>> getPostComments(String postId) {
-        return mApiCall.getPostComments(postId);
+    public Observable<List<Comment>> getPostComments(String postId, String filter) {
+        return mApiCall.getPostComments(postId, filter);
     }
 
-//    @Override
-//    public Single<LogoutResponse> doLogoutApiCall() {
-//        return Rx2AndroidNetworking.post(ApiEndPoint.ENDPOINT_LOGOUT)
-//                .addHeaders(mApiHeader.getProtectedApiHeader())
-//                .build()
-//                .getObjectSingle(LogoutResponse.class);
-//    }
+    @Override
+    public Observable<List<Topic>> getSubscription(String userId) {
+        return mApiCall.getSubscription(userId);
+    }
 
+    @Override
+    public Observable<List<Topic>> getTopicsByPostId(String postId) {
+        return mApiCall.getTopicsForPostId(postId);
+    }
 }
 

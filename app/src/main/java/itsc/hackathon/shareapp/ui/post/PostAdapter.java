@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.text.InputFilter;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +22,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import itsc.hackathon.shareapp.R;
 import itsc.hackathon.shareapp.data.network.model.post.Post;
+import itsc.hackathon.shareapp.data.network.model.topic.Topic;
 import itsc.hackathon.shareapp.ui.base.BaseViewHolder;
 
 public class PostAdapter extends RecyclerView.Adapter<BaseViewHolder> {
@@ -60,14 +62,6 @@ public class PostAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     public void setCallback(CallBack callback) {
         mCallback = callback;
     }
-
-//    public void setMeasurementCallback(MeasurementCallback callback) {
-//        mMeasurementCallback = callback;
-//}
-
-//    public interface MeasurementCallback {
-//        void onItemClicked(Measurement measurement);
-//    }
 
     public class SensorViewHolder extends BaseViewHolder {
 
@@ -133,79 +127,43 @@ public class PostAdapter extends RecyclerView.Adapter<BaseViewHolder> {
                     mPostDescription.setText(String.valueOf(post.getDescription()));
 
 
-                // id
-//                mSensorId.setText((TextUtils.isEmpty(post.getId())) ? post.getName() : post.getId());
-//
-//                // TODO check visibility first for every view before setting visibility
-//                // date
-//                if (!TextUtils.isEmpty(post.getDateCreated())) {
-//                    mSensorDate.setVisibility(View.VISIBLE);
-//                    mSensorDate.setText(String.valueOf(DateTimeUtils.formatWithStyle(post.getDateCreated(),
-//                            DateTimeStyle.MEDIUM)));
-//                } else {
-//                    mSensorDate.setVisibility(View.GONE);
-//                }
-//
-//                // owner
-//                if (!TextUtils.isEmpty(post.getOwner())) {
-//                    ownerIcon.setVisibility(View.VISIBLE);
-//                    mSensorOwner.setVisibility(View.VISIBLE);
-//                    mSensorOwner.setText(String.valueOf(post.getOwner()));
-//                } else {
-//                    ownerIcon.setVisibility(View.GONE);
-//                    mSensorOwner.setVisibility(View.GONE);
-//                }
-//
-//                // domain
-//                if (!TextUtils.isEmpty(post.getDomain())) {
-//                    mSensorDomain.setVisibility(View.VISIBLE);
-//                    mSensorDomain.setText(String.valueOf(post.getDomain()));
-//                } else {
-//                    mSensorDomain.setVisibility(View.GONE);
-//                }
-//
-//                measurementContainer.removeAllViews();
-//
-//                if (post.getFile() != null) {
-//
-//                    if (post.getFile().size() > 0) {
-//                        measurementsTitle.setVisibility(View.VISIBLE);
-//                    } else {
-//                        measurementsTitle.setVisibility(View.GONE);
-//                    }
-//
-//
-//                    for (Measurement measurement : post.getMeasurements()) {
-//                        TextView measurementValue = new TextView(itemView.getContext());
-//                        measurementValue.setTextColor(itemView.getResources().getColor(R.color.white));
-//                        measurementValue.setGravity(Gravity.CENTER);
-//                        measurementValue.setBackground(itemView.getResources().getDrawable(R.drawable.bg_curved_accent_color));
-//                        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-//                                ViewGroup.LayoutParams.WRAP_CONTENT,
-//                                ViewGroup.LayoutParams.WRAP_CONTENT
-//                        );
-//                        params.setMargins(0, 5, 3, 5);
-//                        measurementValue.setLayoutParams(params);
-//                        measurementValue.setWidth(120);
-//                        measurementValue.setHeight(70);
-//                        // for limiting the number of character that can be displayed
-//                        measurementValue.setFilters(new InputFilter[]{new InputFilter.LengthFilter(6)});
-//                        measurementValue.setMaxLines(1);
-//                        measurementValue.setEllipsize(TextUtils.TruncateAt.END);
-//
-//                        if (measurementValue.getParent() != null)
-//                            ((ViewGroup) measurementValue.getParent()).removeView(measurementValue);
-//                        measurementValue.setText(measurement.getId());
+                if (!TextUtils.isEmpty(post.getFile()))
+                    mPostAttachment.setVisibility(View.VISIBLE);
+                else
+                    mPostAttachment.setVisibility(View.GONE);
+
+                Log.e("--->getTopics", String.valueOf(post.getTopics()));
+                if (post.getTopics() != null) {
+
+                    for (Topic measurement : post.getTopics()) {
+                        TextView measurementValue = new TextView(itemView.getContext());
+                        measurementValue.setTextColor(itemView.getResources().getColor(R.color.white));
+                        measurementValue.setGravity(Gravity.CENTER);
+                        measurementValue.setBackground(itemView.getResources().getDrawable(R.drawable.topic_corner_border_gray));
+                        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                                ViewGroup.LayoutParams.WRAP_CONTENT,
+                                ViewGroup.LayoutParams.WRAP_CONTENT
+                        );
+                        params.setMargins(0, 5, 3, 5);
+                        measurementValue.setLayoutParams(params);
+                        measurementValue.setWidth(120);
+                        measurementValue.setHeight(70);
+                        // for limiting the number of character that can be displayed
+                        measurementValue.setFilters(new InputFilter[]{new InputFilter.LengthFilter(6)});
+                        measurementValue.setMaxLines(1);
+                        measurementValue.setEllipsize(TextUtils.TruncateAt.END);
+
+                        if (measurementValue.getParent() != null)
+                            ((ViewGroup) measurementValue.getParent()).removeView(measurementValue);
+                        measurementValue.setText(measurement.getId());
 //                        measurementValue.setOnClickListener(view -> mMeasurementCallback.onItemClicked(measurement));
-//                        measurementContainer.addView(measurementValue);
-//                    }
-//                }
+                        topicContainer.addView(measurementValue);
+                    }
+                }
             } else {
                 // todo find a better way of handling this condition
             }
-
             itemView.setOnClickListener(v -> mCallback.onItemClicked(posts.get(getAdapterPosition())));
-
         }
 
         @Override

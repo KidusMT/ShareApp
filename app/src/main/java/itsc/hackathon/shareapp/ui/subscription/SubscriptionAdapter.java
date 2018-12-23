@@ -1,4 +1,4 @@
-package itsc.hackathon.shareapp.ui.detail;
+package itsc.hackathon.shareapp.ui.subscription;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.github.thunder413.datetimeutils.DateTimeStyle;
@@ -18,22 +19,25 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import itsc.hackathon.shareapp.R;
 import itsc.hackathon.shareapp.data.network.model.comment.Comment;
+import itsc.hackathon.shareapp.data.network.model.topic.Topic;
 import itsc.hackathon.shareapp.ui.base.BaseViewHolder;
+import itsc.hackathon.shareapp.ui.detail.DetailAdapter;
+import itsc.hackathon.shareapp.ui.post.CallBack;
 
-public class DetailAdapter extends RecyclerView.Adapter<BaseViewHolder> {
+public class SubscriptionAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
-    private List<Comment> comments;
+    private List<Topic> topics;
     private Callback mCallback;
 
-    public DetailAdapter(List<Comment> comments) {
-        this.comments = comments;
+    public SubscriptionAdapter(List<Topic> topics) {
+        this.topics = topics;
     }
 
     @NonNull
     @Override
     public SensorViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View view = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.card_comments, viewGroup, false);
+                .inflate(R.layout.card_topic, viewGroup, false);
         return new SensorViewHolder(view);
     }
 
@@ -42,15 +46,15 @@ public class DetailAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         sensorViewHolder.onBind(i);
     }
 
-    public void addItems(List<Comment> comments) {
-        this.comments.clear();
-        this.comments.addAll(comments);
+    public void addItems(List<Topic> topics) {
+        this.topics.clear();
+        this.topics.addAll(topics);
         notifyDataSetChanged();
     }
 
     @Override
     public int getItemCount() {
-        return comments.size();
+        return topics.size();
     }
 
     public void setCallback(Callback callback) {
@@ -58,24 +62,18 @@ public class DetailAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     }
 
     public interface Callback {
-        void onItemClicked(Comment comment);
+        void onItemClicked(Topic topic);
     }
 
     public class SensorViewHolder extends BaseViewHolder {
 
-        @BindView(R.id.card_comment_user_profile)
-        ImageView mCommentUserProfile;
+        @BindView(R.id.card_topic_title)
+        TextView mTopicTitle;
 
-        @BindView(R.id.card_comment_username)
-        TextView mCommentTitle;
+        @BindView(R.id.card_topic_thumbnail)
+        ImageView mTopicThumbnail;
 
-        @BindView(R.id.card_comment_date)
-        TextView mCommentDate;
-
-        @BindView(R.id.card_comment_description)
-        TextView mCommentDescription;
-
-        Comment comment;
+        Topic topic;
 
         public SensorViewHolder(View view) {
             super(view);
@@ -86,32 +84,25 @@ public class DetailAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         public void onBind(int position) {
             super.onBind(position);
 
-            if (comments != null) {
+            if (topics != null) {
 
-                comment = comments.get(position);
+                topic = topics.get(position);
 
-                if (comment.getCreator() != null)
-                    mCommentTitle.setText(String.valueOf(comment.getCreator().getUsername()));
-
-                if (!TextUtils.isEmpty(comment.getCreatedAt()))
-                    mCommentDate.setText(DateTimeUtils.formatWithStyle(comment.getCreatedAt(),
-                            DateTimeStyle.MEDIUM));
-
-                if (!TextUtils.isEmpty(comment.getText()))
-                    mCommentDescription.setText(String.valueOf(comment.getText()));
+                // title
+                if (!TextUtils.isEmpty(topic.getName()))
+                    mTopicTitle.setText(String.valueOf(topic.getName()));
 
             } else {
                 // todo find a better way of handling this condition
             }
-            itemView.setOnClickListener(v -> mCallback.onItemClicked(comments.get(getAdapterPosition())));
+
+            itemView.setOnClickListener(v -> mCallback.onItemClicked(topics.get(getAdapterPosition())));
 
         }
 
         @Override
         protected void clear() {
-            mCommentTitle.setText("");
-            mCommentDate.setText("");
-            mCommentDescription.setText("");
+            mTopicTitle.setText("");
         }
     }
 }

@@ -53,6 +53,10 @@ import itsc.hackathon.shareapp.ui.signup.SignupPresenter;
 import itsc.hackathon.shareapp.ui.splash.SplashMvpPresenter;
 import itsc.hackathon.shareapp.ui.splash.SplashMvpView;
 import itsc.hackathon.shareapp.ui.splash.SplashPresenter;
+import itsc.hackathon.shareapp.ui.subscription.SubscriptionAdapter;
+import itsc.hackathon.shareapp.ui.subscription.SubscriptionMvpPresenter;
+import itsc.hackathon.shareapp.ui.subscription.SubscriptionMvpView;
+import itsc.hackathon.shareapp.ui.subscription.SubscriptionPresenter;
 import itsc.hackathon.shareapp.ui.topic.TopicAdapter;
 import itsc.hackathon.shareapp.ui.topic.TopicMvpPresenter;
 import itsc.hackathon.shareapp.ui.topic.TopicMvpView;
@@ -159,6 +163,17 @@ public class ActivityModule {
     DetailPostMvpPresenter<DetailPostMvpView> provideDetailPresenter(
             DetailPostPresenter<DetailPostMvpView> presenter) {
         return presenter;
+    }
+
+    @Provides
+    SubscriptionMvpPresenter<SubscriptionMvpView> provideSubscriptionPresenter(
+            SubscriptionPresenter<SubscriptionMvpView> presenter) {
+        return presenter;
+    }
+
+    @Provides
+    SubscriptionAdapter provideSubscriptionAdapter() {
+        return new SubscriptionAdapter(new ArrayList<>());
     }
 
     @Provides

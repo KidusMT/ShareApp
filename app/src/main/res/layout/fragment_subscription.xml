@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".ui.post.PostFragment">
+    tools:context=".ui.notification.NotificationFragment">
 
     <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
@@ -20,7 +20,7 @@
             android:orientation="vertical">
 
             <android.support.v4.widget.SwipeRefreshLayout
-                android:id="@+id/post_swipe_to_refresh"
+                android:id="@+id/subscription_swipe_to_refresh"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior">
@@ -31,17 +31,16 @@
                     android:layout_marginStart="5dp"
                     android:layout_marginEnd="5dp">
 
-
                     <android.support.v7.widget.RecyclerView
-                        android:id="@+id/post_recycler"
+                        android:id="@+id/subscription_recycler"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_marginTop="3dp"
                         android:scrollbars="vertical"
-                        tools:listitem="@layout/card_posts" />
+                        tools:listitem="@layout/card_topic" />
 
                     <TextView
-                        android:id="@+id/tv_no_post"
+                        android:id="@+id/tv_no_subscription"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
@@ -56,17 +55,6 @@
 
             </android.support.v4.widget.SwipeRefreshLayout>
         </LinearLayout>
-
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/fab_post"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:clickable="true"
-            app:backgroundTint="@color/colorPrimary"
-            app:layout_anchor="@id/view_container"
-            app:layout_anchorGravity="bottom|right|end"
-            app:srcCompat="@drawable/ic_add" />
 
     </android.support.design.widget.CoordinatorLayout>
 
