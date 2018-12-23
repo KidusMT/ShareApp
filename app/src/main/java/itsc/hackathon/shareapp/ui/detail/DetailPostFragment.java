@@ -1,7 +1,12 @@
 package itsc.hackathon.shareapp.ui.detail;
 
+import android.app.Dialog;
+import android.content.Intent;
 import android.hardware.Sensor;
+import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -9,16 +14,25 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.MimeTypeMap;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.github.thunder413.datetimeutils.DateTimeStyle;
 import com.github.thunder413.datetimeutils.DateTimeUtils;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -31,6 +45,7 @@ import itsc.hackathon.shareapp.data.network.model.comment.Comment;
 import itsc.hackathon.shareapp.data.network.model.post.Post;
 import itsc.hackathon.shareapp.di.component.ActivityComponent;
 import itsc.hackathon.shareapp.ui.base.BaseFragment;
+import okhttp3.ResponseBody;
 
 import static itsc.hackathon.shareapp.utils.AppConstants.DETAIL_POST_KEY;
 
@@ -66,8 +81,8 @@ public class DetailPostFragment extends BaseFragment implements DetailPostMvpVie
     @BindView(R.id.card_post_date)
     TextView mPostDate;
 
-    @BindView(R.id.card_post_attachment)
-    ImageView mPostAttachment;
+//    @BindView(R.id.card_post_attachment)
+//    ImageView mPostAttachment;
 
     @BindView(R.id.card_post_description)
     TextView mPostDescription;
@@ -87,6 +102,12 @@ public class DetailPostFragment extends BaseFragment implements DetailPostMvpVie
     @BindView(R.id.detail_comment_count)
     TextView mCommentCount;
 
+    @BindView(R.id.tv_document_title)
+    TextView title;
+
+    @BindView(R.id.download_document)
+    ImageView downloadIcon;
+
     @BindView(R.id.card_post_btn_vote_up)
     ImageView btnVoteUp;
 
@@ -96,10 +117,14 @@ public class DetailPostFragment extends BaseFragment implements DetailPostMvpVie
 
     Post post;
 
+    String fileName;
+
 
     public static final String TAG = "DetailPostFragment";
 
     public static String parentFragment;
+
+    DownloadZipFileTask downloadZipFileTask;
 
     public static DetailPostFragment newInstance(Post post, String fragmentPassed) {
         Bundle args = new Bundle();
@@ -199,8 +224,19 @@ public class DetailPostFragment extends BaseFragment implements DetailPostMvpVie
     }
 
     @Override
+    public void writeResponseBodyToDisk(ResponseBody body, Dialog dialog) {
+        downloadZipFileTask = new DownloadZipFileTask();
+        downloadZipFileTask.execute(body);
+        onResume();
+//        downloadListAdapter.notifyDataSetChanged();
+        dialog.dismiss();
+    }
+
+    @Override
     public void loadPage(Post post) {
         if (post != null) {
+            java.io.File destinationFile = null;
+
             // we can display id if the title is not being displayed...but it most probably works.
             toolbarTitle.setText((TextUtils.isEmpty(post.getTitle())) ? String.valueOf(post.getId()) : String.valueOf(post.getTitle()));
 
@@ -221,19 +257,137 @@ public class DetailPostFragment extends BaseFragment implements DetailPostMvpVie
             if (!TextUtils.isEmpty(post.getTitle()))
                 mPostTitle.setText(String.valueOf(post.getTitle()));
 
-            if (!TextUtils.isEmpty(post.getFile()))
-                mPostAttachment.setVisibility(View.VISIBLE);
-            else
-                mPostAttachment.setVisibility(View.GONE);
+            if (!TextUtils.isEmpty(post.getFile())) {
+                // todo check this out later
+                fileName = post.getFile().substring(post.getFile().lastIndexOf("/"),post.getFile().length()-1);
+                destinationFile = new java.io.File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), post.getFile());
 
+                if (destinationFile.isFile()) {
+                    downloadIcon.setImageResource(R.drawable.ic_folder_open);
+                } else {
+                    downloadIcon.setImageResource(R.drawable.ic_file_download);
+                }
+            }
             if (!TextUtils.isEmpty(post.getDescription()))
                 mPostDescription.setText(String.valueOf(post.getDescription()));
-
-//            if (!TextUtils.isEmpty(post.get()))
-//                mPostVoteCount
 
         } else {// todo there has to be a way of expression the tvNoMeasurement in here in the else clause
 
         }
+    }
+
+    private class DownloadZipFileTask extends AsyncTask<ResponseBody, Pair<Integer, Long>, String> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+        }
+
+        @Override
+        protected String doInBackground(ResponseBody... urls) {
+            //Copy you logic to calculate progress and call
+//            if (!originalName.isEmpty())
+//                saveToDisk(urls[0], originalName);
+//            else if (!fileName.isEmpty())
+            if (!TextUtils.isEmpty(fileName))
+                saveToDisk(urls[0], fileName);
+            return null;
+        }
+
+        protected void onProgressUpdate(Pair<Integer, Long>... progress) {
+
+            if (progress[0].first == 100)
+                Toast.makeText(getBaseActivity(), "File downloaded successfully", Toast.LENGTH_SHORT).show();
+
+            if (progress[0].second > 0) {
+                int currentProgress = (int) ((double) progress[0].first / (double) progress[0].second * 100);
+//                progressBar.setProgress(currentProgress);
+
+//                txtProgressPercent.setText("Progress " + currentProgress + "%");
+
+            }
+
+            if (progress[0].first == -1) {
+                Toast.makeText(getBaseActivity(), "Download failed", Toast.LENGTH_SHORT).show();
+            }
+
+        }
+
+        public void doProgress(Pair<Integer, Long> progressDetails) {
+            publishProgress(progressDetails);
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+
+        }
+    }
+
+    private void saveToDisk(ResponseBody body, String filename) {
+        try {
+
+            File destinationFile = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), filename);
+
+            InputStream inputStream = null;
+            OutputStream outputStream = null;
+
+            try {
+
+                inputStream = body.byteStream();
+                outputStream = new FileOutputStream(destinationFile);
+                byte data[] = new byte[4096];
+                int count;
+                int progress = 0;
+                long fileSize = body.contentLength();
+                Log.d(TAG, "File Size=" + fileSize);
+                while ((count = inputStream.read(data)) != -1) {
+                    outputStream.write(data, 0, count);
+                    progress += count;
+                    Pair<Integer, Long> pairs = new Pair<>(progress, fileSize);
+                    downloadZipFileTask.doProgress(pairs);
+                    Log.d(TAG, "Progress: " + progress + "/" + fileSize + " >>>> " + (float) progress / fileSize);
+                }
+
+                outputStream.flush();
+
+                Log.d(TAG, destinationFile.getParent());
+                Pair<Integer, Long> pairs = new Pair<>(100, 100L);
+                downloadZipFileTask.doProgress(pairs);
+                return;
+            } catch (IOException e) {
+                e.printStackTrace();
+                Pair<Integer, Long> pairs = new Pair<>(-1, Long.valueOf(-1));
+                downloadZipFileTask.doProgress(pairs);
+                Toast.makeText(getBaseActivity(), "Failed to save the file!", Toast.LENGTH_SHORT).show();
+                Log.d(TAG, "Failed to save the file!");
+                return;
+            } finally {
+                if (inputStream != null) inputStream.close();
+                if (outputStream != null) outputStream.close();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            Toast.makeText(getBaseActivity(), "Failed to save the file!", Toast.LENGTH_SHORT).show();
+            Log.d(TAG, "Failed to save the file!");
+            return;
+        }
+    }
+
+    public void openFile(String filePath) {
+        java.io.File file = new File(filePath);
+        MimeTypeMap map = MimeTypeMap.getSingleton();
+        String ext = MimeTypeMap.getFileExtensionFromUrl(file.getName());
+        String type = map.getMimeTypeFromExtension(ext);
+
+        if (type == null)
+            type = "*/*";
+
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        Uri data = Uri.fromFile(file);
+
+        intent.setDataAndType(data, type);
+
+        startActivity(intent);
     }
 }

@@ -16,6 +16,8 @@
     package="itsc.hackathon.shareapp">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
     <application
         android:name=".MvpApp"
@@ -45,19 +47,8 @@
             android:name=".ui.main.MainActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
-        <activity
-            android:name=".ui.feed.FeedActivity"
-            android:launchMode="singleTop"
-            android:parentActivityName=".ui.main.MainActivity"
-            android:screenOrientation="portrait">
 
-            <!-- Parent activity meta-data to support 4.0 and lower -->
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ui.main.MainActivity" />
-        </activity>
         <activity android:name=".ui.signup.SignupActivity" />
-        <activity android:name=".ui.detail.DetailActivity"></activity>
     </application>
 
 </manifest>
