@@ -28,6 +28,7 @@ import itsc.hackathon.shareapp.data.network.model.SignupResponse;
 import itsc.hackathon.shareapp.data.network.model.comment.Comment;
 import itsc.hackathon.shareapp.data.network.model.post.Post;
 import itsc.hackathon.shareapp.data.network.model.topic.Topic;
+import itsc.hackathon.shareapp.data.network.model.user.User;
 
 /**
  * Created by janisharali on 28/01/17.
@@ -90,6 +91,11 @@ public class AppApiHelper implements ApiHelper {
     @Override
     public Observable<List<Topic>> getTopicsByPostId(String postId) {
         return mApiCall.getTopicsForPostId(postId);
+    }
+
+    @Override
+    public Observable<List<User>> getVoteCount(String postId) {
+        return mApiCall.getVoteCount(postId);
     }
 }
 

@@ -16,6 +16,7 @@ import itsc.hackathon.shareapp.data.network.model.SignupResponse;
 import itsc.hackathon.shareapp.data.network.model.comment.Comment;
 import itsc.hackathon.shareapp.data.network.model.post.Post;
 import itsc.hackathon.shareapp.data.network.model.topic.Topic;
+import itsc.hackathon.shareapp.data.network.model.user.User;
 import okhttp3.OkHttpClient;
 import okhttp3.ResponseBody;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -66,10 +67,13 @@ public interface ApiCall {
     Observable<List<Topic>> getSubscription(@Path("users_id") String sensorId);
 
     @Streaming
-    @GET(FILE_DOWNLOAD)
+    @GET(ApiEndPoint.FILE_DOWNLOAD)
     @Headers(ApiHeader.API_AUTH_TYPE + HEADER_PARAM_SEPARATOR + ApiHeader.PUBLIC_API)
     Call<ResponseBody> downloadFile(@Path("file") String file);
 
+    @GET(ApiEndPoint.POST_VOTE_COUNT)
+    @Headers(ApiHeader.API_AUTH_TYPE + HEADER_PARAM_SEPARATOR + ApiHeader.PUBLIC_API)
+    Observable<List<User>> getVoteCount(@Path("post_id") String sensorId);
 
     class Factory {
 

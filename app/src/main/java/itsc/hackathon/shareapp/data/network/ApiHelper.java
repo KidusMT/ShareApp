@@ -25,6 +25,7 @@ import itsc.hackathon.shareapp.data.network.model.SignupResponse;
 import itsc.hackathon.shareapp.data.network.model.comment.Comment;
 import itsc.hackathon.shareapp.data.network.model.post.Post;
 import itsc.hackathon.shareapp.data.network.model.topic.Topic;
+import itsc.hackathon.shareapp.data.network.model.user.User;
 
 /**
  * Created by janisharali on 27/01/17.
@@ -47,4 +48,6 @@ public interface ApiHelper {
     Observable<List<Topic>> getSubscription(String userId);
 
     Observable<List<Topic>> getTopicsByPostId(String postId);
+
+    Observable<List<User>> getVoteCount(String postId);
 }

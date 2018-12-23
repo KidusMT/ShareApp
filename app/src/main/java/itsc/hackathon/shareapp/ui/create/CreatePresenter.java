@@ -69,7 +69,7 @@ public class CreatePresenter<V extends CreateMvpView> extends BasePresenter<V>
 //                    if (!isViewAttached())
 //                        return;
                     getMvpView().hideLoading();
-                    getMvpView().onError("Question Composed Successfully");
+                    getMvpView().onError("Post created successfully.");
                     getMvpView().openQuestionListActivity();
 //                }, throwable -> {
 //
@@ -83,6 +83,21 @@ public class CreatePresenter<V extends CreateMvpView> extends BasePresenter<V>
 
     @Override
     public void loadUserGroups() {
+        getMvpView().showLoading();
+        getCompositeDisposable().add(getDataManager().getTopics()
+                .subscribeOn(getSchedulerProvider().io())
+                .observeOn(getSchedulerProvider().ui())
+                .subscribe(topics -> {
+                    if (!isViewAttached())
+                        return;
 
+                    getMvpView().showUserQuestionables(topics);
+                }, throwable -> {
+                    if (!isViewAttached())
+                        return;
+                    Log.e("---->", throwable.getMessage());
+                    getMvpView().hideLoading();
+                    getMvpView().onError(CommonUtils.getErrorMessage(throwable));
+                }));
     }
 }

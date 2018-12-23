@@ -112,6 +112,7 @@ public class CreateFragment extends BaseFragment implements CreateMvpView{
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_create, container, false);
 
+        mLayout = view;
         ActivityComponent component = getActivityComponent();
         if (component != null) {
             component.inject(this);
