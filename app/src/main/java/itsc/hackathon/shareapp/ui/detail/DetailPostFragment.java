@@ -257,16 +257,27 @@ public class DetailPostFragment extends BaseFragment implements DetailPostMvpVie
             if (!TextUtils.isEmpty(post.getTitle()))
                 mPostTitle.setText(String.valueOf(post.getTitle()));
 
+
+
             if (!TextUtils.isEmpty(post.getFile())) {
                 // todo check this out later
-                fileName = post.getFile().substring(post.getFile().lastIndexOf("/"),post.getFile().length()-1);
+                fileName = post.getFile().substring(post.getFile().lastIndexOf("/")+1,post.getFile().length()-1);
                 destinationFile = new java.io.File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), post.getFile());
+
+                title.setText(String.valueOf(fileName));
 
                 if (destinationFile.isFile()) {
                     downloadIcon.setImageResource(R.drawable.ic_folder_open);
                 } else {
                     downloadIcon.setImageResource(R.drawable.ic_file_download);
                 }
+
+                File finalDestinationFile = destinationFile;
+
+                downloadIcon.setOnClickListener(view -> {
+                    if (finalDestinationFile.isFile())
+                        openFile(finalDestinationFile.getPath());
+                });
             }
             if (!TextUtils.isEmpty(post.getDescription()))
                 mPostDescription.setText(String.valueOf(post.getDescription()));
