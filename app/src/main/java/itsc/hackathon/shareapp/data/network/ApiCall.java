@@ -17,7 +17,9 @@ import itsc.hackathon.shareapp.data.network.model.comment.Comment;
 import itsc.hackathon.shareapp.data.network.model.post.Post;
 import itsc.hackathon.shareapp.data.network.model.topic.Topic;
 import okhttp3.OkHttpClient;
+import okhttp3.ResponseBody;
 import okhttp3.logging.HttpLoggingInterceptor;
+import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.Body;
@@ -26,6 +28,9 @@ import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
+import retrofit2.http.Streaming;
+
+import static itsc.hackathon.shareapp.data.network.ApiEndPoint.FILE_DOWNLOAD;
 
 
 public interface ApiCall {
@@ -60,7 +65,10 @@ public interface ApiCall {
     @Headers(ApiHeader.API_AUTH_TYPE + HEADER_PARAM_SEPARATOR + ApiHeader.PUBLIC_API)
     Observable<List<Topic>> getSubscription(@Path("users_id") String sensorId);
 
-
+    @Streaming //todo this has to be handled well runs on main thread
+    @GET(FILE_DOWNLOAD)
+    @Headers(ApiHeader.API_AUTH_TYPE + HEADER_PARAM_SEPARATOR + ApiHeader.PUBLIC_API)
+    Call<ResponseBody> downloadFile(@Path("file") String file);
 
 
     class Factory {

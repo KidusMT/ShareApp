@@ -20,6 +20,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.MimeTypeMap;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -40,12 +41,18 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import itsc.hackathon.shareapp.BuildConfig;
 import itsc.hackathon.shareapp.R;
+import itsc.hackathon.shareapp.data.network.ApiCall;
 import itsc.hackathon.shareapp.data.network.model.comment.Comment;
 import itsc.hackathon.shareapp.data.network.model.post.Post;
 import itsc.hackathon.shareapp.di.component.ActivityComponent;
 import itsc.hackathon.shareapp.ui.base.BaseFragment;
+import itsc.hackathon.shareapp.utils.CommonUtils;
 import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Response;
+import retrofit2.Retrofit;
 
 import static itsc.hackathon.shareapp.utils.AppConstants.DETAIL_POST_KEY;
 
@@ -272,11 +279,56 @@ public class DetailPostFragment extends BaseFragment implements DetailPostMvpVie
                     downloadIcon.setImageResource(R.drawable.ic_file_download);
                 }
 
-                File finalDestinationFile = destinationFile;
-
+                File finalDestinationFile1 = destinationFile;
                 downloadIcon.setOnClickListener(view -> {
-                    if (finalDestinationFile.isFile())
-                        openFile(finalDestinationFile.getPath());
+                    if (finalDestinationFile1.isFile()) {
+                        openFile(finalDestinationFile1.getPath());
+                    } else {
+
+                        final Dialog dialog = new Dialog(getBaseActivity());
+                        dialog.setContentView(R.layout.custom_dialog);
+                        //            dialog.setTitle("Downloading...");
+                        dialog.setCancelable(false);
+
+                        // set the custom dialog components - text, image and button
+                //            txtProgressPercent = dialog.findViewById(R.id.txtProgressPercent);
+                //            progressBar = dialog.findViewById(R.id.pb_loading);
+
+                        Button dialogButton = dialog.findViewById(R.id.dialogButtonCancel);
+
+                        //api calling part for handling the download
+                        Retrofit.Builder builder = new Retrofit.Builder().baseUrl(BuildConfig.BASE_URL);
+                        Retrofit retrofit = builder.build();
+                        ApiCall fileDownloadClient = retrofit.create(ApiCall.class);
+                        if (!TextUtils.isEmpty(fileName)){
+                            Call<ResponseBody> call = fileDownloadClient.downloadFile(fileName);
+
+                            call.enqueue(new retrofit2.Callback<ResponseBody>() {
+                                @Override
+                                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+
+                                    if (response.isSuccessful()) {
+                                        if (response.body() != null)
+                                            writeResponseBodyToDisk(response.body(), dialog);
+                                    }
+                                }
+
+                                @Override
+                                public void onFailure(Call<ResponseBody> call, Throwable t) {
+                                    dialog.dismiss();
+                                    onError(CommonUtils.getErrorMessage(t));
+                                }
+                            });
+
+                            // if button is clicked, close the custom dialog
+                            dialogButton.setOnClickListener(v -> {
+                                call.cancel();
+                                dialog.dismiss();
+                            });
+                        }
+
+                        dialog.show();
+                    }
                 });
             }
             if (!TextUtils.isEmpty(post.getDescription()))

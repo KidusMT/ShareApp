@@ -33,6 +33,7 @@ public final class ApiEndPoint {
     public final static String USER_SUBSCRIPTION = "users/{users_id}/subscriptions";
     public final static String POST_TOPICS = "posts/{post_id}/topics";
 
+    public static final String FILE_DOWNLOAD = "Containers/posts/download/{file}";
     private ApiEndPoint() {
         // This class is not publicly instantiable
     }

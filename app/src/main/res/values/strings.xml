@@ -84,6 +84,9 @@
     <string name="later">Later</string>
     <string name="submit">Submit</string>
 
+
+    <string name="downloading">downloading...</string>
+
     <!--feed-->
     <string name="title">My Feed</string>
     <string name="open_source">Open Source</string>
