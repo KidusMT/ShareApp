@@ -2,47 +2,61 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    android:orientation="vertical"
     tools:context=".ui.notification.NotificationFragment">
 
-    <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/notification_swipe_to_refresh"
+    <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <RelativeLayout
+        <LinearLayout
+            android:id="@+id/view_container"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:layout_marginEnd="5dp">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/notification_recycler"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="3dp"
-                android:scrollbars="vertical"
-                tools:listitem="@layout/card_notification" />
-
-            <TextView
-                android:id="@+id/tv_no_notification"
+            <android.support.v4.widget.SwipeRefreshLayout
+                android:id="@+id/subscription_swipe_to_refresh"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:layout_margin="5dp"
-                android:fontFamily="@font/roboto_light"
-                android:text="No notification list found."
-                android:textAlignment="center"
-                android:textSize="18sp"
-                android:visibility="gone" />
+                app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        </RelativeLayout>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="5dp">
 
-    </android.support.v4.widget.SwipeRefreshLayout>
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/subscription_recycler"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="3dp"
+                        android:scrollbars="vertical"
+                        tools:listitem="@layout/card_topic" />
+
+                    <TextView
+                        android:id="@+id/tv_no_subscription"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:layout_margin="5dp"
+                        android:fontFamily="@font/roboto_light"
+                        android:text="No comments found."
+                        android:textAlignment="center"
+                        android:textSize="18sp"
+                        android:visibility="gone" />
+
+                </RelativeLayout>
+
+            </android.support.v4.widget.SwipeRefreshLayout>
+        </LinearLayout>
+
+    </android.support.design.widget.CoordinatorLayout>
+
 
 </LinearLayout>

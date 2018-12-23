@@ -33,8 +33,25 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/card_topic_thumbnail"
                 android:layout_marginTop="10dp"
+                android:layout_marginBottom="5dp"
+                android:paddingLeft="10dp"
+                android:fontFamily="@font/roboto_regular"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:paddingRight="10dp"
+                android:text="topic name"
+                android:textColor="@color/material_grey_700" />
+
+            <TextView
+                android:id="@+id/card_topic_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/card_topic_title"
                 android:layout_marginBottom="10dp"
                 android:paddingLeft="10dp"
+                android:maxLines="3"
+                android:fontFamily="@font/roboto_light"
+                android:ellipsize="end"
                 android:paddingRight="10dp"
                 android:text="topic name"
                 android:textColor="@color/material_grey_700" />

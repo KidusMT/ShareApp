@@ -7,22 +7,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.github.thunder413.datetimeutils.DateTimeStyle;
-import com.github.thunder413.datetimeutils.DateTimeUtils;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import itsc.hackathon.shareapp.R;
-import itsc.hackathon.shareapp.data.network.model.comment.Comment;
 import itsc.hackathon.shareapp.data.network.model.topic.Topic;
 import itsc.hackathon.shareapp.ui.base.BaseViewHolder;
-import itsc.hackathon.shareapp.ui.detail.DetailAdapter;
-import itsc.hackathon.shareapp.ui.post.CallBack;
 
 public class SubscriptionAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
@@ -70,6 +65,9 @@ public class SubscriptionAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         @BindView(R.id.card_topic_title)
         TextView mTopicTitle;
 
+        @BindView(R.id.card_topic_description)
+        TextView mTopicDescription;
+
         @BindView(R.id.card_topic_thumbnail)
         ImageView mTopicThumbnail;
 
@@ -89,8 +87,27 @@ public class SubscriptionAdapter extends RecyclerView.Adapter<BaseViewHolder> {
                 topic = topics.get(position);
 
                 // title
-                if (!TextUtils.isEmpty(topic.getName()))
+                if (!TextUtils.isEmpty(topic.getName())){
                     mTopicTitle.setText(String.valueOf(topic.getName()));
+
+                    if (topic.getName().equals("SQL")){
+                        Picasso.get().load(R.drawable.ic_sql)
+                                .into(mTopicThumbnail);
+                    }else if (topic.getName().equals("Physics")){
+                        Picasso.get().load(R.drawable.ic_physics)
+                                .into(mTopicThumbnail);
+                    }else if (topic.getName().equals("Machine Learning")){
+                        Picasso.get().load(R.drawable.ic_machine_learning)
+                                .into(mTopicThumbnail);
+                    }else{
+                        Picasso.get().load(R.drawable.ic_default)
+                                .into(mTopicThumbnail);
+                    }
+                }
+
+                // description
+                if (!TextUtils.isEmpty(topic.getDescription()))
+                    mTopicDescription.setText(String.valueOf(topic.getDescription()));
 
             } else {
                 // todo find a better way of handling this condition

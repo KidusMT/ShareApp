@@ -8,5 +8,7 @@ import itsc.hackathon.shareapp.ui.base.MvpView;
 
 public interface TopicMvpView extends MvpView {
 
-    void showTopics(List<Topic> topics);
+    void showSubscriptions(List<Topic> topics);
+    void openDetailSensorActivity(Topic topics);
+    void loadPage();
 }

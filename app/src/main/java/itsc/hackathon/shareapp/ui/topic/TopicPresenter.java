@@ -23,17 +23,16 @@ public class TopicPresenter<V extends TopicMvpView> extends BasePresenter<V>
     }
 
     @Override
-    public void loadTopics() {
+    public void loadSubscription() {
         getMvpView().showLoading();
-
-        getCompositeDisposable().add(getDataManager().getTopics()
+        getCompositeDisposable().add(getDataManager().getSubscription(String.valueOf(getDataManager().getAccessToken()))
                 .subscribeOn(getSchedulerProvider().io())
                 .observeOn(getSchedulerProvider().ui())
-                .subscribe(topics -> {
+                .subscribe(posts -> {
                     if (!isViewAttached())
                         return;
 
-                    getMvpView().showTopics(topics);
+                    getMvpView().showSubscriptions(posts);
 
                 }, throwable -> {
 

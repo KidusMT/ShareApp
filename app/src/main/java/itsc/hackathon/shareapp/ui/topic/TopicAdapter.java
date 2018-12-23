@@ -2,11 +2,14 @@ package itsc.hackathon.shareapp.ui.topic;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -15,11 +18,12 @@ import butterknife.ButterKnife;
 import itsc.hackathon.shareapp.R;
 import itsc.hackathon.shareapp.data.network.model.topic.Topic;
 import itsc.hackathon.shareapp.ui.base.BaseViewHolder;
+import itsc.hackathon.shareapp.ui.subscription.SubscriptionAdapter;
 
 public class TopicAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
     private List<Topic> topics;
-    private Callback mCallback;
+    private SubscriptionAdapter.Callback mCallback;
 
     public TopicAdapter(List<Topic> topics) {
         this.topics = topics;
@@ -27,10 +31,10 @@ public class TopicAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
     @NonNull
     @Override
-    public SensorViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+    public TopicViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View view = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.card_notification, viewGroup, false);
-        return new SensorViewHolder(view);
+                .inflate(R.layout.card_topic, viewGroup, false);
+        return new TopicViewHolder(view);
     }
 
     @Override
@@ -49,7 +53,7 @@ public class TopicAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         return topics.size();
     }
 
-    public void setCallback(Callback callback) {
+    public void setCallback(SubscriptionAdapter.Callback callback) {
         mCallback = callback;
     }
 
@@ -57,17 +61,20 @@ public class TopicAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         void onItemClicked(Topic topic);
     }
 
-    public class SensorViewHolder extends BaseViewHolder {
+    public class TopicViewHolder extends BaseViewHolder {
 
         @BindView(R.id.card_topic_title)
-        TextView topicTitle;
+        TextView mTopicTitle;
+
+        @BindView(R.id.card_topic_description)
+        TextView mTopicDescription;
 
         @BindView(R.id.card_topic_thumbnail)
-        ImageView topicThumbnail;
+        ImageView mTopicThumbnail;
 
         Topic topic;
 
-        public SensorViewHolder(View view) {
+        public TopicViewHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);
         }
@@ -80,69 +87,28 @@ public class TopicAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
                 topic = topics.get(position);
 
-//                // sensor name
-//                if (topic.getCondition().getSensors().size() > 0) {
-//                    for (int i = 0; i < topic.getCondition().getSensors().size(); i++) {
-//                        mNotificationSensorName.setText(String.valueOf(
-//                                (topic.getCondition().getSensors().size() == 1) ? topic.getCondition().getSensors().get(i)
-//                                        : (topic.getCondition().getSensors().size() == i) ? topic.getCondition().getSensors().get(i)
-//                                        : topic.getCondition().getSensors().get(i) + ", "));
-//                    }
-//                } else {
-//                    mNotificationSensorName.setVisibility(View.GONE);
-//                }
-//
-//                // measurement
-//                if (topic.getCondition().getMeasurements().size() > 0) {
-//                    for (int i = 0; i < topic.getCondition().getMeasurements().size(); i++) {
-//                        mNotificationMeasurement.setText(String.valueOf(
-//                                (topic.getCondition().getMeasurements().size() == 1) ? topic.getCondition().getMeasurements().get(i)
-//                                        : (topic.getCondition().getMeasurements().size() == i) ? topic.getCondition().getMeasurements().get(i)
-//                                        : topic.getCondition().getMeasurements().get(i) + ", "));
-//                    }
-//                } else {
-//                    mNotificationMeasurement.setVisibility(View.GONE);
-//                }
-//
-//                // expression
-//                if (!TextUtils.isEmpty(topic.getCondition().getExpression())) {
-//                    mNotificationExpression.setText(String.valueOf(topic.getCondition().getExpression()));
-//                } else {
-//                    mNotificationExpression.setVisibility(View.GONE);
-//                }
-//
-//                // message
-//                if (!TextUtils.isEmpty(topic.getNotification().getMessage())) {
-//                    mNotificationMessage.setText(String.valueOf(topic.getNotification().getMessage()));
-//                } else {
-//                    mNotificationMessage.setVisibility(View.GONE);
-//                }
-//
-//                // owner
-//                if (topic.getNotification().getUsernames().size() > 0) {
-//                    for (int i = 0; i < topic.getNotification().getUsernames().size(); i++) {
-//                        mNotificationOwner.setText(String.valueOf(
-//                                (topic.getNotification().getUsernames().size() == 1) ? topic.getNotification().getUsernames().get(i)
-//                                        : (topic.getNotification().getUsernames().size() == i) ? topic.getNotification().getUsernames().get(i)
-//                                        : topic.getNotification().getUsernames().get(i) + ", "));
-//                    }
-//                } else {
-//                    mNotificationOwner.setVisibility(View.GONE);
-//                }
-//
-//                // shared at
-//                if (topic.getCondition().getSensors().size() > 0) {
-//                    for (int i = 0; i < topic.getNotification().getChannels().size(); i++) {
-//                        mNotificationSharedAt.setText(String.valueOf(
-//                                (topic.getNotification().getChannels().size() == 1) ?
-//                                        topic.getNotification().getChannels().get(i)
-//                                        : (topic.getNotification().getChannels().size() == i) ?
-//                                        topic.getNotification().getChannels().get(i)
-//                                        : topic.getNotification().getChannels().get(i) + ", "));
-//                    }
-//                } else {
-//                    mNotificationSharedAt.setVisibility(View.GONE);
-//                }
+                // title
+                if (!TextUtils.isEmpty(topic.getName())){
+                    mTopicTitle.setText(String.valueOf(topic.getName()));
+
+                    if (topic.getName().equals("SQL")){
+                        Picasso.get().load(R.drawable.ic_sql)
+                                .into(mTopicThumbnail);
+                    }else if (topic.getName().equals("Physics")){
+                        Picasso.get().load(R.drawable.ic_physics)
+                                .into(mTopicThumbnail);
+                    }else if (topic.getName().equals("Machine Learning")){
+                        Picasso.get().load(R.drawable.ic_machine_learning)
+                                .into(mTopicThumbnail);
+                    }else{
+                        Picasso.get().load(R.drawable.ic_default)
+                                .into(mTopicThumbnail);
+                    }
+                }
+
+                // description
+                if (!TextUtils.isEmpty(topic.getDescription()))
+                    mTopicDescription.setText(String.valueOf(topic.getDescription()));
 
             } else {
                 // todo find a better way of handling this condition
@@ -154,7 +120,7 @@ public class TopicAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
         @Override
         protected void clear() {
-            topicTitle.setText("");
+            mTopicTitle.setText("");
         }
     }
 }
